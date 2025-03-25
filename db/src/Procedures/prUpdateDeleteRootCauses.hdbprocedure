@@ -1,0 +1,25 @@
+/************************************* Project : Incident *******************************************/
+/* Developer Name 			  	: Gopal Birajdar							                        */
+/* Date      					: 10/10/2023	                                                    */
+/* Application Name             : Incident Portal                                                   */
+/* Procedure Name 				: prUpdateDeleteRootCauses.hdbprocedure                             */
+/* Functionality                : To delete root causes                                             */
+/****************************************************************************************************/
+
+PROCEDURE prUpdateDeleteRootCauses ( 
+    
+    IN  RCSID   INTEGER,     -- Corrective Action   
+    IN  INCID   INTEGER      -- Incident Id
+) 
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   ---- DEFAULT SCHEMA SODLS1 
+   --READS SQL DATA 
+   AS
+BEGIN
+ 
+     -- Update data into table
+     UPDATE INC_T_RTCAS
+     SET ISDEL='1',CHNBY=SESSION_USER,CHNDT=CURRENT_DATE,CHNTM=CURRENT_TIME
+     WHERE RCSID=:RCSID AND INCID=:INCID AND ISDEL='0';
+END

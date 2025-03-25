@@ -1,0 +1,25 @@
+/************************************* Project : Incident *******************************************/
+/* Developer Name 			  	: Gopal Birajdar							                        */
+/* Date      					: 18/10/2023	                                                    */
+/* Application Name             : Incident Portal                                                   */
+/* Procedure Name 				: prUpdateCloseIncident.hdbprocedure                                */
+/* Functionality                : To update incident status to closed                               */
+/****************************************************************************************************/
+
+PROCEDURE prUpdateCloseIncident ( 
+    
+    IN INCID    INTEGER          -- Incident Id
+   
+) 
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   ---- DEFAULT SCHEMA SODLS1 
+   --READS SQL DATA 
+   AS
+BEGIN
+ 
+     -- Update data into table
+     UPDATE INC_T_INCDT
+     SET INCST=542,CHNBY=SESSION_USER,CHNDT=CURRENT_DATE,CHNTM=CURRENT_TIME,CLOBY=SESSION_USER,CLODT=CURRENT_DATE,CLOTM=CURRENT_TIME
+     WHERE INCID=:INCID AND ISDEL='0';
+END

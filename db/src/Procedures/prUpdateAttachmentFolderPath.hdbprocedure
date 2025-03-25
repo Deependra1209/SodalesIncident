@@ -1,0 +1,26 @@
+/************************************* Project : Incident *******************************************/
+/* Developer Name 			  	: Gopal Birajdar							                        */
+/* Date      					: 11/10/2023	                                                    */
+/* Application Name             : Update Attachment Folder Path                                     */
+/* Procedure Name 				: prUpdateAttachmentFolderPath.hdbprocedure                         */
+/* Functionality                : To update attachment folder path                                  */
+/****************************************************************************************************/
+PROCEDURE prUpdateAttachmentFolderPath (
+    
+    IN INCID INTEGER,      -- Incident Id
+    IN ATTFP NVARCHAR(50)  -- Attachment Folder Path
+    
+    )
+   LANGUAGE SQLSCRIPT 
+   SQL SECURITY INVOKER
+   ---- DEFAULT SCHEMA SODLS1
+   --READS SQL DATA 
+   AS
+BEGIN
+
+   -- Update data into incident details table
+   UPDATE INC_T_INCDT 
+   SET ATTFP = :ATTFP 
+   WHERE INCID = :INCID AND ISDEL = '0';
+   
+END

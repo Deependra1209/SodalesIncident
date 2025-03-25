@@ -1,0 +1,74 @@
+/************************************* Project : Incident *******************************************/
+/* Developer Name 			  	: Gopal Birajdar        							                */
+/* Date      					: 20/09/2023	                                                    */
+/* Application Name             : Incident Portal                                                   */
+/* Procedure Name 				: prCreateUpdatePreInvestigation.hdbprocedure                       */
+/* Functionality                : To create and update pre-investigation details                    */
+/****************************************************************************************************/
+PROCEDURE prCreateUpdatePreInvestigation ( 
+     
+    IN	PRIID	INTEGER,		  --  Unique id
+    IN	INCID	INTEGER,		  --  Incident Id
+    IN	T1LB1	SMALLINT,	      --  Is this a multi-casualty incident event?
+    IN	T1LB3	NVARCHAR(100),	  --  General Location at Time of Injury
+    IN	T1LB4	NVARCHAR(100),	  --  General Conditions at Time of Injury
+    IN	T1LB5	SMALLINT,         --  Known hazard
+    IN	T1LB6	NVARCHAR(100),	  --  Known hazard description
+    IN	T1LB7	NVARCHAR(100),	  --  Injury due to equipment/machine
+    IN	T1LB8	SMALLINT,		  --  Incident level
+    IN	T3LB1	NVARCHAR(5000),	  --  Staff Statement
+    IN	T3LB2	NVARCHAR(5000),	  --  Witness Statement 
+    IN	T3LB3	NVARCHAR(5000),	  --  Sketch
+    IN	T3LB4	NVARCHAR(5000),	  --  Pre-Investigation Notes
+    IN  PRFLG   INTEGER          --  Process Flow Flag
+    -- OUT OPRIID  INTEGER           --  Out parameter
+    
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   -- DEFAULT SCHEMA SODLS1
+   --READS SQL DATA 
+   AS
+BEGIN
+
+    -- DECLARE COLUMN_ID INTEGER;
+    -- DECLARE QU NVARCHAR(150);
+    -- DECLARE SEQ NVARCHAR(100);
+ 
+
+IF :PRIID = 0 THEN
+   -- Insert Data into preinvestigation Table
+   INSERT INTO INC_T_PRINV (INCID,T1LB1,T1LB3,T1LB4,T1LB5,T1LB6,T1LB7,T1LB8,T3LB1,T3LB2,T3LB3,T3LB4,ISDEL,CRTBY,CRTDT,CRTTM)
+                              VALUES (INCID,T1LB1,T1LB3,T1LB4,T1LB5,T1LB6,T1LB7,T1LB8,T3LB1,T3LB2,T3LB3,T3LB4,'0',SESSION_USER,CURRENT_DATE,CURRENT_TIME);
+   
+   -- Update Investigation Status 
+  UPDATE INC_T_INCDT
+  SET INVST=660,CHNBY=SESSION_USER,CHNDT=CURRENT_DATE,CHNTM=CURRENT_TIME   
+  WHERE INCID=:INCID AND ISDEL='0';  
+   
+     /* sequence number */ 
+    -- SELECT '_SYS_SEQUENCE_'|| COLUMN_ID||'_#0_#' INTO SEQ FROM TABLE_COLUMNS WHERE (TABLE_NAME='INC_T_PRINV' and Schema_name='SODLS1') AND COLUMN_NAME='PRIID';
+    --     QU :='select '||SEQ||'.CURRVAL from DUMMY';
+    --     EXECUTE IMMEDIATE QU INTO OPRIID;
+   
+ELSE
+   -- update Data into preinvestigation Table
+   UPDATE INC_T_PRINV 
+   SET T1LB1=:T1LB1,T1LB3=:T1LB3,T1LB4=:T1LB4,T1LB5=:T1LB5,T1LB6=:T1LB6,T1LB7=:T1LB7,T1LB8=:T1LB8,T3LB1=:T3LB1,T3LB2=:T3LB2,T3LB3=:T3LB3,T3LB4=:T3LB4,
+       CHNBY=SESSION_USER,CHNDT=CURRENT_DATE,CHNTM=CURRENT_TIME
+   WHERE PRIID=:PRIID AND INCID=:INCID AND ISDEL='0';
+   
+--    OPRIID:=:PRIID; 
+   
+   
+  IF :PRFLG = 2 THEN
+    -- Update Investigation Status  
+  UPDATE INC_T_INCDT 
+  SET INVST=886,CHNBY=SESSION_USER,CHNDT=CURRENT_DATE,CHNTM=CURRENT_TIME
+  WHERE INCID=:INCID AND ISDEL='0'; 
+   
+END IF;
+  
+END IF;
+   
+END

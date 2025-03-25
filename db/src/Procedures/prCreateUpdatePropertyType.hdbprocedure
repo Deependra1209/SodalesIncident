@@ -1,0 +1,42 @@
+/************************************* Project : Incident *******************************************/
+/* Developer Name 			  	: Deependra Pratap Singh							                */
+/* Date      					: 23/08/2023	                                                    */
+/* Application Name             : Report Incident                                                   */
+/* Procedure Name 				: prCreateUpdatePropertyType.hdbprocedure                           */
+/* Functionality                : To create and update property type for property equipment damage  */
+/****************************************************************************************************/
+
+PROCEDURE prCreateUpdatePropertyType ( 
+    
+    IN PTYID INTEGER,	        -- Unique id	
+    IN INCID INTEGER,	        -- Incident Id	
+    IN PEDID INTEGER,	        -- Property - Equipment Damage ID	
+    IN T1LB1 SMALLINT,	        -- Property Type Selected	
+    IN ISDEL NVARCHAR(1)        -- Is delete
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   ---- DEFAULT SCHEMA SODLS1
+   --READS SQL DATA 
+   AS 
+BEGIN 
+
+-- Insert data into table 
+IF :PTYID = 0 THEN
+
+        INSERT INTO INC_T_PRTYP (INCID,PEDID,T1LB1,ISDEL,CRTBY,CRTDT,CRTTM)
+		                           VALUES (INCID,PEDID,T1LB1,'0',SESSION_USER,CURRENT_DATE,CURRENT_TIME);
+
+        
+        
+ELSE
+
+-- Update data into table
+        UPDATE INC_T_PRTYP
+        SET ISDEL=:ISDEL,CHNBY=SESSION_USER,CHNDT=CURRENT_DATE,CHNTM=CURRENT_TIME
+        WHERE PTYID=:PTYID AND INCID=:INCID AND PEDID=:PEDID;
+        
+       
+END IF; 
+
+END

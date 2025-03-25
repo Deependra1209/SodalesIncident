@@ -1,0 +1,45 @@
+/************************************* Project : Incident *******************************************/
+/* Developer Name 			  	: yASH Pandia										                */
+/* Date      					: 28/08/2023	                                                    */
+/* Application Name             : Report Incident                                                   */
+/* Procedure Name 				: prCreateUpdateFirstAider.hdbprocedure			                    */
+/* Functionality                : To create and update first aider details                          */
+/****************************************************************************************************/
+
+PROCEDURE prCreateUpdateFirstAider (
+    
+    IN FISID	INTEGER,          -- Unique id
+    IN INCID	INTEGER,          -- Incident Id
+    IN IPLID    INTEGER,          -- People Involved Id
+    IN UNQID    NVARCHAR(20),     -- Unique id
+    IN T1LB1	NVARCHAR(1000),   -- Custom Filed 1
+    IN T1LB2	NVARCHAR(1000),   -- Custom Filed 2
+    IN T1LB3    NVARCHAR(5000),   -- What was the treatment rendered?
+    IN T1LB4    NVARCHAR(5000),   -- Please describe what happened and what is the arrangement made for the ill / injured person?
+    IN T1LB5	NVARCHAR(5000)    -- Custom Filed 3
+      
+    
+)
+
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER 
+   ---- DEFAULT SCHEMA SODLS1
+   --READS SQL DATA
+   AS 
+BEGIN
+
+   IF :FISID = 0 THEN 
+   
+   INSERT INTO INC_T_FISAL (INCID,IPLID,UNQID,T1LB1,T1LB2,T1LB3,T1LB4,T1LB5,ISDEL,CRTBY,CRTDT,CRTTM,CHNBY,CHNDT,CHNTM) 
+                              VALUES (INCID,IPLID,UNQID,T1LB1,T1LB2,T1LB3,T1LB4,T1LB5,'0',SESSION_USER,CURRENT_DATE,CURRENT_TIME,SESSION_USER,CURRENT_DATE,CURRENT_TIME);
+   
+   ELSE
+   
+   UPDATE INC_T_FISAL 
+   SET UNQID=:UNQID,T1LB1=:T1LB1,T1LB2=:T1LB2,T1LB3=:T1LB3,T1LB4=:T1LB4,T1LB5=:T1LB5,
+       CHNBY=SESSION_USER, CHNDT=CURRENT_DATE, CHNTM=CURRENT_TIME
+   WHERE FISID=:FISID AND INCID=:INCID AND ISDEL = '0'; 
+   
+   END IF;
+   
+END

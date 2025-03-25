@@ -1,0 +1,38 @@
+/************************************* Project : Incident ****************************************** */
+/* Developer Name 			  	: Yash Pandia							                             */
+/* Date      					: 23/08/2023	                                                     */
+/* Application Name             : Report Incident                                                    */
+/* Procedure Name 				: prCreateUpdateReleaseTo.hdbprocedure                               */
+/* Functionality                : To create and update release to details for environment incident   */
+/*************************************************************************************************** */
+
+PROCEDURE prCreateUpdateReleaseTo ( 
+    
+    IN RLSID INTEGER,            -- Primary Key of the Table
+    IN ENVID INTEGER,            -- Environmrent Injury Details Table Primary Key
+    IN INCID INTEGER,            -- Incident Details Table Primary Key
+    IN T1LB2 SMALLINT,           -- Realese to Master ID
+    IN ISDEL NVARCHAR(1)         -- Is Deleted Flag
+    
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   ---- DEFAULT SCHEMA SODLS1
+   --READS SQL DATA
+   AS
+BEGIN
+   
+   IF :RLSID = 0 THEN 
+   
+   INSERT INTO INC_T_RLSTO (ENVID,INCID,T1LB2,ISDEL,CRTBY,CRTDT,CRTTM,CHNBY,CHNDT,CHNTM)
+                               VALUES (ENVID,INCID,T1LB2,'0',SESSION_USER,CURRENT_DATE,CURRENT_TIME,SESSION_USER,CURRENT_DATE,CURRENT_TIME);
+   
+   ELSE 
+   
+   UPDATE INC_T_RLSTO 
+   SET ISDEL=:ISDEL,CHNBY=SESSION_USER,CHNDT=CURRENT_DATE,CHNTM=CURRENT_TIME
+   WHERE RLSID=:RLSID AND ENVID=:ENVID AND INCID=:INCID AND ISDEL = '0';
+   
+   END IF;
+   
+END

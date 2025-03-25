@@ -1,0 +1,53 @@
+/************************************* Project : Incident *******************************************/
+/* Developer Name 			  	: Gopal Birajdar										            */
+/* Date      					: 10/05/2024	                                                    */
+/* Application Name             : Incident Portal                                                   */
+/* Procedure Name 				: prCreateUpdateRTWDetails.hdbprocedure			                    */
+/* Functionality                : To create and update RTW details                                  */
+/****************************************************************************************************/
+
+PROCEDURE prCreateUpdateRTWDetails ( 
+    
+   IN   RTWID   INTEGER,   
+   IN   INCID   INTEGER,
+   IN   RTWL1   INTEGER,
+   IN   RTWL2   DATE, 
+   IN   RTWL3   DATE,
+   IN   RTWL4   DATE, 
+   IN   TEMID   INTEGER,  
+   IN   TEMBD   CLOB,
+   IN   COMNT   NVARCHAR(1000),
+   IN   CDAYS   INTEGER
+--    OUT  ORTWID  INTEGER 
+) 
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER 
+   ---- DEFAULT SCHEMA SODLS1
+   --READS SQL DATA 
+   AS
+BEGIN
+
+    -- DECLARE COLUMN_ID INTEGER;
+    -- DECLARE QU NVARCHAR(150);
+    -- DECLARE SEQ NVARCHAR(100);
+   
+IF :RTWID = 0 THEN 
+
+     INSERT INTO INC_T_GRTWD (INCID,RTWL1,RTWL2,RTWL3,RTWL4,TEMID,TEMBD,COMNT,CDAYS,ISDEL,CRTBY,CRTDT,CRTTM)
+                                VALUES (INCID,RTWL1,RTWL2,RTWL3,RTWL4,TEMID,TEMBD,COMNT,CDAYS,'0',SESSION_USER,CURRENT_DATE,CURRENT_TIME);
+                                
+    -- SELECT '_SYS_SEQUENCE_'|| COLUMN_ID||'_#0_#' INTO SEQ FROM TABLE_COLUMNS WHERE (TABLE_NAME='INC_T_GRTWD' and Schema_name='SODLS1') AND COLUMN_NAME='RTWID';
+    -- QU :='select '||SEQ||'.CURRVAL from DUMMY';
+    -- EXECUTE IMMEDIATE QU INTO ORTWID;                      
+                                
+ELSE
+
+     UPDATE INC_T_GRTWD
+     SET RTWL1=:RTWL1,RTWL2=:RTWL2,RTWL3=:RTWL3,RTWL4=:RTWL4,TEMID=:TEMID,TEMBD=:TEMBD,COMNT=:COMNT,CDAYS=:CDAYS,
+         CHNBY=SESSION_USER,CHNDT=CURRENT_DATE,CHNTM=CURRENT_TIME
+     WHERE RTWID=:RTWID AND INCID=:INCID AND ISDEL='0';  
+       
+    --  ORTWID :=:RTWID;  
+                                
+END IF;   
+END

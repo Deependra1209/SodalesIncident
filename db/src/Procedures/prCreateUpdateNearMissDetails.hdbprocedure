@@ -1,0 +1,52 @@
+/************************************* Project : Incident ****************************************/
+/* Developer Name 			  	: Gopal Birajdar										         */
+/* Date      					: 17/08/2023	                                                 */
+/* Application Name             : Report Incident                                                */
+/* Procedure Name 				: prCreateUpdateNearMissDetails.hdbprocedure			         */
+/* Functionality                : To create and update near miss details                         */
+/*************************************************************************************************/
+
+PROCEDURE prCreateUpdateNearMissDetails ( 
+    
+    IN  NRMID	INTEGER, 		   -- Unique Id
+    IN  INCID	INTEGER, 		   -- Incident Id
+    IN  T1LB3	NVARCHAR(1000),    -- Custom Filed 1
+    IN  T1LB4	NVARCHAR(1000),    -- Custom Filed 2
+    IN  T1LB5   NVARCHAR(5000),    -- Near Miss Description
+    IN  T1LB6	NVARCHAR(5000),    -- How could the near-miss have been avoided?
+    IN  T1LB7	NVARCHAR(5000),    -- What immediate actions have been put in place to prevent recurrence?
+    IN  T1LB8	NVARCHAR(5000)    -- Custom Filed 3
+    -- OUT ONRMID  INTEGER            -- Unique Near Miss Id as Output
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   ---- DEFAULT SCHEMA SODLS1
+   --READS SQL DATA 
+   AS
+BEGIN
+
+    -- DECLARE COLUMN_ID INTEGER;
+    -- DECLARE QU NVARCHAR(150);
+    -- DECLARE SEQ NVARCHAR(100);
+    
+    IF :NRMID = 0 THEN
+    
+    INSERT INTO INC_T_NRMIS (INCID,T1LB3,T1LB4,T1LB5,T1LB6,T1LB7,T1LB8,ISDEL,CRTBY,CRTDT,CRTTM)
+                               VALUES (INCID,T1LB3,T1LB4,T1LB5,T1LB6,T1LB7,T1LB8,'0',SESSION_USER,CURRENT_DATE,CURRENT_TIME);
+    
+    -- SELECT '_SYS_SEQUENCE_'|| COLUMN_ID||'_#0_#' INTO SEQ FROM TABLE_COLUMNS WHERE (TABLE_NAME='INC_T_NRMIS' and Schema_name='SODLS1') AND COLUMN_NAME='NRMID';
+    -- QU :='select '||SEQ||'.CURRVAL from DUMMY';
+    -- EXECUTE IMMEDIATE QU INTO ONRMID;
+    
+    ELSE
+    
+    UPDATE INC_T_NRMIS 
+    SET T1LB3=:T1LB3,T1LB4=:T1LB4,T1LB5=:T1LB5,T1LB6=:T1LB6,T1LB7=:T1LB7,T1LB8=:T1LB8,
+        CHNBY=SESSION_USER,CHNDT=CURRENT_DATE,CHNTM=CURRENT_TIME
+    WHERE NRMID=:NRMID AND INCID=:INCID AND ISDEL = '0'; 
+    
+    -- ONRMID:=:NRMID;
+    
+    END IF;
+
+END

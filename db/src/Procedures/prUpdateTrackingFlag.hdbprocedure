@@ -1,0 +1,39 @@
+/************************************* Project : Incident *******************************************/
+/* Developer Name 			  	: Gopal Birajdar							                        */
+/* Date      					: 03/04/2024	                                                    */
+/* Application Name             : Mobile Application                                                */
+/* Procedure Name 				: prUpdateTrackingFlag.hdbprocedure                                 */
+/* Functionality                : To update tracking flag                                           */
+/****************************************************************************************************/
+
+PROCEDURE prUpdateTrackingFlag ( 
+    
+    IN INCID INTEGER,     -- Incident Id
+    IN TRACK SMALLINT     -- Tracking Flag ---> 1 means Tracked & 0 means Not Tracked 
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   -- DEFAULT SCHEMA SODLS1
+   --READS SQL DATA 
+   AS
+BEGIN 
+   
+   DECLARE R_Count INTEGER;
+   
+   SELECT COUNT(*) INTO  R_Count FROM INC_T_MOBTR WHERE LOWER(CRTBY) = LOWER(SESSION_USER) AND INCID =:INCID AND ISDEL = '0'; 
+   
+IF :R_Count = 0 THEN 
+
+     INSERT INTO  INC_T_MOBTR(INCID,TRACK,ISDEL,CRTBY,CRTDT,CRTTM) 
+                                 VALUES(INCID,TRACK,'0',SESSION_USER,CURRENT_DATE,CURRENT_TIME);
+                                 
+     
+ELSE 
+
+     UPDATE INC_T_MOBTR
+     SET TRACK=:TRACK
+     WHERE INCID=:INCID AND LOWER(CRTBY) = LOWER(SESSION_USER) AND ISDEL = '0'; 
+     
+END IF;      
+     
+END

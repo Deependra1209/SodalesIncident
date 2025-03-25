@@ -1,0 +1,53 @@
+/************************************* Project : Incident *******************************************/
+/* Developer Name 			  	: Deependra Pratap Singh							                */
+/* Date      					: 08/04/2024	                                                    */
+/* Application Name             : Report Incident                                                   */
+/* Procedure Name 				: prCreateUpdateAbsenceAudit.hdbprocedure                           */
+/* Functionality                : To create or update absence audit                                 */
+/****************************************************************************************************/
+PROCEDURE prCreateUpdateAbsenceAudit (
+    
+     IN  ABAID INTEGER,	           -- Unique id
+     IN  INCID INTEGER,	           -- Incident Id
+     IN  ABCL1 SMALLINT,	       -- Absence Type 
+     IN  ABCL3 DATE,	           -- Start Date
+     IN  ABCL4 DATE,	           -- End Date
+     IN  ABCL5 INTEGER,            -- TOTAL ABSENT DAYS
+     IN  ABCL6 NVARCHAR(1000)     -- Reason
+    --  OUT OABAID INTEGER            -- Out Parameter      
+)
+   LANGUAGE SQLSCRIPT 
+   SQL SECURITY INVOKER 
+   ---- DEFAULT SCHEMA SODLS1
+   --READS SQL DATA 
+   AS
+BEGIN 
+
+IF :ABAID = 0 THEN 
+
+    -- DECLARE COLUMN_ID INTEGER;
+    -- DECLARE QU NVARCHAR(150);
+    -- DECLARE SEQ NVARCHAR(100);
+    
+   --Insert Data in to Table 
+    INSERT INTO INC_T_ABSAU(INCID,ABCL1,ABCL2,ABCL3,ABCL4,ABCL5,ABCL6,ISDEL,CRTBY,CRTDT,CRTTM)
+                              VALUES (INCID,ABCL1,SESSION_USER,ABCL3,ABCL4,ABCL5,ABCL6,'0',SESSION_USER,CURRENT_DATE,CURRENT_TIME);
+    
+    /* sequence number */ 
+    -- SELECT '_SYS_SEQUENCE_'|| COLUMN_ID||'_#0_#' INTO SEQ FROM TABLE_COLUMNS WHERE (TABLE_NAME='INC_T_ABSAU' and Schema_name='SODLS1') AND COLUMN_NAME='ABAID';
+    -- QU :='select '||SEQ||'.CURRVAL from DUMMY';
+    -- EXECUTE IMMEDIATE QU INTO OABAID;                         
+            
+
+ELSE 
+    --Update Data 
+   UPDATE INC_T_ABSAU 
+   SET ABCL1 = :ABCL1,ABCL2 = SESSION_USER,ABCL3=:ABCL3,ABCL4=:ABCL4,ABCL5=:ABCL5,ABCL6=:ABCL6,
+       CHNBY=SESSION_USER,CHNDT=CURRENT_DATE,CHNTM=CURRENT_TIME
+   WHERE ABAID=:ABAID AND INCID=:INCID AND ISDEL = '0'; 
+   
+--    OABAID =:ABAID;
+
+END IF;
+   
+END

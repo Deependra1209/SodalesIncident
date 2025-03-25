@@ -1,0 +1,21 @@
+/************************************* Project : Incident *******************************************/
+/* Developer Name 			  	: Deependra Pratap Singh							                */
+/* Date      					: 03/10/2024	                                                    */
+/* Application Name             : Update Incident Sequence                                          */
+/* Procedure Name 				: prUpdateIncidentSequenceNumber                                    */
+/****************************************************************************************************/
+PROCEDURE prUpdateIncidentSequenceNumber
+(
+    IN INCID INTEGER,       -- Incident Id
+    IN SEQUN INTEGER        -- Sequence Number
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   ---- DEFAULT SCHEMA SODLS1
+   --READS SQL DATA 
+   AS
+BEGIN
+    -- Update data into incident details table
+   UPDATE INC_T_INCDT SET SEQUN = :SEQUN WHERE INCID = :INCID AND ISDEL = '0'; 
+
+END 

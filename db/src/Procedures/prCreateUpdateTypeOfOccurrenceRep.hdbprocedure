@@ -1,0 +1,38 @@
+/************************************* Project : Incident *******************************************/
+/* Developer Name 			  	: Deependra Pratap Singh							                */
+/* Date      					: 23/08/2023	                                                    */
+/* Application Name             : Report Incident                                                   */
+/* Procedure Name 				: prCreateUpdateTypeOfOccurrenceRep.hdbprocedure                    */
+/* Functionality                : To create and update type of occurrence that has been reported    */
+/****************************************************************************************************/
+
+PROCEDURE prCreateUpdateTypeOfOccurrenceRep ( 
+    
+    IN OCRID INTEGER,       -- Unique id	
+    IN WHVID INTEGER,       -- Workspace Harassment and Violence Id	
+    IN INCID INTEGER,       -- Incident Id	
+    IN T3LB4 SMALLINT,	    -- Please select the type of occurrence that has been reported	
+    IN ISDEL NVARCHAR(1)    -- IS DELETED FLAG
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   ---- DEFAULT SCHEMA SODLS1
+   --READS SQL DATA 
+   AS
+BEGIN 
+ 
+IF :OCRID = 0 THEN 
+   --Insert Data in to Table
+   INSERT INTO INC_T_OCRTP(WHVID,INCID,T3LB4,ISDEL,CRTBY,CRTDT,CRTTM,CHNBY,CHNDT,CHNTM)
+                             VALUES (WHVID,INCID,T3LB4,'0',SESSION_USER,CURRENT_DATE,CURRENT_TIME,SESSION_USER,CURRENT_DATE,CURRENT_TIME);
+  
+   
+ELSE 
+    --Update Data 
+   UPDATE INC_T_OCRTP SET ISDEL=:ISDEL,CHNBY=SESSION_USER,
+   CHNDT=CURRENT_DATE,CHNTM=CURRENT_TIME
+   WHERE OCRID=:OCRID AND INCID=:INCID AND WHVID=:WHVID; 
+   
+END IF;
+   
+END

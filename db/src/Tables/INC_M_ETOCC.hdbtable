@@ -1,0 +1,15 @@
+COLUMN TABLE INC_M_ETOCC (
+  ETCID INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START 
+WITH 1 INCREMENT BY 1) COMMENT 'Unique Id',
+  ETOCC NVARCHAR(30) COMMENT 'To/Cc values like Employee Id,Group Id or Hierarchy',
+  EFLAG INTEGER COMMENT 'Flag for Employee/Group/Hierarchy',
+  EMMID INTEGER COMMENT 'Email configuration Id/Mapping Id',
+  TOCCF INTEGER COMMENT 'To/Cc Identification Flag',
+  ISDEL NVARCHAR(1) COMMENT 'Is delete',
+  CRTBY NVARCHAR(100) COMMENT 'Created By',
+  CRTDT DATE COMMENT 'Created Date',
+  CRTTM TIME COMMENT 'Created Time',
+  CHNBY NVARCHAR(100) COMMENT 'Changed By',
+  CHNDT DATE COMMENT 'Changed Date',
+  CHNTM TIME COMMENT 'Changed Time'
+);

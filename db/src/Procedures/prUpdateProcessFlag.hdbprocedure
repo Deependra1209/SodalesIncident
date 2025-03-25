@@ -1,0 +1,26 @@
+/************************************* Project : Incident *******************************************/
+/* Developer Name 			  	: Deependra Pratap Singh    				                        */
+/* Date      					: 15/04/2024	                                                    */
+/* Application Name             : Update Process Flag                                               */
+/* Procedure Name 				: prUpdateProcessFlag.hdbprocedure                                  */
+/* Functionality                : To update process flag                                            */
+/****************************************************************************************************/
+
+PROCEDURE prUpdateProcessFlag ( 
+    
+    IN INCID INTEGER,    -- Incident Id
+    IN PRFLG SMALLINT    -- Process Flag 
+    	
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   -- DEFAULT SCHEMA SODLS1
+   --READS SQL DATA 
+   AS
+BEGIN
+   
+     UPDATE INC_T_INCDT
+     SET PRFLG=:PRFLG,CHNBY = SESSION_USER,CHNDT=CURRENT_DATE,CHNTM=CURRENT_TIME
+     WHERE INCID=:INCID AND ISDEL = '0';
+     
+END

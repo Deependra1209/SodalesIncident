@@ -1,0 +1,28 @@
+/************************************* Project : Incident *******************************************/
+/* Developer Name 			  	: Gopal Birajdar							                        */
+/* Date      					: 25/09/2023	                                                    */
+/* Application Name             : Delete passeneger                                                 */
+/* Procedure Name 				: prUpdateDeletePassenger.hdbprocedure                              */
+/* Functionality                : To delete passenger                                               */
+/****************************************************************************************************/
+
+PROCEDURE prUpdateDeletePassenger (
+    
+    IN  PASID   INTEGER,     -- Passenger Id
+    IN  MVDID   INTEGER,     -- Motor vehicle Id 
+    IN  INCID   INTEGER      -- Incident Id
+    
+    )
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   ---- DEFAULT SCHEMA SODLS1
+   --READS SQL DATA 
+   AS
+BEGIN 
+
+     -- Update data into table
+     UPDATE INC_T_PSNGR
+     SET ISDEL='1',CHNBY=SESSION_USER,CHNDT=CURRENT_DATE,CHNTM=CURRENT_TIME
+     WHERE PASID=:PASID AND MVDID=:MVDID AND INCID=:INCID AND ISDEL='0';
+     
+END

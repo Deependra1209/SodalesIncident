@@ -1,0 +1,27 @@
+/************************************* Project : Incident ****************************************/
+/* Developer Name 			  	: Deependra Pratap Singh								         */
+/* Date      					: 14/05/2024	                                                 */
+/* Application Name             : Delete GRTW                                                    */
+/* Procedure Name 				: prUpdateDeleteGRTW.hdbprocedure	        	     	         */
+/* Functionality                : To delete GRTW                                                 */
+/*************************************************************************************************/
+
+PROCEDURE prUpdateDeleteGRTW ( 
+    
+   IN RTWID INTEGER    -- RTW Id
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   ---- DEFAULT SCHEMA SODLS1
+   --READS SQL DATA 
+   AS
+BEGIN
+
+-- Update data into table 
+
+    UPDATE INC_T_GRTWD 
+    SET ISDEL=1,CHNBY=SESSION_USER,CHNDT=CURRENT_DATE,CHNTM=CURRENT_TIME
+    WHERE RTWID=:RTWID AND ISDEL='0';
+    
+ 
+END

@@ -1,0 +1,43 @@
+/************************************* Project : Incident *******************************************/
+/* Developer Name 			  	: Yash Pandia							                            */
+/* Date      					: 22/08/2023	                                                    */
+/* Application Name             : Report Incident                                                   */
+/* Procedure Name 				: prCreateUpdateRouteExposure.hdbprocedure                          */
+/* Functionality                : To create and update root of exposure                             */
+/****************************************************************************************************/
+
+PROCEDURE prCreateUpdateRouteExposure (
+    
+    IN EXRID    INTEGER,            -- UNIQUE id
+    IN EXPID	INTEGER,            -- EXPOSURE ID
+    IN INCID	INTEGER,            -- Incident Id
+    IN T1LB7	SMALLINT,	        -- ROUTE OF EXPOSER
+    IN ISDEL    NVARCHAR(1)         -- Is delete
+    
+
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   ---- DEFAULT SCHEMA SODLS1
+   --READS SQL DATA 
+   AS 
+BEGIN 
+ 
+ 
+-- Insert data into table 
+IF :EXRID = 0 THEN
+
+        INSERT INTO INC_T_EXPRT (EXPID,INCID,T1LB7,ISDEL,CRTBY,CRTDT,CRTTM)
+								   VALUES (EXPID,INCID,T1LB7,'0',SESSION_USER,CURRENT_DATE,CURRENT_TIME);
+       
+        
+ELSE
+-- Update data into table
+        UPDATE INC_T_EXPRT
+        SET  ISDEL=:ISDEL,CHNBY=SESSION_USER,CHNDT=CURRENT_DATE,CHNTM=CURRENT_TIME
+        WHERE EXRID=:EXRID AND INCID=:INCID AND EXPID=:EXPID;
+        
+END IF;
+
+
+END

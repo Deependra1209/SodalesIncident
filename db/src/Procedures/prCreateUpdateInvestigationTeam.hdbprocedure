@@ -1,0 +1,32 @@
+/************************************* Project : Incident ****************************************/
+/* Developer Name 			  	: Gopal Birajdar										         */
+/* Date      					: 10/07/2023	                                                 */
+/* Application Name             : Incident portal / investigation                                */
+/* Procedure Name 				: prCreateUpdateInvestigationTeam.hdbprocedure			         */
+/* Functionality                : To create and update investigation team                        */
+/*************************************************************************************************/
+
+PROCEDURE prCreateUpdateInvestigationTeam ( 
+    
+    IN	ITMID INTEGER,		        -- Unique Id
+    IN	INCID INTEGER,		        -- Incident id
+    IN	INVID INTEGER,	            -- Investigation id
+    IN	EMPID NVARCHAR(30)	        -- Investigator unique employee id
+  
+) 
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   ---- DEFAULT SCHEMA SODLS1
+   --READS SQL DATA 
+   AS
+BEGIN
+
+-- Insert data into table
+IF :ITMID = 0 THEN
+ 
+    INSERT INTO INC_T_INVTM (INCID,INVID,EMPID,ISDEL,CRTBY,CRTDT,CRTTM) 
+                                VALUES (INCID,INVID,EMPID,'0',SESSION_USER,CURRENT_DATE,CURRENT_TIME);
+    
+END IF;
+
+END

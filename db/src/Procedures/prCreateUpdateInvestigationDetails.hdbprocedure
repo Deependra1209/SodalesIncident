@@ -1,0 +1,54 @@
+/************************************* Project : Incident ****************************************/
+/* Developer Name 			  	: Gopal Birajdar										         */
+/* Date      					: 10/07/2023	                                                 */
+/* Application Name             : Incident portal /  investigation                               */
+/* Procedure Name 				: prCreateUpdateInvestigationDetails.hdbprocedure			     */
+/* Functionality                : To create and update investigation details                     */
+/*************************************************************************************************/
+PROCEDURE prCreateUpdateInvestigationDetails ( 
+    
+    IN  INVID   INTEGER,              -- Unique id
+	IN  INCID   INTEGER,              -- Incident Id
+	IN  T1LB1   NVARCHAR (5000),      -- Executive Summary
+	IN  T2LB1   NVARCHAR (5000),      -- Investigation Summary
+	IN  T2LB2   NVARCHAR (5000),      -- Conclusion
+	IN  RCFAC   SMALLINT             -- Root cause factor
+    -- OUT OINVID  INTEGER               -- Out parameter
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   ---- DEFAULT SCHEMA SODLS1
+   --READS SQL DATA 
+   AS
+BEGIN 
+
+    -- DECLARE COLUMN_ID INTEGER;
+    -- DECLARE QU NVARCHAR(150);
+    -- DECLARE SEQ NVARCHAR(100);
+
+-- Insert data into Investigation Table
+IF :INVID = 0 THEN
+    INSERT INTO INC_T_INVST (INCID,T1LB1,T2LB1,T2LB2,RCFAC,INVST,ISDEL,CRTBY,CRTDT,CRTTM) 
+                                VALUES (INCID,T1LB1,T2LB1,T2LB2,RCFAC,659,'0',SESSION_USER,CURRENT_DATE,CURRENT_TIME);
+    
+    -- Update Investigation Status
+    UPDATE INC_T_INCDT
+    SET INVST=956,CHNBY=SESSION_USER,CHNDT=CURRENT_DATE,CHNTM=CURRENT_TIME  
+    WHERE INCID=:INCID AND ISDEL='0'; 
+   
+     /* sequence number */ 
+    -- SELECT '_SYS_SEQUENCE_'|| COLUMN_ID||'_#0_#' INTO SEQ FROM TABLE_COLUMNS WHERE (TABLE_NAME='INC_T_INVST' and Schema_name='SODLS1') AND COLUMN_NAME='INVID';
+    --     QU :='select '||SEQ||'.CURRVAL from DUMMY';
+    --     EXECUTE IMMEDIATE QU INTO OINVID;
+    
+-- Update data into table                                 
+ELSE
+
+    UPDATE INC_T_INVST 
+    SET T1LB1=:T1LB1,T2LB1=:T2LB1,T2LB2=:T2LB2,RCFAC=:RCFAC,CHNBY=SESSION_USER,CHNDT=CURRENT_DATE,CHNTM=CURRENT_TIME 
+    WHERE INVID=:INVID AND INCID=:INCID AND ISDEL = '0';
+    
+    -- OINVID:=:INVID; 
+    
+END IF;
+END

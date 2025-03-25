@@ -1,0 +1,60 @@
+/************************************* Project : Incident *******************************************/
+/* Developer Name 			  	: Deependra Pratap Singh							                */
+/* Date      					: 23/08/2023	                                                    */
+/* Application Name             : Report Incident                                                   */
+/* Procedure Name 				: prCreateUpdatePropertyEquipmentDamage.hdbprocedure                */
+/* Functionality                : To create and update property equipment damage details            */
+/****************************************************************************************************/
+
+PROCEDURE prCreateUpdatePropertyEquipmentDamage ( 
+    
+    IN   PEDID   INTEGER,	            -- Unique id		
+    IN   INCID   INTEGER,	            -- Incident Id
+    IN   T1LB2   SMALLINT,	            -- Were There Any Previous Incidents?	
+    IN   T1LB3   SMALLINT,	            -- Are there any Safety concerns related to the damage?	
+    IN   T1LB4   NVARCHAR(1000),        -- Custom Filed 1	
+    IN   T1LB5   NVARCHAR(1000),        -- Custom Filed 2	
+    IN   T1LB6   SMALLINT,	            -- Owner Type	
+    IN   T1LB7   NVARCHAR(250),	        -- Owner Name	
+    IN   T1LB8   NVARCHAR(1000),        -- Custom Filed 3	
+    IN   T1LB9   NVARCHAR(1000),        -- Custom Filed 4	
+    IN   T1LB10  NVARCHAR(5000),   	    -- Describe previous incidents if known	
+    IN   T1LB11  NVARCHAR(5000),	    -- Describe Safety Concern
+    IN   T1LB12  NVARCHAR(5000)        -- Custom Filed 5	
+    -- OUT  OPEDID  INTEGER
+) 
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   ---- DEFAULT SCHEMA SODLS1
+   --READS SQL DATA 
+   AS 
+BEGIN 
+ 
+    -- DECLARE COLUMN_ID INTEGER;
+    -- DECLARE QU NVARCHAR(150);
+    -- DECLARE SEQ NVARCHAR(100);
+
+-- Insert data into table 
+IF :PEDID = 0 THEN
+
+        INSERT INTO INC_T_PEDMG (INCID,T1LB2,T1LB3,T1LB4,T1LB5,T1LB6,T1LB7,T1LB8,T1LB9,T1LB10,T1LB11,T1LB12,ISDEL,CRTBY,CRTDT,CRTTM)
+								   VALUES (INCID,T1LB2,T1LB3,T1LB4,T1LB5,T1LB6,T1LB7,T1LB8,T1LB9,T1LB10,T1LB11,T1LB12,'0',SESSION_USER,CURRENT_DATE,CURRENT_TIME);
+ /* sequence number */ 
+        -- SELECT '_SYS_SEQUENCE_'|| COLUMN_ID||'_#0_#' INTO SEQ FROM TABLE_COLUMNS WHERE (TABLE_NAME='INC_T_PEDMG' and Schema_name='SODLS1') AND COLUMN_NAME='PEDID';
+        -- QU :='select '||SEQ||'.CURRVAL from DUMMY';
+        -- EXECUTE IMMEDIATE QU INTO OPEDID;
+        
+        
+ELSE
+-- Update data into table
+        UPDATE INC_T_PEDMG
+        SET T1LB2=:T1LB2,T1LB3=:T1LB3,T1LB4=:T1LB4,T1LB5=:T1LB5,T1LB6=:T1LB6,T1LB7=:T1LB7,T1LB8=:T1LB8,T1LB9=:T1LB9,T1LB10=:T1LB10,T1LB11=:T1LB11,
+            T1LB12=:T1LB12,CHNBY=SESSION_USER,CHNDT=CURRENT_DATE,CHNTM=CURRENT_TIME
+        WHERE PEDID=:PEDID AND INCID=:INCID AND ISDEL='0';
+        
+        -- OPEDID:=:PEDID;
+END IF; 
+
+END
+
+

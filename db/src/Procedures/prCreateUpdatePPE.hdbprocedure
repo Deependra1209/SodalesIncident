@@ -1,0 +1,40 @@
+/************************************* Project : Incident *******************************************/
+/* Developer Name 			  	: Yash Pandia							                            */
+/* Date      					: 22/08/2023	                                                    */
+/* Application Name             : Report Incident                                                   */
+/* Procedure Name 				: prCreateUpdatePPE.hdbprocedure                                    */
+/* Functionality                : To create and update list of PPE in exposure incident             */
+/****************************************************************************************************/
+
+PROCEDURE prCreateUpdatePPE (
+    
+    IN PPEID    INTEGER,            -- UNIQUE id
+    IN EXPID	INTEGER,            -- EXPOSURE ID
+    IN INCID	INTEGER,            -- Incident Id
+    IN T1LB4	SMALLINT,	        -- List of Personal Protective Equipment (PPE) Used
+    IN ISDEL    NVARCHAR(1)         -- Is delete
+
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   ---- DEFAULT SCHEMA SODLS1 
+   --READS SQL DATA 
+   AS 
+BEGIN 
+ 
+ 
+-- Insert data into table 
+IF :PPEID = 0 THEN
+        INSERT INTO INC_T_PPEUS(EXPID,INCID,T1LB4,ISDEL,CRTBY,CRTDT,CRTTM)
+								   VALUES(EXPID,INCID,T1LB4,'0',SESSION_USER,CURRENT_DATE,CURRENT_TIME);
+       
+         
+ELSE
+-- Update data into table
+        UPDATE INC_T_PPEUS
+        SET  ISDEL=:ISDEL,CHNBY=SESSION_USER,CHNDT=CURRENT_DATE,CHNTM=CURRENT_TIME
+        WHERE PPEID=:PPEID AND INCID=:INCID AND EXPID=:EXPID AND ISDEL='0';
+        
+END IF;
+
+END

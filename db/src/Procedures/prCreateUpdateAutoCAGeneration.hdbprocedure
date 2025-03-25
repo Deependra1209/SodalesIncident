@@ -1,0 +1,46 @@
+/************************************* Project : Incident ****************************************/
+/* Developer Name 			  	: Gopal Birajdar										         */
+/* Date      					: 23/10/2024	                                                 */
+/* Application Name             : Incident portal /  Corrective Actions                          */
+/* Procedure Name 				: prCreateUpdateAutoCAGeneration.hdbprocedure			         */
+/*************************************************************************************************/
+
+PROCEDURE prCreateUpdateAutoCAGeneration (  
+    
+    IN  RCSID   INTEGER,         -- Scat Analysis Id
+    IN  INCID   INTEGER,         -- Incident Id
+    IN  RCA1ID   SMALLINT,        -- Incident Or Potential Incident Id
+    IN  RCA1PH   NVARCHAR(30),    -- Incident Or Potential Incident Path
+    IN  RCA2ID   SMALLINT,        -- Immediate Cause Id
+    IN  RCA2PH   NVARCHAR(30),    -- Immediate Cause Path
+    IN  RCA3ID   SMALLINT,        -- Root Cause Id
+    IN  RCA3PH   NVARCHAR(30),    -- Root Cause Path
+    IN  RCA4ID   SMALLINT,        -- Lack Of Management System Control Id
+    IN  RCA4PH   NVARCHAR(30)     -- Lack Of Management System Control Path 
+  
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   ---- DEFAULT SCHEMA SODLS1 
+   --READS SQL DATA 
+   AS
+BEGIN
+
+     DECLARE CA_COUNT INTEGER;
+     SELECT COUNT(*) INTO CA_COUNT FROM INC_T_CRACT WHERE ISDEL = '0' AND RCSID=:RCSID; 
+
+IF :CA_COUNT = 0 THEN  
+
+     INSERT INTO INC_T_CRACT (INCID,RCSID,RCA1ID,RCA1PH,RCA2ID,RCA2PH,RCA3ID,RCA3PH,RCA4ID,RCA4PH,CASTS,ISDEL,CRTBY,CRTDT,CRTTM) 
+                                VALUES (INCID,RCSID,RCA1ID,RCA1PH,RCA2ID,RCA2PH,RCA3ID,RCA3PH,RCA4ID,RCA4PH,655,'0',SESSION_USER,CURRENT_DATE,CURRENT_TIME);
+                             
+                                
+ELSE
+
+     UPDATE INC_T_CRACT   
+     SET RCA1ID=:RCA1ID,RCA1PH=:RCA1PH,RCA2ID=:RCA2ID,RCA2PH=:RCA2PH,RCA3ID=:RCA3ID,RCA3PH=:RCA3PH,RCA4ID=:RCA4ID,RCA4PH=:RCA4PH,
+         CHNBY=SESSION_USER,CHNDT=CURRENT_DATE,CHNTM=CURRENT_TIME 
+     WHERE RCSID=:RCSID AND ISDEL='0'; 
+    
+END IF;  
+END

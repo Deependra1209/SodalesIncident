@@ -1,0 +1,40 @@
+/************************************* Project : Incident *******************************************/
+/* Developer Name 			  	: yASH PandIA										                */
+/* Date      					: 25/08/2023	                                                    */
+/* Application Name             : Report Incident                                                   */
+/* Procedure Name 				: prCreateUpdateBodyParts.hdbprocedure			                    */
+/* Functionality                : To create or update body parts                                    */
+/****************************************************************************************************/
+
+PROCEDURE prCreateUpdateBodyParts (
+    
+    IN BDPID	INTEGER,         -- Unique id
+    IN WPIID	INTEGER,         --	WORKPLACE INJURY id
+    IN INCID	INTEGER,         --	Incident Id
+    IN BDCL1	SMALLINT,        --	Body Parts
+    IN BDCL2	SMALLINT,        --	Nature Of injury
+    IN BDCL3	SMALLINT,        --	Body Part Side
+    IN BDCL4    NVARCHAR(1000)   -- BODY PART DESCRTITON
+)
+
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   ---- DEFAULT SCHEMA SODLS1  
+   --READS SQL DATA
+   AS 
+BEGIN 
+
+IF :BDPID = 0 THEN 
+  
+     INSERT INTO INC_T_BDPRT (WPIID,INCID,BDCL1,BDCL2,BDCL3,BDCL4,ISDEL,CRTBY,CRTDT,CRTTM,CHNBY,CHNDT,CHNTM) 
+                                VALUES (WPIID,INCID,BDCL1,BDCL2,BDCL3,BDCL4,'0',SESSION_USER,CURRENT_DATE,CURRENT_TIME,SESSION_USER,CURRENT_DATE,CURRENT_TIME);
+   
+ELSE
+   
+     UPDATE INC_T_BDPRT 
+     SET BDCL1=:BDCL1,BDCL2=:BDCL2,BDCL3=:BDCL3,BDCL4=:BDCL4,CHNBY=SESSION_USER, CHNDT=CURRENT_DATE, CHNTM=CURRENT_TIME
+     WHERE BDPID=:BDPID AND INCID=:INCID AND ISDEL = '0'; 
+   
+END IF;
+  
+END

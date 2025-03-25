@@ -1,0 +1,26 @@
+/************************************* Project : Incident *******************************************/
+/* Developer Name 			  	: Gopal B							                               */
+/* Date      					: 05/02/2025	                                                   */
+/* Application Name             : Incident Portal                                                  */
+/* Procedure Name 				: prUpdateIncidentStatusToReopen                                   */
+/****************************************************************************************************/
+
+PROCEDURE prUpdateIncidentStatusToReopen (
+    
+    IN INCID INTEGER         -- Incident Id
+    
+    )
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   -- DEFAULT SCHEMA SODLS1
+   -- READS SQL DATA 
+   AS
+BEGIN
+  
+  -- Update Incident Status to reopen in INC_T_INCDT
+  
+     UPDATE INC_T_INCDT
+     SET INCST = '950',PRFLG=0,INVST = null,CHNBY=SESSION_USER,CHNDT=CURRENT_DATE,CHNTM=CURRENT_TIME
+     WHERE INCID=:INCID AND ISDEL = '0';
+     
+END

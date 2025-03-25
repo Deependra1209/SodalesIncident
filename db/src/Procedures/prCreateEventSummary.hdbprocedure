@@ -1,0 +1,36 @@
+/************************************* Project : Incident ****************************************/
+/* Developer Name 			  	: Gopal Birajdar										         */
+/* Date      					: 18/07/2023	                                                 */
+/* Application Name             : Incident                                                       */
+/* Procedure Name 				: prCreateEventSummary.hdbprocedure			                     */
+/* Functionality                : To create Event Summary.                                       */
+/*************************************************************************************************/
+  PROCEDURE prCreateEventSummary ( 
+     
+     IN  INCID	INTEGER,          -- Incident Id		
+     IN  SECTN	NVARCHAR(50),     -- Section Updated
+     IN  DETLS  NVARCHAR(100),    -- Updated Details
+     IN  EVDES	NVARCHAR(5000),   -- Event Description	
+     IN  PRFLW  INTEGER          -- Process Flow id
+   --   OUT OEVNID BIGINT            -- Out Parameter
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER 
+   ---- DEFAULT SCHEMA SODLS1 
+   --READS SQL DATA  
+   AS    
+BEGIN
+
+   --  DECLARE COLUMN_ID INTEGER;
+   --  DECLARE QU NVARCHAR(150);
+   --  DECLARE SEQ NVARCHAR(100);
+
+    INSERT INTO INC_T_EVNSM(INCID,SECTN,DETLS,EVDES,ISRED,PRFLW,ISDEL,CRTBY,CRTDT,CRTTM)
+    VALUES(INCID,SECTN,DETLS,EVDES,0,PRFLW,'0',SESSION_USER,CURRENT_DATE,CURRENT_TIME);
+   
+   --  SELECT '_SYS_SEQUENCE_'|| COLUMN_ID||'_#0_#' INTO SEQ FROM TABLE_COLUMNS WHERE (TABLE_NAME='INC_T_EVNSM' and Schema_name='SODLS1') AND COLUMN_NAME='EVNID';
+   --  QU :='select '||SEQ||'.CURRVAL from DUMMY';
+   --  EXECUTE IMMEDIATE QU INTO OEVNID; 
+      
+END
+

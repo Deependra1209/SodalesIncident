@@ -1,0 +1,55 @@
+/************************************* Project : Incident ****************************************/
+/* Developer Name 			  	: Gopal Birajdar										         */
+/* Date      					: 10/07/2023	                                                 */
+/* Application Name             : Incident portal /  investigation /scat analysis                */
+/* Procedure Name 				: prCreateUpdateRootCauseAnalysis.hdbprocedure			         */
+/*************************************************************************************************/
+
+PROCEDURE prCreateUpdateRootCauseAnalysis ( 
+    
+    IN	RCSID	 INTEGER,		     -- Unique id
+    IN	INVID	 INTEGER,		     -- Investigation id
+    IN	INCID	 INTEGER,		     -- Incident id 
+    IN  RCA1ID   SMALLINT,           -- Incident Or Potential Incident Id
+    IN  RCA1PH   NVARCHAR(30),       -- Incident Or Potential Incident Path
+    IN  RCA2ID   SMALLINT,           -- Immediate Cause Id
+    IN  RCA2PH   NVARCHAR(30),       -- Immediate Cause Path
+    IN  RCA3ID   SMALLINT,           -- Root Cause Id
+    IN  RCA3PH   NVARCHAR(30),       -- Root Cause Path
+    IN  RCA4ID   SMALLINT,           -- Lack Of Management System Control Id
+    IN  RCA4PH   NVARCHAR(30)       -- Lack Of Management System Control Path
+    -- OUT ORCSID   INTEGER             -- Out Parameter
+ 
+)  
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   ---- DEFAULT SCHEMA SODLS1
+   --READS SQL DATA 
+   AS
+BEGIN
+
+    -- DECLARE COLUMN_ID INTEGER;
+    -- DECLARE QU NVARCHAR(150);
+    -- DECLARE SEQ NVARCHAR(100); 
+
+-- Insert data into table
+IF :RCSID = 0 THEN
+    INSERT INTO INC_T_RTCAU (INVID,INCID,RCA1ID,RCA1PH,RCA2ID,RCA2PH,RCA3ID,RCA3PH,RCA4ID,RCA4PH,ISDEL,CRTBY,CRTDT,CRTTM) 
+                               VALUES (INVID,INCID,RCA1ID,RCA1PH,RCA2ID,RCA2PH,RCA3ID,RCA3PH,RCA4ID,RCA4PH,'0',SESSION_USER,CURRENT_DATE,CURRENT_TIME);
+                                
+    -- SELECT '_SYS_SEQUENCE_'|| COLUMN_ID||'_#0_#' INTO SEQ FROM TABLE_COLUMNS WHERE (TABLE_NAME='INC_T_RTCAU' and Schema_name='SODLS1') AND COLUMN_NAME='RCSID';
+    -- QU :='select '||SEQ||'.CURRVAL from DUMMY';
+    -- EXECUTE IMMEDIATE QU INTO ORCSID;                             
+    
+                               
+ELSE
+   -- Update data into table 
+    UPDATE INC_T_RTCAU 
+    SET RCA1ID=:RCA1ID,RCA1PH=:RCA1PH,RCA2ID=:RCA2ID,RCA2PH=:RCA2PH,RCA3ID=:RCA3ID,RCA3PH=:RCA3PH,RCA4ID=:RCA4ID,RCA4PH=:RCA4PH,
+        CHNBY=SESSION_USER,CHNDT=CURRENT_DATE,CHNTM=CURRENT_TIME 
+    WHERE RCSID=:RCSID AND INVID=:INVID AND INCID=:INCID; 
+    
+    -- ORCSID:=:RCSID;
+    
+END IF;
+END

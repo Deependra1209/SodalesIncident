@@ -1,0 +1,40 @@
+/************************************* Project : Incident *******************************************/
+/* Developer Name 			  	: Deependra Pratap Singh							                */
+/* Date      					: 10/05/2024	                                                    */
+/* Application Name             : Incident Poratl                                                   */
+/* Procedure Name 				: prCreateUpdateRestrictionBodyParts.hdbprocedure          */
+/* Functionality                : To create or update abstration restriction body part              */
+/****************************************************************************************************/
+
+PROCEDURE prCreateUpdateRestrictionBodyParts ( 
+    
+     IN ARBID INTEGER,	        -- Unique id
+     IN INCID INTEGER,   	    -- Incident IdId	
+     IN ABRID INTEGER,   	    -- Abstarction & Restriction  id
+     IN RSCL7 SMALLINT,   	    -- Body Part
+     IN ISDEL NVARCHAR(1)       -- Is delete
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   ---- DEFAULT SCHEMA SODLS1
+   --READS SQL DATA 
+   AS 
+BEGIN 
+
+-- Insert data into table 
+IF :ARBID = 0 THEN
+
+        INSERT INTO INC_T_ARBDP (ABRID,INCID,RSCL7,ISDEL,CRTBY,CRTDT,CRTTM)
+		                           VALUES (ABRID,INCID,RSCL7,'0',SESSION_USER,CURRENT_DATE,CURRENT_TIME);
+
+ELSE
+
+-- Update data into table
+        UPDATE INC_T_ARBDP
+        SET ISDEL=:ISDEL,CHNBY=SESSION_USER,CHNDT=CURRENT_DATE,CHNTM=CURRENT_TIME
+        WHERE ARBID=:ARBID AND INCID=:INCID AND ABRID=:ABRID;
+        
+       
+END IF; 
+
+END

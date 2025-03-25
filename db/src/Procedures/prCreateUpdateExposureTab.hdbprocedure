@@ -1,0 +1,61 @@
+/************************************* Project : Incident *******************************************/
+/* Developer Name 			  	: Yash Pandia							                            */
+/* Date      					: 22/08/2023	                                                    */
+/* Application Name             : Report Incident                                                   */
+/* Procedure Name 				: prCreateUpdateExposureTab.hdbprocedure                            */
+/* Functionality                : To create and update exposure tab details                         */
+/****************************************************************************************************/
+
+PROCEDURE prCreateUpdateExposureTab (
+    
+    IN  EXPID	INTEGER,            -- UNIQUE id
+    IN  INCID	INTEGER,            -- Incident Id
+    IN  T1LB1   SMALLINT,           -- Type of Hazardous Material
+    IN  T1LB2	SMALLINT, 		    -- Physical Form
+    IN  T1LB3	SMALLINT, 	        -- Is Personal Protective Equipment (PPE) Used
+    IN  T1LB5	NVARCHAR(1000),     -- Custom Field 1	
+    IN  T1LB6	NVARCHAR(1000),     -- Custom Field 2	
+    IN  T1LB8	SMALLINT, 		    -- Severity of Exposure
+    IN  T1LB9	SMALLINT ,		    -- Did Expose person Received the treatment?
+    IN  T1LB10	NVARCHAR(1000),     -- Custom Field 3	
+    IN  T1LB11	NVARCHAR(1000),     -- Custom Field 4
+    IN  T1LB12	NVARCHAR (5000),    -- Details of Treatment
+    IN  T1LB13	NVARCHAR(5000)     -- Custom Field 5	
+    -- OUT OEXPID  INTEGER             -- Out Parameter
+)  
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   ---- DEFAULT SCHEMA SODLS1
+   --READS SQL DATA 
+   AS 
+BEGIN 
+
+    -- DECLARE COLUMN_ID INTEGER;
+    -- DECLARE QU NVARCHAR(150);
+    -- DECLARE SEQ NVARCHAR(100);
+ 
+-- Insert data into table 
+IF :EXPID = 0 THEN
+        INSERT INTO INC_T_EXPSR (INCID,T1LB1,T1LB2,T1LB3,T1LB5,T1LB6,T1LB8,T1LB9,T1LB10,T1LB11,T1LB12,T1LB13,ISDEL,CRTBY,CRTDT,CRTTM)
+								   VALUES (INCID,T1LB1,T1LB2,T1LB3,T1LB5,T1LB6,T1LB8,T1LB9,T1LB10,T1LB11,T1LB12,T1LB13,'0',SESSION_USER,CURRENT_DATE,CURRENT_TIME);
+       
+        -- SELECT '_SYS_SEQUENCE_'|| COLUMN_ID||'_#0_#' INTO SEQ FROM TABLE_COLUMNS WHERE (TABLE_NAME='INC_T_EXPSR' and Schema_name='SODLS1') AND COLUMN_NAME='EXPID';
+        -- QU :='select '||SEQ||'.CURRVAL from DUMMY';
+        -- EXECUTE IMMEDIATE QU INTO OEXPID;
+        
+ELSE
+-- Update data into table
+        UPDATE INC_T_EXPSR
+        SET T1LB1=:T1LB1,T1LB2=:T1LB2,T1LB3=:T1LB3,T1LB5=:T1LB5,T1LB6=:T1LB6,T1LB8=:T1LB8,T1LB9=:T1LB9,T1LB10=:T1LB10,T1LB11=:T1LB11,T1LB12=:T1LB12,T1LB13=:T1LB13, 
+            CHNBY=SESSION_USER,CHNDT=CURRENT_DATE,CHNTM=CURRENT_TIME
+        WHERE EXPID=:EXPID AND INCID=:INCID AND ISDEL='0';
+        
+    --    OEXPID:=:EXPID; 
+        
+END IF;
+
+END
+
+
+
+

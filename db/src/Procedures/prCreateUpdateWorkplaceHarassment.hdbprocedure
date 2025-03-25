@@ -1,0 +1,56 @@
+/************************************* Project : Incident *******************************************/
+/* Developer Name 			  	: Deependra Pratap Singh							                */
+/* Date      					: 23/08/2023	                                                    */
+/* Application Name             : Report Incident                                                   */
+/* Procedure Name 				: prCreateUpdateWorkplaceHarassment.hdbprocedure                    */
+/* Functionality                : To create and update workplace harassment details                 */
+/****************************************************************************************************/
+
+PROCEDURE prCreateUpdateWorkplaceHarassment ( 
+    
+    IN  WHVID   INTEGER,                -- Unique id		
+    IN  INCID   INTEGER,                -- Incident Id,
+    IN  T3LB1   NVARCHAR(5000),	        -- Relationship to the complainant (i.e. Supervisor, co-worker, subordinate, etc.)
+    IN  T3LB2   SMALLINT,	            -- Has a Notice Of Occurrence (NOO) been received?		
+    IN  T3LB3   DATE,	                -- NOO received date
+    IN  T3LB6   NVARCHAR(5000),	        -- Physical harasssments description	
+    IN  T3LB8   NVARCHAR(5000),	        -- Psychological harassment description	
+    IN  T3LB10  NVARCHAR(5000),	        -- Verbal harassment description	
+    IN  T3LB11  SMALLINT,	            -- Did the complainant identify a human rights ground?	
+    IN  T3LB14  NVARCHAR(5000),         -- Other 
+    IN  T3LB15  NVARCHAR(5000)         -- Custom Field
+    -- OUT OWHVID  INTEGER                 -- OUTPUT PARAMETER
+) 
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   ---- DEFAULT SCHEMA SODLS1
+   --READS SQL DATA   
+   AS   
+BEGIN
+
+    -- DECLARE COLUMN_ID INTEGER;
+    -- DECLARE QU NVARCHAR(150);
+    -- DECLARE SEQ NVARCHAR(100);
+
+IF :WHVID = 0 THEN   
+
+   --Insert Data in to Table
+    INSERT INTO INC_T_WPHAV(INCID,T3LB1,T3LB2,T3LB3,T3LB6,T3LB8,T3LB10,T3LB11,T3LB14,T3LB15,ISDEL,CRTBY,CRTDT,CRTTM)
+                              VALUES (INCID,T3LB1,T3LB2,T3LB3,T3LB6,T3LB8,T3LB10,T3LB11,T3LB14,T3LB15,'0',SESSION_USER,CURRENT_DATE,CURRENT_TIME);
+   /* sequence number */ 
+    -- SELECT '_SYS_SEQUENCE_'|| COLUMN_ID||'_#0_#' INTO SEQ FROM TABLE_COLUMNS WHERE (TABLE_NAME='INC_T_WPHAV' and Schema_name='SODLS1') AND COLUMN_NAME='WHVID';
+    -- QU :='select '||SEQ||'.CURRVAL from DUMMY';
+    -- EXECUTE IMMEDIATE QU INTO OWHVID;
+   
+ELSE 
+    --Update Data 
+    UPDATE INC_T_WPHAV 
+    SET T3LB1=:T3LB1,T3LB2=:T3LB2,T3LB3=:T3LB3,T3LB6=:T3LB6,T3LB8=:T3LB8,T3LB10=:T3LB10,T3LB11=:T3LB11,T3LB14=:T3LB14,T3LB15=:T3LB15,
+        CHNBY=SESSION_USER,CHNDT=CURRENT_DATE,CHNTM=CURRENT_TIME
+    WHERE WHVID=:WHVID AND INCID=:INCID AND ISDEL = '0'; 
+   
+--    OWHVID:=:WHVID;
+   
+END IF; 
+   
+END

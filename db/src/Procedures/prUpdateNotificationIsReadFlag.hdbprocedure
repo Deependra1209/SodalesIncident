@@ -1,0 +1,30 @@
+/************************************* Project : Incident *******************************************/
+/* Developer Name 			  	: Gopal Birajdar							                        */
+/* Date      					: 21/02/2024	                                                    */
+/* Application Name             : Incident Portal                                                   */
+/* Procedure Name 				: prUpdateNotificationIsReadFlag.hdbprocedure                       */
+/* Functionality                : To update notification read flag                                  */
+/****************************************************************************************************/
+
+PROCEDURE prUpdateNotificationIsReadFlag (
+    
+    IN EVNID INTEGER,   -- Event Id
+    IN ISRED INTEGER    -- Is Read Flag (1 Means Readed)
+)
+   LANGUAGE SQLSCRIPT 
+   SQL SECURITY INVOKER
+   -- DEFAULT SCHEMA SODLS1
+   --READS SQL DATA 
+   AS
+BEGIN
+     IF :EVNID = 0 THEN
+     UPDATE INC_T_EVNSM
+     SET ISRED=:ISRED,CHNBY=SESSION_USER,CHNDT=CURRENT_DATE,CHNTM=CURRENT_TIME
+     WHERE ISRED = 0;
+     ELSE
+     
+     UPDATE INC_T_EVNSM
+     SET ISRED=:ISRED,CHNBY=SESSION_USER,CHNDT=CURRENT_DATE,CHNTM=CURRENT_TIME
+     WHERE EVNID=:EVNID;
+     END IF;
+END

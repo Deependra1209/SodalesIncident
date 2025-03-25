@@ -1,0 +1,29 @@
+/************************************* Project : Incident *******************************************/
+/* Developer Name 			  	: Gopal Birajdar							                        */
+/* Date      					: 25/09/2023	                                                    */
+/* Application Name             : Delete injured body parts                                         */
+/* Procedure Name 				: prUpdateDeleteInjuredBodyParts.hdbprocedure                       */
+/* Functionality                : To delete injured body part                                       */
+/****************************************************************************************************/
+
+PROCEDURE prUpdateDeleteInjuredBodyParts ( 
+    
+    IN  BDPID    INTEGER,       -- Body parts Id
+    IN  WPIID    INTEGER,       -- Workplace injured id
+    IN  INCID    INTEGER        -- Incident Id
+) 
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   ---- DEFAULT SCHEMA SODLS1
+   --READS SQL DATA 
+   AS
+BEGIN
+   
+   -- Update data into table
+   
+      UPDATE INC_T_BDPRT
+      SET ISDEL='1'
+      WHERE BDPID=:BDPID AND WPIID=:WPIID AND INCID=:INCID AND ISDEL='0';
+   
+   
+END

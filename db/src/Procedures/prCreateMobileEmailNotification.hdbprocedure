@@ -1,0 +1,30 @@
+/************************************* Project : Incident *******************************************/
+/* Developer Name 			  	: Gopal Birajdar       							                    */
+/* Date      					: 17/05/2024	                                                    */
+/* Application Name             : Report Incident                                                   */
+/* Procedure Name 				: prCreateMobileEmailNotification.hdbprocedure                      */
+/* Functionality                : To insert data for mobile email notifications.                    */
+/****************************************************************************************************/
+
+PROCEDURE prCreateMobileEmailNotification ( 
+    
+     IN MONID   INTEGER,          -- Unique Id
+     IN EMAID   INTEGER,          -- Email Notification Id
+     IN INCID   INTEGER,          -- Incident Id 
+     IN EMPID   NVARCHAR(30),     -- Employee Id  
+     IN EMPML   NVARCHAR(250),    -- Employee Email
+     IN SUBCT   NVARCHAR(500),    -- Subject
+     IN EBODY   CLOB              -- Email Body 
+) 
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   -- DEFAULT SCHEMA SODLS1 
+   --READS SQL DATA  
+   AS
+BEGIN
+
+     INSERT INTO INC_T_MOBNT(EMPID,EMAID,INCID,EMPML,SUBCT,EBODY,ISDEL,CRTBY,CRTDT,CRTTM)
+                               VALUES (EMPID,EMAID,INCID,EMPML,SUBCT,EBODY,'0',SESSION_USER,CURRENT_DATE,CURRENT_TIME); 
+                                
+                                
+END

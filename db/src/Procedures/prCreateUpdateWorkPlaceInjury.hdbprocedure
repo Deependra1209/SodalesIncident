@@ -1,0 +1,72 @@
+/************************************* Project : Incident *******************************************/
+/* Developer Name 			  	: Yash  Pandia										                */
+/* Date      					: 22/08/2023	                                                    */
+/* Application Name             : Report Incident                                                   */
+/* Procedure Name 				: prCreateUpdateWorkPlaceInjury.hdbprocedure			            */
+/* Functionality                : To create and update workplace injury details                     */
+/****************************************************************************************************/
+
+PROCEDURE prCreateUpdateWorkPlaceInjury ( 
+    
+    IN  WPIID	INTEGER,		   -- Unique id
+    IN  INCID	INTEGER,		   -- Incident Id
+    IN  IPLID   INTEGER,           -- Involved People Id
+    IN  UNQID   NVARCHAR(20),      -- Unique id
+    IN  T1LB1   SMALLINT,          -- Is recordable
+    IN  T1LB2	SMALLINT,		   -- Type of Injury / Illness
+    IN  T1LB3	NVARCHAR(1000),    -- Custom Filed 1
+    IN  T1LB4	NVARCHAR(1000),    -- Custom Filed 2
+    IN  T1LB5   SMALLINT,          -- Is Reportable 
+    IN  T1LB6	SMALLINT,		   -- Was the injured taken to a medical facility?
+    IN  T1LB7	NVARCHAR(250),	   -- Facility Name
+    IN  T1LB8	NVARCHAR(250),	   -- Doctor Name
+    IN  T1LB9	NVARCHAR(1000),    -- Custom Filed 7
+    IN  T1LB10	NVARCHAR(1000),    -- Custom Filed 8
+    IN  T1LB11	NVARCHAR(5000),	   -- Injury / Illness Description
+    IN  T1LB12	NVARCHAR(5000),    -- Custom Filed 3
+    IN  T1LB13	NVARCHAR(5000),	   -- Injured person statement
+    IN  T2LB1	NVARCHAR(1000),    -- Custom Filed 4
+    IN  T2LB2	NVARCHAR(1000),    -- Custom Filed 5
+    IN  T2LB3	SMALLINT,		   -- Any alternative duties available?
+    IN  T2LB4	SMALLINT,		   -- Any impact on work ability?
+    IN  T2LB5	SMALLINT,		   -- Alternative Duties Options
+    IN  T2LB6	NVARCHAR(5000),	   -- Describe impact on work ability
+    IN  T2LB7	NVARCHAR(5000)    -- Custom Filed 6
+    -- OUT OWPIID INTEGER             -- OUT ID
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   ---- DEFAULT SCHEMA SODLS1 
+   --READS SQL DATA
+   AS
+BEGIN
+
+    -- DECLARE COLUMN_ID INTEGER;
+    -- DECLARE QU NVARCHAR(150);
+    -- DECLARE SEQ NVARCHAR(100);
+      
+-- Insert data into table
+    IF :WPIID = 0 THEN
+    
+        INSERT INTO INC_T_WPIDT (INCID,IPLID, UNQID, T1LB1 ,T1LB2,T1LB3,T1LB4,T1LB5,T1LB6,T1LB7,T1LB8,T1LB9,T1LB10,
+                                            T1LB11,T1LB12,T1LB13,T2LB1,T2LB2,T2LB3,T2LB4,T2LB5,T2LB6,T2LB7,ISDEL,CRTBY,CRTDT,CRTTM)
+                                    VALUES (INCID,IPLID, UNQID, T1LB1 ,T1LB2,T1LB3,T1LB4,T1LB5,T1LB6,T1LB7,T1LB8,T1LB9,T1LB10,
+                                            T1LB11,T1LB12,T1LB13,T2LB1,T2LB2,T2LB3,T2LB4,T2LB5,T2LB6,T2LB7,'0',SESSION_USER,CURRENT_DATE,CURRENT_TIME);
+    
+        -- SELECT '_SYS_SEQUENCE_'|| COLUMN_ID||'_#0_#' INTO SEQ FROM TABLE_COLUMNS WHERE (TABLE_NAME='INC_T_WPIDT' and Schema_name='SODLS1') AND COLUMN_NAME='WPIID';
+        -- QU :='select '||SEQ||'.CURRVAL from DUMMY';
+        -- EXECUTE IMMEDIATE QU INTO OWPIID;
+      
+    -- Update data into table                                
+    ELSE
+        UPDATE INC_T_WPIDT 
+        SET  UNQID =:UNQID,T1LB1=:T1LB1,T1LB2=:T1LB2,T1LB3=:T1LB3,T1LB4=:T1LB4,T1LB5=:T1LB5,T1LB6=:T1LB6,T1LB7=:T1LB7,T1LB8=:T1LB8,T1LB9=:T1LB9,T1LB10=:T1LB10,
+             T1LB11=:T1LB11,T1LB12=:T1LB12,T1LB13=:T1LB13,T2LB1=:T2LB1,T2LB2=:T2LB2,T2LB3=:T2LB3,T2LB4=:T2LB4,T2LB5=:T2LB5,T2LB6=:T2LB6,T2LB7=:T2LB7,
+             CHNBY=SESSION_USER,CHNDT=CURRENT_DATE,CHNTM=CURRENT_TIME  
+        WHERE WPIID=:WPIID AND INCID=:INCID AND ISDEL='0';
+        
+        --  OWPIID:=:WPIID;
+         
+    END IF;
+
+END

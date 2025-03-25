@@ -1,0 +1,38 @@
+/************************************* Project : Incident *******************************************/
+/* Developer Name 			  	: Deependra Pratap Singh							                */
+/* Date      					: 17/08/2023	                                                    */
+/* Application Name             : Report Incident                                                   */
+/* Procedure Name 				: prCreateUpdatePotentialNearMiss.hdbprocedure                      */
+/* Functionality                : To create and update potential near miss                          */
+/****************************************************************************************************/
+
+PROCEDURE prCreateUpdatePotentialNearMiss ( 
+    
+    IN NMPID INTEGER,           -- Unique Id
+    IN INCID INTEGER,           -- Incident Id
+    IN NRMID INTEGER,           -- Near Miss Id
+    IN T1LB2 SMALLINT,          -- Potential Near Miss
+    IN ISDEL NVARCHAR(1)        -- Is delete flag
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   ---- DEFAULT SCHEMA SODLS1
+   --READS SQL DATA 
+   AS
+BEGIN
+
+IF :NMPID = 0 THEN
+    
+    INSERT INTO INC_T_NMPOT (INCID,NRMID,T1LB2,ISDEL,CRTBY,CRTDT,CRTTM)
+                               VALUES (INCID,NRMID,T1LB2,'0',SESSION_USER,CURRENT_DATE,CURRENT_TIME);
+    
+   
+ELSE
+    
+    UPDATE INC_T_NMPOT 
+    SET ISDEL=:ISDEL,CHNBY=SESSION_USER,CHNDT=CURRENT_DATE,CHNTM=CURRENT_TIME
+    WHERE NMPID=:NMPID AND INCID=:INCID AND NRMID=:NRMID;
+  
+END IF;
+
+END

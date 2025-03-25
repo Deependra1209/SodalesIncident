@@ -1,0 +1,31 @@
+/************************************* Project : Incident *******************************************/
+/* Developer Name 			  	: Deependra Pratap Singh							                */
+/* Date      					: 11/04/2024	                                                    */
+/* Application Name             : Report Incident                                                   */
+/* Procedure Name 				: prUpdateAssignTo.hdbprocedure                                     */
+/* Functionality                : To update assign to details                                       */
+/****************************************************************************************************/
+
+PROCEDURE prUpdateAssignTo (
+    
+    IN INCID INTEGER,                       -- Incident Id
+    IN INCAT NVARCHAR(30),                  -- Incident Assign to
+    IN INCAB NVARCHAR(30)                   -- Incident Assign by
+   -- IN INCAD DATE                         -- Incident Assign Date 
+
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER 
+   ---- DEFAULT SCHEMA SODLS1
+   --READS SQL DATA 
+   AS 
+BEGIN 
+ 
+    --Update Data 
+   UPDATE INC_T_INCDT 
+   SET INCAT = :INCAT,INCAB = :INCAB,INCAD = CURRENT_DATE
+   WHERE  INCID=:INCID AND ISDEL = '0'; 
+   
+
+   
+END

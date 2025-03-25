@@ -1,0 +1,24 @@
+/************************************* Project : Incident *******************************************/
+/* Developer Name 			  	: Gopal Birajdar							                        */
+/* Date      					: 18/10/2023	                                                    */
+/* Application Name             : Incident Portal                                                   */
+/* Procedure Name 				: prUpdateCompleteInvestigation.hdbprocedure                        */
+/* Functionality                : To update investigation status to complete                        */
+/****************************************************************************************************/
+
+PROCEDURE prUpdateCompleteInvestigation ( 
+    
+    IN  INCID   INTEGER      -- Incident Id
+)  
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   ---- DEFAULT SCHEMA SODLS1 
+   --READS SQL DATA 
+   AS
+BEGIN 
+     
+    -- Update Investigation Status
+     UPDATE INC_T_INCDT
+     SET INVST=957,INVCB=SESSION_USER,INVCD=CURRENT_DATE
+     WHERE INCID=:INCID AND ISDEL='0';    
+END

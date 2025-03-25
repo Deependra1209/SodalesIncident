@@ -1,0 +1,35 @@
+/************************************* Project : Incident *******************************************/
+/* Developer Name 			  	: Gopal Birajdar							                        */
+/* Date      					: 10/03/2025	                                                    */
+/* Application Name             : Incident Portal                                                   */
+/* Procedure Name 				: prUpdateDeleteRootCauseAndContributingFactors.hdbprocedure        */
+/* Functionality                : To delete data while changing Root cause and contributing factors */
+/****************************************************************************************************/
+
+PROCEDURE prUpdateDeleteRootCauseAndContributingFactors ( 
+    
+    IN INCID INTEGER  -- Incident Id
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   -- DEFAULT SCHEMA SODLS1
+   --READS SQL DATA 
+   AS
+BEGIN
+   
+   UPDATE INC_T_RTCAS
+   SET ISDEL = '1',CHNBY=SESSION_USER,CHNDT=CURRENT_DATE,CHNTM=CURRENT_TIME
+   WHERE INCID=:INCID AND ISDEL = '0';
+   
+   UPDATE INC_T_RTCAU
+   SET ISDEL = '1',CHNBY=SESSION_USER,CHNDT=CURRENT_DATE,CHNTM=CURRENT_TIME
+   WHERE INCID=:INCID AND ISDEL = '0';
+   
+   UPDATE INC_T_GRPHA
+   SET ISDEL = '1',CHNBY=SESSION_USER,CHNDT=CURRENT_DATE,CHNTM=CURRENT_TIME
+   WHERE INCID=:INCID AND ISDEL = '0';
+   
+   
+   
+   
+END

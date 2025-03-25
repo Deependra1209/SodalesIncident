@@ -1,0 +1,47 @@
+/************************************* Project : Incident *******************************************/
+/* Developer Name 			  	: Gopal Birajdar										            */
+/* Date      					: 12/10/2023	                                                    */
+/* Application Name             : Report Incident                                                   */
+/* Procedure Name 				: PrUpdateDeleteInvolvedPeopleRelatedData.hdbprocedure	            */
+/* Functionality                : To delete involved people related data                            */
+/****************************************************************************************************/
+
+PROCEDURE PrUpdateDeleteInvolvedPeopleRelatedData (
+    
+    IN INCID INTEGER,      -- Incident Id
+    IN IPLID INTEGER       -- Involved People Id
+)
+   LANGUAGE SQLSCRIPT 
+   SQL SECURITY INVOKER
+   ---- DEFAULT SCHEMA SODLS1
+   --READS SQL DATA 
+   AS
+BEGIN 
+  
+    -- Injured Party
+    UPDATE INC_T_WPIDT
+    SET ISDEL='1',CHNBY=SESSION_USER,CHNDT=CURRENT_DATE,CHNTM=CURRENT_TIME
+    WHERE INCID=:INCID AND ISDEL='0' AND IPLID=:IPLID;
+    
+
+    -- First Aider
+    UPDATE INC_T_FISAL
+    SET ISDEL='1',CHNBY=SESSION_USER,CHNDT=CURRENT_DATE,CHNTM=CURRENT_TIME
+    WHERE INCID=:INCID AND ISDEL='0' AND IPLID=:IPLID;
+    
+    -- Complainant
+    UPDATE INC_T_COAAC
+    SET ISDEL='1',CHNBY=SESSION_USER,CHNDT=CURRENT_DATE,CHNTM=CURRENT_TIME
+    WHERE INCID=:INCID AND ISDEL='0' AND COAAC=0 AND IPLID=:IPLID;
+     
+    -- Accused
+    UPDATE INC_T_COAAC
+    SET ISDEL='1',CHNBY=SESSION_USER,CHNDT=CURRENT_DATE,CHNTM=CURRENT_TIME
+    WHERE INCID=:INCID AND ISDEL='0' AND COAAC=1 AND IPLID=:IPLID;
+    
+    -- Motor Vehicle
+    UPDATE INC_T_MTVDT
+    SET ISDEL='1',CHNBY=SESSION_USER,CHNDT=CURRENT_DATE,CHNTM=CURRENT_TIME
+    WHERE INCID=:INCID AND ISDEL='0' AND IPLID=:IPLID;
+
+END

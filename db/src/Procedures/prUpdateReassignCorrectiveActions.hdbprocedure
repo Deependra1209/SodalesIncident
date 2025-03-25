@@ -1,0 +1,29 @@
+/************************************* Project : Incident *******************************************/
+/* Developer Name 			  	: Gopal Birajdar							                        */
+/* Date      					: 13/10/2023	                                                    */
+/* Application Name             : CA Portal                                                         */
+/* Procedure Name 				: prUpdateReassignCorrectiveActions.hdbprocedure                    */
+/* Functionality                : To update corrective action assign to                             */
+/****************************************************************************************************/
+
+PROCEDURE prUpdateReassignCorrectiveActions ( 
+    
+    IN  CRAID   INTEGER,         -- CA Id
+    IN  INCID   INTEGER,         -- Incident Id 
+    IN  EMPID   NVARCHAR(30),    -- Reassign Id
+    IN  CACL11  DATE             -- Due Date
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER 
+   ---- DEFAULT SCHEMA SODLS1
+   --READS SQL DATA 
+   AS
+BEGIN 
+   /*************************************
+       Write your procedure logic 
+   *************************************/
+   
+   UPDATE INC_T_CRACT
+   SET EMPID=:EMPID,CACL11=:CACL11,CHNBY=SESSION_USER,CHNDT=CURRENT_DATE,CHNTM=CURRENT_TIME
+   WHERE CRAID=:CRAID AND INCID=:INCID AND ISDEL='0';
+END

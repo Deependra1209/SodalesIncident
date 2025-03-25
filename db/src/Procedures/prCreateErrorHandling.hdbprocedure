@@ -1,0 +1,27 @@
+/************************************* Project : Product One *************************************/
+/* Developer Name 			  	: Gopal Birajdar										         */
+/* Date      					: 18/07/2023	                                                 */
+/* Application Name             : Incident Module                                                */
+/* Procedure Name 				: prCreateErrorHandling.hdbprocedure			                 */
+/* Functionality                : To Manage Errors.                                              */ 
+/*************************************************************************************************/
+PROCEDURE prCreateErrorHandling ( 
+    
+     IN	APPNM	NVARCHAR(50),	-- Application name
+     IN	SRVNM	NVARCHAR(50),	-- Service name
+     IN	PLOAD	CLOB,		    -- Payload
+     IN	ERTXT	CLOB,		    -- Error text
+     IN CLFRM   NVARCHAR(5)     -- Service Function Called From UI/DB
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER 
+--    -- DEFAULT SCHEMA SODLS1
+    --READS SQL DATA 
+AS
+BEGIN
+
+    INSERT INTO INC_T_ERLOG (APPNM,SRVNM,PLOAD,ERTXT,MDLNM,USRID,ISDEL,CRTBY,CRTDT,CRTTM,CLFRM) 
+    VALUES(APPNM,SRVNM,PLOAD,ERTXT,'Incident',SESSION_USER,'0',SESSION_USER,CURRENT_DATE,CURRENT_TIME,CLFRM);
+
+END
+

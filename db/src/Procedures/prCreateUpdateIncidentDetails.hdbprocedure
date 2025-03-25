@@ -1,0 +1,87 @@
+/************************************* Project : Incident ****************************************/
+/* Developer Name 			  	: Gopal Birajdar										         */
+/* Date      					: 10/07/2023	                                                 */
+/* Application Name             : Report Incident                                                */
+/* Procedure Name 				: prCreateUpdateIncidentDetails.hdbprocedure			         */
+/* Functionality                : To create and update incident details                          */
+/*************************************************************************************************/
+
+PROCEDURE prCreateUpdateIncidentDetails (
+
+     IN  INCID	 INTEGER,             -- Unique id		
+     IN  REBEH	 SMALLINT,            -- Are you reporting on behalf of someone else?	
+     IN  T1LB1	 DATE,                -- Date and Time Of Incident-Date		
+     IN  T1LB2	 TIME,                -- Date and Time Of Incident-Time		
+     IN  T1LB3	 DATE,                -- Date and Time of Incident Reported-Date		
+     IN  T1LB4	 TIME,                -- Date and Time of Incident Reported-Time		
+     IN  T1LB5	 SMALLINT,            -- Select Incident Location		
+     IN  T1LB8	 SMALLINT,            -- Country Of Incident		
+     IN  T1LB9	 NVARCHAR(1000),      -- Incident Location (Address)	
+     IN  T1LB13	 NVARCHAR(5000),      -- Incident Description	 
+     IN  T2LB1	 SMALLINT,            -- Incident Severity		
+     IN  T2LB2	 SMALLINT,            -- Have regulatory agencies been notified?	
+     IN  T2LB6	 SMALLINT,            -- Incident Probability		
+     IN  T2LB3	 SMALLINT,            -- Has a workers compensation claim been submitted?	
+     IN  T2LB7	 SMALLINT,            -- Were emergency services notified?	
+     IN  T2LB8	 NVARCHAR(1000),      -- Which emergency services were notified?	
+     IN  ISAVE	 NVARCHAR(1),         -- Is Saved flag? 1=Save & 0=Submitted,
+     IN  SIGN1	 NVARCHAR(100),       -- Employee Signature	
+     IN  SN1ST	 NVARCHAR(100),       -- Employee Signature Style	
+     IN  SN1DT	 DATE,                -- Employee Signature Date		
+     IN  SIGN2	 NVARCHAR(100),       -- Supervisor Signature	
+     IN  SN2ST	 NVARCHAR(100),       -- Supervisor Signature Style	
+     IN  SN2DT	 DATE,                -- Supervisor Signature Date 
+     IN  LATIT	 NVARCHAR(50),        -- Latitude	
+     IN  LONGI	 NVARCHAR(50),        -- Longitude	
+     IN  DRFNM   NVARCHAR(150),       -- Draft Name
+     IN  T1LB10  NVARCHAR(500),       -- Describe Location,
+     IN  T1LB6   NVARCHAR(1000),      -- Custom Filed 1
+     IN  T1LB7   NVARCHAR(1000),      -- Custom Filed 2
+     IN  T1LB11  NVARCHAR(1000),      -- Custom Filed 3
+     IN  T1LB12  NVARCHAR(1000),      -- Custom Filed 4
+     IN  T1LB14  NVARCHAR(5000),      -- Custom Filed 5
+     IN  T2LB4   NVARCHAR(1000),      -- Custom Filed 6
+     IN  T2LB5   NVARCHAR(1000),      -- Custom Filed 7
+     IN  T2LB9   NVARCHAR(1000),      -- Custom Filed 8
+     IN  T2LB10  NVARCHAR(1000),      -- Custom Filed 9
+     IN  INCTY   NVARCHAR(50)        -- Incident types pipe seperated used for filters
+     --OUT OINCID	 INTEGER              -- Out parameter      
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   ---- DEFAULT SCHEMA SODLS1
+   --READS SQL DATA 
+   AS 
+BEGIN
+
+   -- DECLARE COLUMN_ID INTEGER;
+    --DECLARE QU NVARCHAR(150); 
+   -- DECLARE SEQ NVARCHAR(100);
+   
+-- Insert data into table 
+IF :INCID = 0 THEN
+
+        INSERT INTO INC_T_INCDT(REBEH,T1LB1,T1LB2,T1LB3,T1LB4,T1LB5,T1LB8,T1LB9,T1LB13,T2LB1,T2LB2,T2LB6,T2LB3,T2LB7,
+                                          T2LB8,INCST,ISAVE,SIGN1,SN1ST,SN1DT,SIGN2,SN2ST,SN2DT,LATIT,LONGI,DRFNM,T1LB10,
+                                          T1LB6,T1LB7,T1LB11,T1LB12,T1LB14,T2LB4,T2LB5,T2LB9,T2LB10,PRFLG,ISDEL,INCTY,CRTBY,CRTDT,CRTTM,CHNBY,CHNDT,CHNTM)
+                                   VALUES(REBEH,T1LB1,T1LB2,T1LB3,T1LB4,T1LB5,T1LB8,T1LB9,T1LB13,T2LB1,T2LB2,T2LB6,T2LB3,T2LB7, 
+                                          T2LB8,539,ISAVE,SIGN1,SN1ST,SN1DT,SIGN2,SN2ST,SN2DT,LATIT,LONGI,DRFNM,T1LB10,T1LB6,
+                                          T1LB7,T1LB11,T1LB12,T1LB14,T2LB4,T2LB5,T2LB9,T2LB10,0,'0',INCTY,SESSION_USER,CURRENT_DATE,CURRENT_TIME,SESSION_USER,CURRENT_DATE,CURRENT_TIME);
+                                            
+      --  SELECT '_SYS_SEQUENCE_'|| COLUMN_ID||'_#0_#' INTO SEQ FROM TABLE_COLUMNS WHERE (TABLE_NAME='INC_T_INCDT' and Schema_name='SODLS1') AND COLUMN_NAME='INCID';
+      --  QU :='select '||SEQ||'.CURRVAL from DUMMY';
+       -- EXECUTE IMMEDIATE QU INTO OINCID;
+        
+ELSE  
+-- Update data into table
+        UPDATE INC_T_INCDT
+        SET REBEH=:REBEH,T1LB1=:T1LB1,T1LB2=:T1LB2,T1LB3=:T1LB3,T1LB4=:T1LB4,T1LB5=:T1LB5,T1LB8=:T1LB8,T1LB9=:T1LB9,T1LB13=:T1LB13,T2LB1=:T2LB1,
+            T2LB2=:T2LB2,T2LB6=:T2LB6,T2LB3=:T2LB3,T2LB7=:T2LB7,T2LB8=:T2LB8,ISAVE=:ISAVE,SIGN1=:SIGN1,SN1ST=:SN1ST,SN1DT=:SN1DT,
+            SIGN2=:SIGN2,SN2ST=:SN2ST,SN2DT=:SN2DT,LATIT=:LATIT,LONGI=:LONGI,DRFNM=:DRFNM,T1LB10=:T1LB10,T1LB6=:T1LB6,T1LB7=:T1LB7, 
+            T1LB11=:T1LB11,T1LB12=:T1LB12,T1LB14=:T1LB14,T2LB4=:T2LB4,T2LB5=:T2LB5,T2LB9=:T2LB9,T2LB10=:T2LB10,INCTY=:INCTY,
+            CHNBY=SESSION_USER,CHNDT=CURRENT_DATE,CHNTM=CURRENT_TIME
+        WHERE INCID=:INCID AND ISDEL='0';
+        --OINCID:=:INCID;
+END IF;
+
+END

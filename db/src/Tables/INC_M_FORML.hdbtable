@@ -1,0 +1,15 @@
+COLUMN TABLE INC_M_FORML (
+  FMLID BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1) COMMENT 'Label ID Primary Key',
+  LBVAL NVARCHAR(1000),
+  UIBIN NVARCHAR(50) COMMENT 'Dropdown valuefield name binded with ui',
+  APPNM NVARCHAR(100) COMMENT 'Application name',
+  LABTY NVARCHAR(10) COMMENT 'Label type - Success msg or label',
+  ISMAN NVARCHAR(6) COMMENT 'Is field mandatory',
+  ISDEL NVARCHAR(1) COMMENT 'Is deleted ',
+  CRTBY NVARCHAR(100) COMMENT 'Created By',
+  CRTDT DATE COMMENT 'Created Date',
+  CRTTM TIME COMMENT 'Created Time',
+  CHNBY NVARCHAR(100) COMMENT 'Changed By',
+  CHNDT DATE COMMENT 'Changed Date',
+  CHNTM TIME COMMENT 'Changed Time'
+);

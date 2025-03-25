@@ -1,0 +1,59 @@
+/************************************* Project : Incident *******************************************/
+/* Developer Name 			  	: Deependra Pratap Singh							                */
+/* Date      					: 17/08/2023	                                                    */
+/* Application Name             : Report Incident                                                   */
+/* Procedure Name 				: prCreateUpdateErgonomics.hdbprocedure                             */
+/* Functionality                : To create and update ergonomics details                           */
+/****************************************************************************************************/
+
+
+PROCEDURE prCreateUpdateErgonomics (
+    
+    IN  ERGID   INTEGER,		         --  Unique id
+    IN  INCID   INTEGER,	 	         --  Incident Id
+    IN  T1LB3	NVARCHAR(1000),          --  Custom Field 1
+    IN  T1LB4	NVARCHAR(1000),          --  Custom Field 2
+    IN  T2LB1   SMALLINT,	    	     --  Have you previously had an ergo assessment completed?
+    IN  T2LB2   SMALLINT,	    	     --  Have you completed self-assessment of your work station?
+    IN  T2LB3   SMALLINT,	    	     --  How long have you been in your current workstation?
+    IN  T2LB4   SMALLINT,	    	     --  Are you requesting an ergo assessment because you are having an issue with one of the items below: (please click one)
+    IN  T2LB5   SMALLINT,	    	     --  What type of mouse do you currently use?
+    IN  T2LB6   SMALLINT,	    	     --  What type of keyboard do you currently have?
+    IN  T3LB1   NVARCHAR(5000),  	     --  Please provide brief description on Acute-related incidents
+    IN  T3LB2   NVARCHAR(5000),	         --  Please provide brief description on Chronic-related incidents
+    IN  T3LB3	NVARCHAR(5000)          --  Custom Field 3
+    -- OUT OERGID  INTEGER                  --  output of unique id
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER 
+   ---- DEFAULT SCHEMA SODLS1
+   --READS SQL DATA 
+   AS
+BEGIN 
+
+    -- DECLARE COLUMN_ID INTEGER;
+    -- DECLARE QU NVARCHAR(150);
+    -- DECLARE SEQ NVARCHAR(100);
+    
+IF :ERGID = 0 THEN 
+   --Insert Data in to Table 
+     INSERT INTO INC_T_ERGNM(INCID,T1LB3,T1LB4,T2LB1,T2LB2,T2LB3,T2LB4,T2LB5,T2LB6,T3LB1,T3LB2,T3LB3,ISDEL,CRTBY,CRTDT,CRTTM)
+                               VALUES (INCID,T1LB3,T1LB4,T2LB1,T2LB2,T2LB3,T2LB4,T2LB5,T2LB6,T3LB1,T3LB2,T3LB3,'0',SESSION_USER,CURRENT_DATE,CURRENT_TIME);
+   /* sequence number */ 
+    --  SELECT '_SYS_SEQUENCE_'|| COLUMN_ID||'_#0_#' INTO SEQ FROM TABLE_COLUMNS WHERE (TABLE_NAME='INC_T_ERGNM' and Schema_name='SODLS1') AND COLUMN_NAME='ERGID';
+    --  QU :='select '||SEQ||'.CURRVAL from DUMMY';
+    --  EXECUTE IMMEDIATE QU INTO OERGID;
+   
+ELSE 
+    --Update Data 
+     UPDATE INC_T_ERGNM 
+     SET T1LB3=:T1LB3,T1LB4=:T1LB4,T2LB1=:T2LB1,T2LB2=:T2LB2,T2LB3=:T2LB3,T2LB4=:T2LB4,T2LB5=:T2LB5,T2LB6=:T2LB6,T3LB1=:T3LB1,T3LB2=:T3LB2,T3LB3=:T3LB3,
+         CHNBY=SESSION_USER,CHNDT=CURRENT_DATE,CHNTM=CURRENT_TIME
+     WHERE ERGID=:ERGID AND INCID=:INCID AND ISDEL = '0'; 
+   
+--    OERGID:=:ERGID;
+    
+   
+END IF;
+   
+END

@@ -1,0 +1,26 @@
+/************************************* Project : Incident *******************************************/
+/* Developer Name 			  	: Gopal Birajdar							                        */
+/* Date      					: 05/02/2025	                                                    */
+/* Application Name             : Delete Root Cause Analysis                                        */
+/* Procedure Name 				: prUpdateDeleteRootCauseAnalysis.hdbprocedure                      */
+/* Functionality                : To delete Root Cause Analysis                                     */
+/****************************************************************************************************/
+
+PROCEDURE prUpdateDeleteRootCauseAnalysis ( 
+    
+    IN RCSID INTEGER,    -- Root cause Id
+    IN INCID INTEGER     -- Incident Id
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   -- DEFAULT SCHEMA SODLS1
+   --READS SQL DATA 
+   AS
+BEGIN
+
+     UPDATE INC_T_RTCAU
+     SET ISDEL = '1',CHNBY=SESSION_USER,CHNDT=CURRENT_DATE,CHNTM=CURRENT_TIME
+     WHERE RCSID=:RCSID AND INCID=:INCID;
+     
+     
+END

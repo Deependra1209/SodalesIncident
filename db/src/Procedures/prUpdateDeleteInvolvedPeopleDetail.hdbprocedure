@@ -1,0 +1,26 @@
+/************************************* Project : Incident *******************************************/
+/* Developer Name 			  	: Gopal Birajdar							                        */
+/* Date      					: 14/09/2023	                                                    */
+/* Application Name             : Report Incident                                                   */
+/* Procedure Name 				: prDeleteInvolvedPeopleDetail.hdbprocedure                         */
+/* Functionality                : To delete incvolved people detail                                 */
+/****************************************************************************************************/
+
+PROCEDURE prUpdateDeleteInvolvedPeopleDetail ( 
+    
+ IN IPLID INTEGER,     -- Involved People id   
+ IN INCID INTEGER      -- Incident Id
+)
+   LANGUAGE SQLSCRIPT 
+   SQL SECURITY INVOKER
+   ---- DEFAULT SCHEMA SODLS1
+   --READS SQL DATA 
+   AS
+BEGIN 
+   -- Update data into table 
+   
+    UPDATE INC_T_INVPL
+    SET ISDEL=1,CHNBY=SESSION_USER,CHNDT=CURRENT_DATE,CHNTM=CURRENT_TIME
+    WHERE IPLID=:IPLID AND INCID=:INCID AND ISDEL='0';
+    
+END

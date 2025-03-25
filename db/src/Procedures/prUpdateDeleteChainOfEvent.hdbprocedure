@@ -1,0 +1,26 @@
+/************************************* Project : Incident *******************************************/
+/* Developer Name 			  	: Deependra Pratap Singh					                        */
+/* Date      					: 16/02/2024	                                                    */
+/* Application Name             : Delete Chain Of Event                                             */
+/* Procedure Name 				: prUpdateDeleteChainOfEvent.hdbprocedure                           */
+/* Functionality                : To delete chain of events                                         */
+/****************************************************************************************************/
+
+PROCEDURE prUpdateDeleteChainOfEvent ( 
+    
+    IN EIJID INTEGER,
+    IN INCID INTEGER,
+    IN PRIID INTEGER
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   ---- DEFAULT SCHEMA SODLS1 
+   --READS SQL DATA 
+   AS
+BEGIN
+ 
+     -- Update data into table
+     UPDATE INC_T_EVINJ
+     SET ISDEL='1',CHNBY=SESSION_USER,CHNDT=CURRENT_DATE,CHNTM=CURRENT_TIME
+     WHERE EIJID=:EIJID AND INCID=:INCID AND PRIID=:PRIID AND ISDEL='0';
+END

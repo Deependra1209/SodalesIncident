@@ -1,0 +1,32 @@
+/************************************* Project : Incident *******************************************/
+/* Developer Name 			  	: Gopal Birajdar										            */
+/* Date      					: 12/05/2024	                                                    */
+/* Application Name             : Incident Portal                                                   */
+/* Procedure Name 				: prCreateUpdateRTWTemplateSendToCc.hdbprocedure			        */
+/* Functionality                : To create and update RTW details send to and cc                   */
+/****************************************************************************************************/
+
+PROCEDURE prCreateUpdateRTWTemplateSendToCc ( 
+    
+     IN  RTCID     INTEGER,
+     IN  INCID     INTEGER,
+     IN  RTWID     INTEGER,
+     IN  EMPID     NVARCHAR(30), 
+     IN  TCFLG     INTEGER 
+)
+   LANGUAGE SQLSCRIPT  
+   SQL SECURITY INVOKER
+   -- DEFAULT SCHEMA SODLS1 
+   --READS SQL DATA 
+   AS
+BEGIN 
+
+IF :RTCID = 0 THEN
+ 
+       INSERT INTO INC_T_RTWTC (INCID,RTWID,EMPID,TCFLG,ISDEL,CRTBY,CRTDT,CRTTM)     
+                                   VALUES (INCID,RTWID,EMPID,TCFLG,'0',SESSION_USER,CURRENT_DATE,CURRENT_TIME);    
+                                
+                                 
+                                 
+END IF; 
+END

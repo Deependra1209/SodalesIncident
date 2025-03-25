@@ -1,0 +1,39 @@
+/************************************* Project : Incident *******************************************/
+/* Developer Name 			  	: Deependra Pratap Singh							                */
+/* Date      					: 23/08/2023	                                                    */
+/* Application Name             : Report Incident                                                   */
+/* Procedure Name 				: prCreateUpdatePleaseSelectAllThatApply.hdbprocedure               */
+/* Functionality                : To create and update all the condition that aaply in WHV tab      */
+/****************************************************************************************************/
+
+PROCEDURE prCreateUpdatePleaseSelectAllThatApply (
+    
+	IN PSAID	INTEGER,        -- Unique id
+	IN WHVID	INTEGER,        -- Workspace Harassment and Violence Id
+	IN INCID	INTEGER,        -- Incident Id
+	IN T3LB12	SMALLINT ,      -- Please select all that apply
+    IN ISDEL    NVARCHAR(1)     -- IS DELETED FLAG   
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER 
+   ---- DEFAULT SCHEMA SODLS1
+   --READS SQL DATA 
+   AS  
+BEGIN
+
+--Insert data into table 
+IF :PSAID = 0 THEN
+
+        INSERT INTO INC_T_PSAAP(WHVID,INCID,T3LB12,ISDEL,CRTBY,CRTDT,CRTTM)
+								   VALUES(WHVID,INCID,T3LB12,'0',SESSION_USER,CURRENT_DATE,CURRENT_TIME);
+        
+ELSE
+-- Update data into table
+        UPDATE INC_T_PSAAP
+        SET ISDEL=:ISDEL,CHNBY=SESSION_USER,CHNDT=CURRENT_DATE,CHNTM=CURRENT_TIME
+        WHERE PSAID=:PSAID AND  INCID=:INCID AND WHVID=:WHVID;
+
+        
+END IF;
+
+END

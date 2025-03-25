@@ -1,0 +1,37 @@
+/************************************* Project : Incident ****************************************/
+/* Developer Name 			  	: Gopal Birajdar										         */
+/* Date      					: 17/08/2023	                                                 */
+/* Application Name             : Report Incident                                                */
+/* Procedure Name 				: prCreateUpdateIncidentType.hdbprocedure			             */
+/* Functionality                : To create and update incident type                             */
+/*************************************************************************************************/
+
+PROCEDURE prCreateUpdateIncidentType (
+    
+    IN  ICTID   INTEGER,            --  Incident Type Table Unique Id
+    IN	INCID	INTEGER,            --	Incident Id
+    IN	INCTY	SMALLINT,           --	Incident Type
+    IN	ISDEL	NVARCHAR(1)         --	Is Deleted Flag (1=True/0=False)
+    
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   ---- DEFAULT SCHEMA SODLS1
+   --READS SQL DATA 
+   AS
+BEGIN
+    
+IF :ICTID = 0 THEN 
+    
+    INSERT INTO INC_T_INCTP (INCID,INCTY,ISDEL,CRTBY,CRTDT,CRTTM,CHNBY,CHNDT,CHNTM)
+    VALUES (INCID,INCTY,'0',SESSION_USER,CURRENT_DATE,CURRENT_TIME,SESSION_USER,CURRENT_DATE,CURRENT_TIME);
+    
+ELSE
+    
+    UPDATE INC_T_INCTP 
+    SET ISDEL=:ISDEL,CHNBY=SESSION_USER,CHNDT=CURRENT_DATE,CHNTM=CURRENT_TIME 
+    WHERE ICTID=:ICTID AND INCID=:INCID AND INCTY=:INCTY AND ISDEL = '0';
+    
+END IF;
+   
+END

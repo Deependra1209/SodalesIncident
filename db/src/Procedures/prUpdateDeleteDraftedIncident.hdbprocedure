@@ -1,0 +1,27 @@
+/************************************* Project : Incident ****************************************/
+/* Developer Name 			  	: Gopal Birajdar										         */
+/* Date      					: 25/09/2023	                                                 */
+/* Application Name             : Delete Drafted Incidents                                       */
+/* Procedure Name 				: prUpdateDeleteDraftedIncident.hdbprocedure			         */
+/* Functionality                : To delete drafted incident                                     */
+/*************************************************************************************************/
+
+PROCEDURE prUpdateDeleteDraftedIncident ( 
+    
+   IN INCID INTEGER    -- Incident Id 
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   ---- DEFAULT SCHEMA SODLS1
+   --READS SQL DATA 
+   AS
+BEGIN
+
+-- Update data into table 
+
+    UPDATE INC_T_INCDT 
+    SET ISDEL=1,CHNBY=SESSION_USER,CHNDT=CURRENT_DATE,CHNTM=CURRENT_TIME
+    WHERE INCID=:INCID AND ISDEL='0';
+    
+ 
+END

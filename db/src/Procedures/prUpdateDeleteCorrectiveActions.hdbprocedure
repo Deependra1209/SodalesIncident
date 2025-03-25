@@ -1,0 +1,25 @@
+/************************************* Project : Incident *******************************************/
+/* Developer Name 			  	: Gopal Birajdar							                        */
+/* Date      					: 25/09/2023	                                                    */
+/* Application Name             : Delete Corrective Action                                          */
+/* Procedure Name 				: prUpdateDeleteCorrectiveActions.hdbprocedure                      */
+/* Functionality                : To delete corrective action                                       */
+/****************************************************************************************************/
+
+PROCEDURE prUpdateDeleteCorrectiveActions ( 
+    
+    IN  CRAID   INTEGER,     -- Corrective Action   
+    IN  INCID   INTEGER      -- Incident Id
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   ---- DEFAULT SCHEMA SODLS1 
+   --READS SQL DATA 
+   AS
+BEGIN
+ 
+     -- Update data into table
+     UPDATE INC_T_CRACT
+     SET ISDEL='1',CHNBY=SESSION_USER,CHNDT=CURRENT_DATE,CHNTM=CURRENT_TIME
+     WHERE CRAID=:CRAID AND INCID=:INCID AND ISDEL='0';
+END

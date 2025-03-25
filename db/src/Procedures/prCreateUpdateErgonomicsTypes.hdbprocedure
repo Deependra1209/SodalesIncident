@@ -1,0 +1,38 @@
+/************************************* Project : Incident *******************************************/
+/* Developer Name 			  	: Deependra Pratap Singh							                */
+/* Date      					: 17/08/2023	                                                    */
+/* Application Name             : Report Incident                                                   */
+/* Procedure Name 				: prCreateUpdateErgonomicsTypes.hdbprocedure                        */
+/* Functionality                : To create and update eronomics types                              */
+/****************************************************************************************************/
+
+PROCEDURE prCreateUpdateErgonomicsTypes ( 
+    
+    IN EGTID INTEGER,	   -- Unique id
+    IN INCID INTEGER,	   -- Incident Id
+    IN ERGID INTEGER,	   -- Ergonomic  ID
+    IN T1LB1 SMALLINT,	   -- Type of Ergonomics
+    IN ISDEL NVARCHAR(1)   -- Is Deleted Flag (1=True/0=False)
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   ---- DEFAULT SCHEMA SODLS1
+   --READS SQL DATA 
+   AS  
+BEGIN 
+ 
+-- Insert data into table  
+IF :EGTID = 0 THEN
+        INSERT INTO INC_T_ERGTY(ERGID,INCID,T1LB1,ISDEL,CRTBY,CRTDT,CRTTM)
+								   VALUES(ERGID,INCID,T1LB1,'0',SESSION_USER,CURRENT_DATE,CURRENT_TIME); 
+      
+        
+ELSE
+-- Update data into table
+        UPDATE INC_T_ERGTY
+        SET ISDEL=:ISDEL,CHNBY=SESSION_USER,CHNDT=CURRENT_DATE,CHNTM=CURRENT_TIME
+        WHERE EGTID=:EGTID AND INCID=:INCID AND ERGID=:ERGID;
+        
+END IF;
+
+END

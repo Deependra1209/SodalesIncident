@@ -1,0 +1,27 @@
+/************************************* Project : Incident *******************************************/
+/* Developer Name 			  	: Gopal Birajdar							                        */
+/* Date      					: 25/09/2023	                                                    */
+/* Application Name             : Delete Property Equipment damage                                  */
+/* Procedure Name 				: prUpdateDeletePropertyEquipmentDamage.hdbprocedure                */
+/* Functionality                : To delete property equipment damage                               */
+/****************************************************************************************************/
+
+PROCEDURE prUpdateDeletePropertyEquipmentDamage ( 
+    
+    IN  PEDID   INTEGER,   -- Property-Equipment Id
+    IN  INCID   INTEGER    -- Incident Id 
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER 
+   ---- DEFAULT SCHEMA SODLS1
+   --READS SQL DATA 
+   AS
+BEGIN
+   /*************************************
+       Write your procedure logic 
+   *************************************/
+   
+   UPDATE INC_T_PEDMG
+   SET ISDEL='1',CHNBY=SESSION_USER,CHNDT=CURRENT_DATE,CHNTM=CURRENT_TIME
+   WHERE PEDID=:PEDID AND INCID=:INCID AND ISDEL='0';
+END

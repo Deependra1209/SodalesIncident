@@ -1,0 +1,41 @@
+    /************************************* Project : Incident ****************************************/
+/* Developer Name 			  	: Gopal Birajdar										         */
+/* Date      					: 10/07/2023	                                                 */
+/* Application Name             : Incident Portal                                                */
+/* Procedure Name 				: prCreateUpdateReportSignOff.hdbprocedure			             */
+/* Functionality                : To create and update report sign off details                   */
+/*************************************************************************************************/
+PROCEDURE prCreateUpdateReportSignOff (
+    
+    IN SIGID INTEGER,         -- Unique Id
+    IN INCID INTEGER,         -- Incident Id
+    IN INVID INTEGER,         -- Investigation id
+    IN T1LB1 NVARCHAR(30),    -- Employee Id
+    IN T1LB3 NVARCHAR(100),	  -- Reported siGN
+    IN T1LB4 DATE,            -- Signature Date
+    IN T1LB5 NVARCHAR(1000),  -- Sign Off notes 
+    IN SFONT NVARCHAR(50)     -- Sign Font
+
+) 
+   LANGUAGE SQLSCRIPT  
+   SQL SECURITY INVOKER 
+   -- DEFAULT SCHEMA SODLS1
+--   READS SQL DATA  
+    AS
+BEGIN
+
+-- insert into table
+IF :SIGID = 0 THEN
+
+    INSERT INTO INC_T_SIGOF (INCID,INVID,T1LB1,T1LB3,T1LB4,T1LB5,SFONT,ISDEL,CRTBY,CRTDT,CRTTM) 
+                                VALUES (INCID,INVID,T1LB1,T1LB3,T1LB4,T1LB5,SFONT,'0',SESSION_USER,CURRENT_DATE,CURRENT_TIME);
+    
+-- Update data into table                                
+ELSE 
+    UPDATE INC_T_SIGOF 
+    SET T1LB1=:T1LB1,T1LB3=:T1LB3,T1LB4=:T1LB4,T1LB5=:T1LB5,SFONT=:SFONT,CHNBY=SESSION_USER,CHNDT=CURRENT_DATE,CHNTM=CURRENT_TIME 
+    WHERE SIGID=:SIGID AND INCID=:INCID AND INVID=:INVID AND ISDEL='0'; 
+    
+END IF;
+   
+END

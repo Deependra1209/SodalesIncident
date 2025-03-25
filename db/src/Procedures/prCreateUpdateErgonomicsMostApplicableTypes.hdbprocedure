@@ -1,0 +1,40 @@
+/************************************* Project : Incident *******************************************/
+/* Developer Name 			  	: Deependra Pratap Singh							                */
+/* Date      					: 17/08/2023	                                                    */
+/* Application Name             : Report Incident                                                   */
+/* Procedure Name 				: prCreateUpdateErgonomicsMostApplicableTypes.hdbprocedure          */
+/* Functionality                : To create and update ergonomics most applicable types             */
+/****************************************************************************************************/
+
+PROCEDURE prCreateUpdateErgonomicsMostApplicableTypes (
+    
+    IN EMAID INTEGER,	        -- Unique id
+    IN INCID INTEGER,	        -- Incident Id
+    IN ERGID INTEGER,	        -- Ergonomic ID
+    IN T1LB2 SMALLINT,	        -- Please select the type of Ergonomics that is most applicable
+	IN ISDEL NVARCHAR(1)            -- Is Deleted Flag (1=True/0=False)
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   ---- DEFAULT SCHEMA SODLS1
+
+   AS  
+BEGIN  
+
+-- Insert data into table 
+IF :EMAID = 0 THEN
+        INSERT INTO INC_T_ERTMA(ERGID,INCID,T1LB2,ISDEL,CRTBY,CRTDT,CRTTM)
+								   VALUES(ERGID,INCID,T1LB2,'0',SESSION_USER,CURRENT_DATE,CURRENT_TIME);
+       
+        
+ELSE
+-- Update data into table
+        UPDATE INC_T_ERTMA
+        SET ISDEL=:ISDEL,CHNBY=SESSION_USER,CHNDT=CURRENT_DATE,CHNTM=CURRENT_TIME
+        WHERE EMAID=:EMAID AND INCID=:INCID  AND ERGID=:ERGID;
+
+END IF;
+
+END
+
+

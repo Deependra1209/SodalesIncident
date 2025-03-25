@@ -1,0 +1,60 @@
+/************************************* Project : Incident *******************************************/
+/* Developer Name 			  	: Gopal Birajdar							                        */
+/* Date      					: 17/04/2024	                                                    */
+/* Application Name             : Incident Portal                                                   */
+/* Procedure Name 				: prCreateUpdateCustomTab_1.hdbprocedure                            */
+/* Functionality                : To create and update custom tab 1                                 */
+/****************************************************************************************************/
+
+PROCEDURE prCreateUpdateCustomTab_1 (  
+    
+    IN  CTBID    INTEGER,                  -- Unique Id
+    IN  INCID    INTEGER,                  -- Incident Id
+    IN  T1LB1    SMALLINT,                 -- Custom Radio Button 1
+    IN  T1LB2    DATE,                     -- Custom Date Picker 1
+    IN  T1LB3    TIME,                     -- Custom Time Picker 1
+    IN  T1LB4    NVARCHAR(1000),           -- Custom InputBox 1
+    IN  T1LB5    SMALLINT,                 -- Custom ComboBox 1
+    IN  T1LB6    SMALLINT,                 -- Custom ComboBox 2
+    IN  T1LB7    SMALLINT,                 -- Custom Radio Button 2
+    IN  T1LB8    DATE,                     -- Custom Date Picker 2
+    IN  T1LB9    TIME,                     -- Custom Time Picker 2
+    IN  T1LB10   NVARCHAR(1000),           -- Custom InputBox 2
+    IN  T1LB11   SMALLINT,                 -- Custom ComboBox 3
+    IN  T1LB12   SMALLINT,                 -- Custom ComboBox 4
+    IN  T2LB1    SMALLINT,                 -- Custom Radio Button 3
+    IN  T2LB2    DATE,                     -- Custom Date Picker 3
+    IN  T2LB3    TIME,                     -- Custom Time Picker 3
+    IN  T2LB4    NVARCHAR(1000),           -- Custom InputBox 3
+    IN  T2LB5    SMALLINT,                 -- Custom ComboBox 5
+    IN  T2LB6    SMALLINT,                 -- Custom ComboBox 6
+    IN  T3LB1    NVARCHAR(5000),           -- Custom TextArea 1
+    IN  T3LB2    NVARCHAR(5000),           -- Custom TextArea 2
+    IN  ISAVE    INTEGER                   -- Is save
+  
+)
+   LANGUAGE SQLSCRIPT 
+   SQL SECURITY INVOKER
+   -- DEFAULT SCHEMA SODLS1
+   --READS SQL DATA 
+   AS
+BEGIN
+ 
+IF :CTBID = 0 THEN 
+   --Insert Data in to Table 
+   INSERT INTO INC_T_CTAB1(INCID,T1LB1,T1LB2,T1LB3,T1LB4,T1LB5,T1LB6,T1LB7,T1LB8,T1LB9,T1LB10,T1LB11,
+                                     T1LB12,T2LB1,T2LB2,T2LB3,T2LB4,T2LB5,T2LB6,T3LB1,T3LB2,ISAVE,ISDEL,CRTBY,CRTDT,CRTTM)
+                             VALUES (INCID,T1LB1,T1LB2,T1LB3,T1LB4,T1LB5,T1LB6,T1LB7,T1LB8,T1LB9,T1LB10,T1LB11,
+                                     T1LB12,T2LB1,T2LB2,T2LB3,T2LB4,T2LB5,T2LB6,T3LB1,T3LB2,ISAVE,'0',SESSION_USER,CURRENT_DATE,CURRENT_TIME);
+  
+ELSE 
+    --Update Data 
+   UPDATE INC_T_CTAB1 
+   SET T1LB1=:T1LB1,T1LB2=:T1LB2,T1LB3=:T1LB3,T1LB4=:T1LB4,T1LB5=:T1LB5,T1LB6=:T1LB6,T1LB7=:T1LB7,T1LB8=:T1LB8,T1LB9=:T1LB9,T1LB10=:T1LB10,
+       T1LB11=:T1LB11,T1LB12=:T1LB12,T2LB1=:T2LB1,T2LB2=:T2LB2,T2LB3=:T2LB3,T2LB4=:T2LB4,T2LB5=:T2LB5,T2LB6=:T2LB6,T3LB1=:T3LB1,T3LB2=:T3LB2,
+       ISAVE=:ISAVE,CHNBY=SESSION_USER,CHNDT=CURRENT_DATE,CHNTM=CURRENT_TIME
+   WHERE CTBID=:CTBID AND INCID=:INCID AND ISDEL = '0';  
+   
+END IF;
+
+END

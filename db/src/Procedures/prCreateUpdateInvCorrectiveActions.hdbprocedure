@@ -1,0 +1,63 @@
+/************************************* Project : Incident ****************************************/
+/* Developer Name 			  	: Gopal Birajdar										         */
+/* Date      					: 20/09/2023	                                                 */
+/* Application Name             : Incident portal /  Corrective Actions                          */
+/* Procedure Name 				: prCreateUpdateInvCorrectiveActions.hdbprocedure			     */
+/* Functionality                : To create and update corrective action - main                  */
+/*************************************************************************************************/
+
+PROCEDURE prCreateUpdateInvCorrectiveActions ( 
+    
+    IN  CRAID    INTEGER,               -- Unique Id
+    IN  INCID    INTEGER,               -- Incident Id
+    IN  EMPID    NVARCHAR(30),          -- Assign To ID
+    IN  CACL7    INTEGER,               -- CA Category
+    IN  CACL8    INTEGER,               -- Type 
+    IN  CACL11   DATE,                  -- Due Date
+    IN  CACL12   NVARCHAR(1000),        -- Notes 
+    IN  CACL13   DATE,                  -- Completion Date
+    IN  CASTS    INTEGER,               -- CA Status
+    IN  CLODT    DATE,                  -- Close Date
+    IN  RCA1ID   SMALLINT,              -- Incident Or Potential Incident Id
+    IN  RCA1PH   NVARCHAR(30),          -- Incident Or Potential Incident Path
+    IN  RCA2ID   SMALLINT,              -- Immediate Cause Id
+    IN  RCA2PH   NVARCHAR(30),          -- Immediate Cause Path
+    IN  RCA3ID   SMALLINT,              -- Root Cause Id
+    IN  RCA3PH   NVARCHAR(30),          -- Root Cause Path
+    IN  RCA4ID   SMALLINT,              -- Lack Of Management System Control Id
+    IN  RCA4PH   NVARCHAR(30)          -- Lack Of Management System Control Path
+    -- OUT OCRAID   INTEGER                -- Out parameter 
+ 
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   ---- DEFAULT SCHEMA SODLS1
+   --READS SQL DATA  
+   AS
+BEGIN 
+
+    -- DECLARE COLUMN_ID INTEGER;
+    -- DECLARE QU NVARCHAR(150);
+    -- DECLARE SEQ NVARCHAR(100); 
+
+IF :CRAID = 0 THEN 
+
+     INSERT INTO INC_T_CRACT (INCID,EMPID,CACL7,CACL8,CACL11,CACL12,CACL13,CASTS,CLODT,RCA1ID,RCA1PH,RCA2ID,
+                                        RCA2PH,RCA3ID,RCA3PH,RCA4ID,RCA4PH,ISDEL,CRTBY,CRTDT,CRTTM)
+                                VALUES (INCID,EMPID,CACL7,CACL8,CACL11,CACL12,CACL13,CASTS,CLODT,RCA1ID,RCA1PH,RCA2ID,
+                                        RCA2PH,RCA3ID,RCA3PH,RCA4ID,RCA4PH,'0',SESSION_USER,CURRENT_DATE,CURRENT_TIME);
+                                
+    -- SELECT '_SYS_SEQUENCE_'|| COLUMN_ID||'_#0_#' INTO SEQ FROM TABLE_COLUMNS WHERE (TABLE_NAME='INC_T_CRACT' and Schema_name='SODLS1') AND COLUMN_NAME='CRAID';
+    --     QU :='select '||SEQ||'.CURRVAL from DUMMY';
+    --     EXECUTE IMMEDIATE QU INTO OCRAID;
+                                
+ELSE
+
+     UPDATE INC_T_CRACT
+     SET EMPID=:EMPID,CACL7=:CACL7,CACL8=:CACL8,CACL11=:CACL11,CACL12=:CACL12,CACL13=:CACL13,CASTS=:CASTS,CLODT=:CLODT,RCA1ID=:RCA1ID,
+         RCA1PH=:RCA1PH,RCA2ID=:RCA2ID,RCA2PH=:RCA2PH,RCA3ID=:RCA3ID,RCA3PH=:RCA3PH,RCA4ID=:RCA4ID,RCA4PH=:RCA4PH,
+         CHNBY=SESSION_USER,CHNDT=CURRENT_DATE,CHNTM=CURRENT_TIME 
+     WHERE CRAID=:CRAID AND INCID=:INCID AND ISDEL='0';
+    --  OCRAID:=:CRAID;
+END IF;  
+END

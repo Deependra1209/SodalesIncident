@@ -1,0 +1,49 @@
+/************************************* Project : Incident *******************************************/
+/* Developer Name 			  	: Deependra Pratap Singh							                */
+/* Date      					: 22/08/2023	                                                    */
+/* Application Name             : Report Incident                                                   */
+/* Procedure Name 				: prCreateUpdateFireExplosionDetails.hdbprocedure			        */
+/* Functionality                : To create and update fire explosion details                       */
+/****************************************************************************************************/
+
+PROCEDURE prCreateUpdateFireExplosionDetails (  
+    
+     IN  FEPID   INTEGER,		     -- Unique id	
+     IN  INCID   INTEGER,		     -- Incident Id	
+     IN  T1LB1   SMALLINT,			 -- Fire/ Explossion Level	
+     IN  T1LB2   SMALLINT,			 -- Is the Fire Contained	
+     IN  T1LB3   NVARCHAR(100),		 -- Equipment Used To Contained The Fire	
+     IN  T1LB4   NVARCHAR(1000),     -- Custom Field 1	
+     IN  T1LB5   NVARCHAR(1000),     -- Custom Field 2	
+     IN  T1LB6   SMALLINT,			 -- Was the area evacuated?	
+     IN  T1LB7   NVARCHAR(1000),     -- Custom Field 3	
+     IN  T1LB8   NVARCHAR(1000),     -- Custom Field 4	
+     IN  T1LB9   NVARCHAR(5000),	 -- Evacuation Details	
+     IN  T1LB10  NVARCHAR(5000),     -- Measures Taken
+     IN  T1LB11  NVARCHAR(5000)      -- Custom Field 5	
+
+
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   ---- DEFAULT SCHEMA SODLS1
+   --READS SQL DATA 
+   AS
+BEGIN
+ 
+IF :FEPID = 0 THEN 
+    
+    INSERT INTO INC_T_FIREP (INCID,T1LB1,T1LB2,T1LB3,T1LB4,T1LB5,T1LB6,T1LB7,T1LB8,T1LB9,T1LB10,T1LB11,ISDEL,CRTBY,CRTDT,CRTTM)
+                               VALUES (INCID,T1LB1,T1LB2,T1LB3,T1LB4,T1LB5,T1LB6,T1LB7,T1LB8,T1LB9,T1LB10,T1LB11,'0',SESSION_USER,CURRENT_DATE,CURRENT_TIME);
+                                
+    
+ELSE
+    
+    UPDATE INC_T_FIREP 
+    SET T1LB1=:T1LB1,T1LB2=:T1LB2,T1LB3=:T1LB3,T1LB4=:T1LB4,T1LB5=:T1LB5,T1LB6=:T1LB6,T1LB7=:T1LB7,T1LB8=:T1LB8,T1LB9=:T1LB9,T1LB10=:T1LB10,T1LB11=:T1LB11,
+        CHNBY=SESSION_USER,CHNDT=CURRENT_DATE,CHNTM=CURRENT_TIME
+    WHERE INCID=:INCID AND FEPID=:FEPID AND ISDEL = '0';
+  
+END IF;
+
+END

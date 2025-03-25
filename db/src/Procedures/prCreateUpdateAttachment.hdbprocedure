@@ -1,0 +1,40 @@
+/************************************* Project : Incident *******************************************/
+/* Developer Name 			  	: Yash Pandia							                            */
+/* Date      					: 30/08/2023	                                                    */
+/* Application Name             : Report Incident                                                   */
+/* Procedure Name 				: prCreateUpdateAttachment.hdbprocedure                             */
+/* Functionality                : To insert attachments                                             */
+/****************************************************************************************************/
+
+PROCEDURE prCreateUpdateAttachment (
+    
+     IN	ATTID	BIGINT,	          -- Unique Id
+     IN	INCID	INTEGER,		  -- Incident Id
+	 IN OBJID	NVARCHAR(50),     -- Object ID
+	 IN ATTNM	NVARCHAR(250),    -- Attachment Name
+     IN FILTY   INTEGER,          -- File Type
+     IN PRIST   INTEGER,          -- Privacy Setting
+     IN DOCTY   NVARCHAR(100),    -- Document Type
+     IN UNQID   NVARCHAR(50),     -- Unique Id
+     IN PERNM   NVARCHAR(250),    -- Person Name
+     IN DESCP   NVARCHAR(1000),   -- Description,
+     IN RTWID   INTEGER           -- RTW iD
+ 
+)
+   LANGUAGE SQLSCRIPT 
+   SQL SECURITY INVOKER
+   -- DEFAULT SCHEMA SODLS1
+--   READS SQL DATA 
+AS
+BEGIN
+
+-- insert into table
+
+IF :ATTID = '0' THEN
+
+    INSERT INTO INC_T_ATACH (INCID,OBJID,ATTNM,FILTY,PRIST,DOCTY,UNQID,PERNM,DESCP,RTWID,ISDEL,CRTBY,CRTDT,CRTTM)  
+                                VALUES (INCID,OBJID,ATTNM,FILTY,PRIST,DOCTY,UNQID,PERNM,DESCP,RTWID,'0',SESSION_USER,CURRENT_DATE,CURRENT_TIME);
+                                
+END IF;                                 
+    
+END

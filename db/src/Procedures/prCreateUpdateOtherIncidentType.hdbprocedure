@@ -1,0 +1,37 @@
+/************************************* Project : Incident *******************************************/
+/* Developer Name 			  	: Deependra Pratap Singh							                */
+/* Date      					: 23/08/2023	                                                    */
+/* Application Name             : Report Incident                                                   */
+/* Procedure Name 				: prCreateUpdateOtherIncidentType.hdbprocedure                      */
+/* Functionality                : To create and update other incident type                          */
+/****************************************************************************************************/
+PROCEDURE prCreateUpdateOtherIncidentType ( 
+    
+     IN  OTHID   INTEGER,                     -- Unique id
+     IN  INCID	 INTEGER,                     -- Incident Id
+     IN  T1LB1   NVARCHAR(1000),              -- Custom Field 1	
+     IN  T1LB2   NVARCHAR(1000),              -- Custom Field 2	
+     IN  T1LB3	 NVARCHAR(5000)               -- Provide Description on Incident Type not identified in Other Sections
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   ---- DEFAULT SCHEMA SODLS1
+   --READS SQL DATA 
+   AS 
+BEGIN
+
+
+-- Insert data into table 
+IF :OTHID = 0 THEN
+        INSERT INTO INC_T_OTHER(INCID,T1LB1,T1LB2,T1LB3,ISDEL,CRTBY,CRTDT,CRTTM)
+								   VALUES(INCID,T1LB1,T1LB2,T1LB3,'0',SESSION_USER,CURRENT_DATE,CURRENT_TIME);
+        
+ELSE
+-- Update data into table
+        UPDATE INC_T_OTHER
+        SET T1LB1=:T1LB1,T1LB2=:T1LB2,T1LB3=:T1LB3,CHNBY=SESSION_USER,CHNDT=CURRENT_DATE,CHNTM=CURRENT_TIME
+        WHERE OTHID=:OTHID AND INCID=:INCID AND ISDEL='0'; 
+        
+END IF;
+
+END

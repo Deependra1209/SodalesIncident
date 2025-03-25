@@ -1,0 +1,70 @@
+/************************************* Project : Incident *******************************************/
+/* Developer Name 			  	: Yash Pandia										                */
+/* Date      					: 23/08/2023	                                                    */
+/* Application Name             : Report Incident                                                   */
+/* Procedure Name 				: prCreateUpdateEnvironmentalDetails.hdbprocedure			        */
+/* Functionality                : To create and update environmental details                        */
+/****************************************************************************************************/
+
+PROCEDURE prCreateUpdateEnvironmentalDetails (
+    
+
+    IN	ENVID	INTEGER,            -- Unique id	
+    IN	INCID	INTEGER,            -- Incident Id	
+    IN	T1LB1	SMALLINT,           -- Pollution/Release location	
+    IN	T1LB3	INTEGER	,           -- Type of substance released or spilled
+    IN	T1LB4	NVARCHAR(5000),     -- Commercial name of substance	
+    IN	T1LB5	NVARCHAR(20),       -- Estimated quantity of substance released	
+    IN	T1LB6	NVARCHAR(50),       -- Unit of measurement	
+    IN  T1LB7	NVARCHAR(1000),     -- Custom Field 1	
+    IN  T1LB8	NVARCHAR(1000),     -- Custom Field 2
+    IN	T1LB9	DATE,               -- Start date of the Release/Spill 	
+    IN	T1LB10	TIME,               -- Start time of the Release/Spill 	
+    IN	T1LB11	DATE,               -- End dateof Release/Spill 	
+    IN	T1LB12	TIME,               -- End time of Release/Spill 
+    IN	T1LB13	INTEGER,            -- Is the concentration known
+    IN  T1LB14	NVARCHAR(50),	    -- Concentration'
+    IN	T1LB15	SMALLINT,           -- Was the Release/Spill contained?
+    IN  T1LB17	NVARCHAR(1000),     -- Custom Field 3	
+    IN  T1LB18	NVARCHAR(1000),     -- Custom Field 4
+    IN  T1LB19	NVARCHAR(5000),     -- Other Substance Details,
+    IN  T1LB20	NVARCHAR(5000),     -- Custom Field 5
+    IN  T1LB21	NVARCHAR(5000)	    -- Environmrental Impact Description
+    -- OUT OENVID INTEGER              -- Unique Environment id as output	
+    
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   ---- DEFAULT SCHEMA SODLS1
+   --READS SQL DATA 
+   AS
+BEGIN
+
+    -- DECLARE COLUMN_ID INTEGER;
+    -- DECLARE QU NVARCHAR(150);
+    -- DECLARE SEQ NVARCHAR(100);
+
+   IF :ENVID = 0 THEN 
+   
+   INSERT INTO INC_T_ENVMT (INCID,T1LB1,T1LB3,T1LB4,T1LB5,T1LB6,T1LB7,T1LB8,T1LB9,T1LB10,T1LB11,T1LB12,T1LB13,T1LB14,
+                                      T1LB15,T1LB17,T1LB18,T1LB19,T1LB20,T1LB21,ISDEL,CRTBY,CRTDT,CRTTM,CHNBY,CHNDT,CHNTM)
+                              VALUES (INCID, T1LB1,T1LB3,T1LB4,T1LB5,T1LB6,T1LB7,T1LB8,T1LB9,T1LB10,T1LB11,T1LB12,T1LB13,T1LB14,
+                                      T1LB15,T1LB17,T1LB18,T1LB19,T1LB20,T1LB21,'0',SESSION_USER,CURRENT_DATE,CURRENT_TIME,SESSION_USER,CURRENT_DATE,CURRENT_TIME);
+   
+--    SELECT '_SYS_SEQUENCE_'|| COLUMN_ID||'_#0_#' INTO SEQ FROM TABLE_COLUMNS WHERE (TABLE_NAME='INC_T_ENVMT' and Schema_name='SODLS1') AND COLUMN_NAME='ENVID';
+--         QU :='select '||SEQ||'.CURRVAL from DUMMY';
+--         EXECUTE IMMEDIATE QU INTO OENVID;
+   
+   ELSE
+   
+   UPDATE INC_T_ENVMT 
+   SET T1LB1=:T1LB1,T1LB3=:T1LB3,T1LB4=:T1LB4,T1LB5=:T1LB5,T1LB6=:T1LB6,T1LB7=:T1LB7,T1LB8=:T1LB8,T1LB9=:T1LB9,T1LB10=:T1LB10,T1LB11=:T1LB11,
+       T1LB12=:T1LB12,T1LB13=:T1LB13,T1LB14=:T1LB14,T1LB15=:T1LB15,T1LB17=:T1LB17,T1LB18=:T1LB18,T1LB19=:T1LB19,T1LB20=:T1LB20,T1LB21=:T1LB21,
+       CHNBY=SESSION_USER,CHNDT=CURRENT_DATE,CHNTM=CURRENT_TIME
+   WHERE ENVID=:ENVID AND INCID=:INCID AND ISDEL = '0'; 
+   
+--    OENVID:=:ENVID;
+   
+   END IF;
+   
+END

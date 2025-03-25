@@ -1,0 +1,38 @@
+/************************************* Project : Incident *******************************************/
+/* Developer Name 			  	: Yash Pandia							                            */
+/* Date      					: 23/08/2023	                                                    */
+/* Application Name             : Report Incident                                                   */
+/* Procedure Name 				: prCreateUpdateEnvImpact.hdbprocedure                              */
+/* Functionality                : To create and update environmental impact                         */
+/****************************************************************************************************/
+
+PROCEDURE prCreateUpdateEnvImpact ( 
+    
+    IN EIMID  INTEGER,            -- Primary Key of the Table
+    IN ENVID  INTEGER,            -- Environmrent Injury Details Table Primary Key
+    IN INCID  INTEGER,            -- Incident Details Table Primary Key
+    IN T1LB16 SMALLINT,           -- Environment Impact Master ID
+    IN ISDEL  NVARCHAR(1)         -- Is Deleted Flag
+    
+)
+   LANGUAGE SQLSCRIPT 
+   SQL SECURITY INVOKER
+   ---- DEFAULT SCHEMA SODLS1
+   --READS SQL DATA
+   AS
+BEGIN
+   
+   IF :EIMID = 0 THEN 
+   
+   INSERT INTO INC_T_ENVIP (ENVID,INCID,T1LB16,ISDEL,CRTBY,CRTDT,CRTTM)
+                              VALUES (ENVID,INCID,T1LB16,'0',SESSION_USER,CURRENT_DATE,CURRENT_TIME);
+   
+   ELSE
+   
+   UPDATE INC_T_ENVIP 
+   SET ISDEL=:ISDEL,CHNBY=SESSION_USER,CHNDT=CURRENT_DATE,CHNTM=CURRENT_TIME
+   WHERE EIMID=:EIMID AND ENVID=:ENVID AND INCID=:INCID AND ISDEL = '0';
+   
+   END IF;
+   
+END

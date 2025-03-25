@@ -1,0 +1,26 @@
+COLUMN TABLE INC_T_PRINV (
+  PRIID INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START 
+WITH 1 INCREMENT BY 1) COMMENT 'Unique id',
+  INCID INTEGER COMMENT 'Incident id',
+  PICOM INTEGER COMMENT 'Review Completion Flag',
+  T1LB1 SMALLINT COMMENT 'Is this a multi-casualty incident event?',
+  T1LB3 NVARCHAR(100) COMMENT 'General Location at Time of Injury',
+  T1LB4 NVARCHAR(100) COMMENT 'General Conditions at Time of Injury',
+  T1LB5 SMALLINT COMMENT 'Known hazard',
+  T1LB6 NVARCHAR(100) COMMENT 'Known hazard description',
+  T1LB7 NVARCHAR(100) COMMENT 'Injury due to equipment/machine',
+  T1LB8 SMALLINT COMMENT 'Incident level',
+  T3LB1 NVARCHAR(5000) COMMENT 'Staff Statement',
+  T3LB2 NVARCHAR(5000) COMMENT 'Witness Statement',
+  T3LB3 NVARCHAR(5000) COMMENT 'Sketch',
+  T3LB4 NVARCHAR(5000) COMMENT 'Pre-Investigation Notes',
+  ISDEL NVARCHAR(1) COMMENT 'Is Deleted Flag (1=True/0=False)',
+  CRTBY NVARCHAR(100) COMMENT 'Created By',
+  CRTDT DATE COMMENT 'Created Date',
+  CRTTM TIME COMMENT 'Created Time',
+  CHNBY NVARCHAR(100) COMMENT 'Changed By',
+  CHNDT DATE COMMENT 'Changed Date',
+  CHNTM TIME COMMENT 'Changed Time',
+  ISLEG NVARCHAR(1) COMMENT 'Is Legacy Record',
+  SR_NO NVARCHAR(50) COMMENT 'Legacy Claim Id'
+);

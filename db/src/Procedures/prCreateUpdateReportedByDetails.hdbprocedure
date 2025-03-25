@@ -1,0 +1,51 @@
+/************************************* Project : Incident ****************************************/
+/* Developer Name 			  	: Gopal Birajdar										         */
+/* Date      					: 17/08/2023	                                                 */
+/* Application Name             : Report Incident                                                */
+/* Procedure Name 				: prCreateUpdateReportedByDetails.hdbprocedure			         */
+/* Functionality                : To create and update reported by details                       */
+/*************************************************************************************************/
+PROCEDURE prCreateUpdateReportedByDetails ( 
+
+     IN  REPID	INTEGER,           -- Unique id		
+     IN  INCID	INTEGER,           -- Incident id 		
+     IN  RPLB1	NVARCHAR(250),     -- Reported By Name	 
+     IN  RPLB2	NVARCHAR(30),      -- Reported By Employee Id
+     IN  RPLB3	NVARCHAR(250),     -- Email Address	
+     IN  RPLB4	NVARCHAR(1000),    -- Custom Field 1
+     IN  RPLB5	NVARCHAR(1000),    -- Custom Field 2
+     IN  RPLB6	NVARCHAR(1000),    -- Custom Field 5
+     IN  RPLB7	NVARCHAR(1000),    -- Custom Field 6
+     IN  RPLB8	NVARCHAR(100),     -- Position	
+     IN  RPLB9	NVARCHAR(100),     -- Department
+     IN  MGRID	NVARCHAR(100),      -- Manager Id	
+     IN  RPLB10 NVARCHAR(250),     -- Manager Name
+     IN  RPLB11	NVARCHAR(1000),    -- Custom Field 3
+     IN  RPLB12	NVARCHAR(1000),    -- Custom Field 4
+     IN  RPLB13	NVARCHAR(1000),    -- Custom Field 7
+     IN  RPLB14	NVARCHAR(1000)    -- Custom Field 8	
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   ---- DEFAULT SCHEMA SODLS1
+   --READS SQL DATA 
+   AS
+BEGIN
+
+IF :REPID = 0 THEN 
+  
+    INSERT INTO INC_T_REPBY(INCID,RPLB1,RPLB2,RPLB3,RPLB4,RPLB5,RPLB6,RPLB7,RPLB8,RPLB9,RPLB10,RPLB11,RPLB12,
+                                       RPLB13,RPLB14,MGRID,ISDEL,CRTBY,CRTDT,CRTTM)
+                                VALUES(INCID,RPLB1,RPLB2,RPLB3,RPLB4,RPLB5,RPLB6,RPLB7,RPLB8,RPLB9,RPLB10,RPLB11,RPLB12,
+                                       RPLB13,RPLB14,MGRID,'0',SESSION_USER,CURRENT_DATE,CURRENT_TIME);
+                               
+ELSE
+
+    UPDATE INC_T_REPBY
+    SET RPLB1=:RPLB1,RPLB2=:RPLB2,RPLB3=:RPLB3,RPLB4=:RPLB4,RPLB5=:RPLB5,RPLB6=:RPLB6,RPLB7=:RPLB7,RPLB8=:RPLB8,
+        RPLB9=:RPLB9,RPLB10=:RPLB10,RPLB11=:RPLB11,RPLB12=:RPLB12,RPLB13=:RPLB13,RPLB14=:RPLB14,MGRID=:MGRID
+    WHERE INCID=:INCID AND REPID=:REPID AND ISDEL='0';
+  
+END IF; 
+
+END

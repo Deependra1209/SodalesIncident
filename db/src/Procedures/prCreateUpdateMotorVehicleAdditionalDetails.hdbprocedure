@@ -1,0 +1,54 @@
+/************************************* Project : Incident ****************************************/
+/* Developer Name 			  	: Gopal Birajdar										         */
+/* Date      					: 06/09/2023	                                                 */
+/* Application Name             : Report Incident                                                */
+/* Procedure Name 				: prCreateUpdateMotorVehicleAdditionalDetails.hdbprocedure		 */
+/* Functionality                : To create and update motor/vehicle incident additional details */
+/*************************************************************************************************/
+
+PROCEDURE prCreateUpdateMotorVehicleAdditionalDetails ( 
+    
+    IN  MVAID	INTEGER,         -- Unique id		
+    IN  INCID	INTEGER,         -- Incident Id		
+    IN  T4LB1	SMALLINT,        -- Weather Condition		 
+    IN  T4LB2	NVARCHAR(100),   -- Wind in KM	 
+    IN  T4LB3	NVARCHAR(100),   -- Temperature In Celcius
+    IN  T4LB4	SMALLINT,        -- Light Condition	
+    IN  T4LB5	NVARCHAR(1000),  -- Custom Field 1
+    IN  T4LB6	NVARCHAR(1000),  -- Custom Field 2	
+    IN  T4LB7	SMALLINT,        -- Road Type		
+    IN  T4LB8	SMALLINT,        -- Road Surface		
+    IN  T4LB9	SMALLINT,        -- Road Condition	
+    IN  RDMAP   CLOB,            -- Road map image
+    IN  T4LB10	NVARCHAR(1000),  -- Custom Field 3	 
+    IN  T4LB11	NVARCHAR(1000),  -- Custom Field 4	
+    IN  T5LB1	NVARCHAR(5000),  -- Description of Incident/Collision	
+    IN  T5LB2	NVARCHAR(5000),  -- What was the cause of Incident/Collision?
+    IN  T5LB3	NVARCHAR(5000),  -- What could you have reasonably done to prevent this Incident/Collision?	
+    IN  T5LB4	NVARCHAR(5000),  -- What else could be done to prevent similar Incident/Collision in the future?
+    IN  T5LB5	NVARCHAR(5000)   -- Custom Field 5	
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   ---- DEFAULT SCHEMA SODLS1
+  -- READS SQL DATA 
+  AS
+BEGIN
+   /*************************************
+       Write your procedure logic 
+   *************************************/
+   
+IF :MVAID = 0 THEN
+ 
+          INSERT INTO INC_T_MVADT (INCID,T4LB1,T4LB2,T4LB3,T4LB4,T4LB5,T4LB6,T4LB7,T4LB8,T4LB9,RDMAP,T4LB10,T4LB11,T5LB1,T5LB2,T5LB3,T5LB4,T5LB5,ISDEL,CRTBY,CRTDT,CRTTM)
+                                      VALUES (INCID,T4LB1,T4LB2,T4LB3,T4LB4,T4LB5,T4LB6,T4LB7,T4LB8,T4LB9,RDMAP,T4LB10,T4LB11,T5LB1,T5LB2,T5LB3,T5LB4,T5LB5,'0',SESSION_USER,CURRENT_DATE,CURRENT_TIME);
+                                
+ELSE
+          UPDATE INC_T_MVADT
+          SET T4LB1=:T4LB1,T4LB2=:T4LB2,T4LB3=:T4LB3,T4LB4=:T4LB4,T4LB5=:T4LB5,T4LB6=:T4LB6,T4LB7=:T4LB7,T4LB8=:T4LB8,T4LB9=:T4LB9,RDMAP=:RDMAP,T4LB10=:T4LB10,T4LB11=:T4LB11,
+              T5LB1=:T5LB1,T5LB2=:T5LB2,T5LB3=:T5LB3,T5LB4=:T5LB4,T5LB5=:T5LB5,CHNBY=SESSION_USER,CHNDT=CURRENT_DATE,CHNTM=CURRENT_TIME
+          WHERE MVAID=:MVAID AND INCID=:INCID AND ISDEL='0';
+            
+END IF;          
+     
+END

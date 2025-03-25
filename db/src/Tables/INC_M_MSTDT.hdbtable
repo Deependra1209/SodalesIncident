@@ -1,0 +1,24 @@
+COLUMN TABLE INC_M_MSTDT (
+  MSTID INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START 
+WITH 1 INCREMENT BY 1) COMMENT 'Master Data Table Primary Key',
+  UNQID INTEGER COMMENT 'Unique Mater Data ID',
+  TYVAL NVARCHAR(50) COMMENT 'Master Data Type Value',
+  TXVAL NVARCHAR(1000) COMMENT 'Master Data Text Value',
+  COLID INTEGER COMMENT 'Column Id',
+  TXDES NVARCHAR(5000) COMMENT 'Master Data Text Description',
+  MODTY NVARCHAR(100) COMMENT 'Module Type',
+  ISDBL INTEGER COMMENT 'Is Deleteble Flag',
+  ISEDT INTEGER COMMENT 'Is Editable Flag',
+  ISADD INTEGER COMMENT 'Is Addable Flag',
+  ISEMP NVARCHAR(1) COMMENT 'Flag for Employee Role Visibility',
+  ISSFT NVARCHAR(1) COMMENT 'Flag for Safety Officer Role Visibility',
+  ISMGR NVARCHAR(1) COMMENT 'Flag for Manager Role Visibility',
+  ISDEL NVARCHAR(1) COMMENT 'Is Deleted Flag (1=True/0=False)',
+  CRTBY NVARCHAR(100) COMMENT 'Created By ',
+  CRTDT DATE COMMENT 'Created Date',
+  CRTTM TIME COMMENT 'Created Time',
+  CHNBY NVARCHAR(100) COMMENT 'Changed By',
+  CHNDT DATE COMMENT 'Changed Date',
+  CHNTM TIME COMMENT 'Changed Time',
+  INCTY INTEGER COMMENT 'Incident Type Id'
+);

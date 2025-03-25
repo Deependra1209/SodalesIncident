@@ -1,0 +1,23 @@
+/************************************* Project : Incident *******************************************/
+/* Developer Name 			  	: Gopal Birajdar							                        */
+/* Date      					: 06/10/2023	                                                    */
+/* Application Name             : Update Incident Number                                            */
+/* Procedure Name 				: prUpdateIncidentNumber.hdbprocedure                               */
+/* Functionality                : To update incident number                                         */
+/****************************************************************************************************/
+PROCEDURE prUpdateIncidentNumber (
+    
+    IN INCID INTEGER,      -- Incident Id
+    IN INCNM NVARCHAR(50)  -- Incident Number
+    
+    )
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   ---- DEFAULT SCHEMA SODLS1
+   --READS SQL DATA 
+   AS
+BEGIN
+   -- Update data into incident details table
+   UPDATE INC_T_INCDT SET INCNM = :INCNM WHERE INCID = :INCID AND ISDEL = '0';
+   
+END

@@ -1,0 +1,54 @@
+/************************************* Project : Incident *******************************************/
+/* Developer Name 			  	: Gopal Birajdar										            */
+/* Date      					: 12/10/2023	                                                    */
+/* Application Name             : Report Incident                                                   */
+/* Procedure Name 				: PrDeleteInvolvedPersonType.hdbprocedure			                */
+/* Functionality                : To delete involved person type                                    */
+/****************************************************************************************************/
+
+PROCEDURE PrDeleteInvolvedPersonType (
+    
+    IN INCID INTEGER,      -- Incident Id
+    IN PPLB6 INTEGER,      -- Involved People Person Type
+    IN IPLID INTEGER       -- Involved People Id
+)
+   LANGUAGE SQLSCRIPT 
+   SQL SECURITY INVOKER
+   ---- DEFAULT SCHEMA SODLS1
+   --READS SQL DATA 
+   AS
+BEGIN  
+  
+IF :PPLB6 = 617 THEN 
+    -- Injured Party
+    UPDATE INC_T_WPIDT
+    SET ISDEL='1',CHNBY=SESSION_USER,CHNDT=CURRENT_DATE,CHNTM=CURRENT_TIME
+    WHERE INCID=:INCID AND ISDEL='0' AND IPLID=:IPLID;
+    
+ELSEIF :PPLB6 = 618 THEN 
+    -- First Aider
+    UPDATE INC_T_FISAL
+    SET ISDEL='1',CHNBY=SESSION_USER,CHNDT=CURRENT_DATE,CHNTM=CURRENT_TIME
+    WHERE INCID=:INCID AND ISDEL='0' AND IPLID=:IPLID;
+    
+ELSEIF :PPLB6 = 622 THEN
+    -- Complainant
+    UPDATE INC_T_COAAC
+    SET ISDEL='1',CHNBY=SESSION_USER,CHNDT=CURRENT_DATE,CHNTM=CURRENT_TIME
+    WHERE INCID=:INCID AND ISDEL='0' AND COAAC=0 AND IPLID=:IPLID;
+     
+ELSEIF :PPLB6 = 623 THEN
+    -- Accused
+    UPDATE INC_T_COAAC
+    SET ISDEL='1',CHNBY=SESSION_USER,CHNDT=CURRENT_DATE,CHNTM=CURRENT_TIME
+    WHERE INCID=:INCID AND ISDEL='0' AND COAAC=1 AND IPLID=:IPLID;
+    
+ELSEIF :PPLB6 = 620 THEN 
+    -- Motor Vehicle
+    UPDATE INC_T_MTVDT
+    SET ISDEL='1',CHNBY=SESSION_USER,CHNDT=CURRENT_DATE,CHNTM=CURRENT_TIME
+    WHERE INCID=:INCID AND ISDEL='0' AND IPLID=:IPLID;
+
+END IF;
+
+END

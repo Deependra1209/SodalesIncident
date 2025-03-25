@@ -1,0 +1,38 @@
+/************************************* Project : Incident *******************************************/
+/* Developer Name 			  	: Deependra Pratap Singh							                */
+/* Date      					: 23/08/2023	                                                    */
+/* Application Name             : Report Incident                                                   */
+/* Procedure Name 				: prCreateUpdateComplainantAccused.hdbprocedure                     */
+/* Functionality                : To create and update details of complainant and accused for WHV   */
+/****************************************************************************************************/
+PROCEDURE prCreateUpdateComplainantAccused ( 
+     
+     IN CAAID INTEGER,		   -- Unique id
+     IN INCID INTEGER,		   -- Incident Id
+     IN IPLID INTEGER,		   -- Involved people Id
+     IN UNQID NVARCHAR(20),    -- UNIQUE ID 
+     IN COAAC SMALLINT	       -- Complainant or Accused 
+ 
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER 
+   ---- DEFAULT SCHEMA SODLS1
+   --READS SQL DATA 
+   AS 
+BEGIN   
+
+IF :CAAID = 0 THEN   
+   --Insert Data in to Table
+   INSERT INTO INC_T_COAAC (INCID,IPLID,UNQID,COAAC,ISDEL,CRTBY,CRTDT,CRTTM,CHNBY,CHNDT,CHNTM)
+                               VALUES (INCID,IPLID,UNQID,COAAC,'0',SESSION_USER,CURRENT_DATE,CURRENT_TIME,SESSION_USER,CURRENT_DATE,CURRENT_TIME);
+  
+   
+ELSE  
+    --Update Data 
+   UPDATE INC_T_COAAC  
+   SET IPLID=:IPLID,UNQID=:UNQID,COAAC=:COAAC,CHNBY=SESSION_USER,CHNDT=CURRENT_DATE,CHNTM=CURRENT_TIME
+   WHERE CAAID=:CAAID AND INCID=:INCID AND ISDEL = '0'; 
+   
+END IF;
+   
+END

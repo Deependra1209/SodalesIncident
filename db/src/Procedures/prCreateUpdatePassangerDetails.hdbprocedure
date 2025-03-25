@@ -1,0 +1,40 @@
+/************************************* Project : Incident *******************************************/
+/* Developer Name 			  	: Deependra Pratap Singh							                */
+/* Date      					: 25/08/2023	                                                    */
+/* Application Name             : Report Incident                                                   */
+/* Procedure Name 				: prCreateUpdatePassangerDetails.hdbprocedure                       */
+/* Functionality                : To create and update passenger details                            */
+/****************************************************************************************************/
+
+PROCEDURE prCreateUpdatePassangerDetails ( 
+    
+    IN PASID INTEGER,	        -- Unique Id	
+    IN MVDID INTEGER,		    -- Motor Vehicle Incident Id	
+    IN INCID INTEGER,	        -- Incident Id	
+    IN T3LB1 SMALLINT,	        -- Passenger Role 
+    IN T3LB2 NVARCHAR(250),	    -- Passenger Name	 
+    IN T3LB3 NVARCHAR(30),      -- Employee Id	
+    IN T3LB4 NVARCHAR(20)	    -- Contact Number
+    
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   ---- DEFAULT SCHEMA SODLS1
+   --READS SQL DATA 
+   AS
+BEGIN
+
+IF :PASID = 0 THEN 
+   --Insert Data in to Table
+   INSERT INTO INC_T_PSNGR(MVDID,INCID,T3LB1,T3LB2,T3LB3,T3LB4,ISDEL,CRTBY,CRTDT,CRTTM)
+                              VALUES (MVDID,INCID,T3LB1,T3LB2,T3LB3,T3LB4,'0',SESSION_USER,CURRENT_DATE,CURRENT_TIME);
+  
+ELSE 
+    --Update Data 
+   UPDATE INC_T_PSNGR 
+   SET T3LB1=:T3LB1,T3LB2=:T3LB2,T3LB3=:T3LB3,T3LB4=:T3LB4,CHNBY=SESSION_USER,CHNDT=CURRENT_DATE,CHNTM=CURRENT_TIME
+   WHERE PASID=:PASID AND INCID=:INCID AND MVDID=:MVDID AND ISDEL='0'; 
+   
+END IF;
+   
+END

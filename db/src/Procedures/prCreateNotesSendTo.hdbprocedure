@@ -1,0 +1,30 @@
+/************************************* Project : Incident ****************************************/
+/* Developer Name 			  	: Gopal Birajdar										         */
+/* Date      					: 17/07/2023	                                                 */
+/* Application Name             : Incident portal/Notes/Send To                                  */
+/* Procedure Name 				: prCreateNotesSendTo.hdbprocedure			                     */
+/* Functionality                : To store notes send to details.                                */  
+/*************************************************************************************************/
+
+PROCEDURE prCreateNotesSendTo ( 
+   
+     IN  SENID  BIGINT,       -- Unique Id
+     IN  NOTID  INTEGER,      -- Note Id
+     IN  INCID  INTEGER,      -- Incident Id
+     IN  T1LB4  NVARCHAR(30)  -- Employee Id
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   ---- DEFAULT SCHEMA SODLS1
+   --READS SQL DATA 
+   AS 
+BEGIN
+  
+IF :SENID = '0' THEN
+
+   INSERT INTO INC_T_NOTST(NOTID,INCID,T1LB4,ISDEL,CRTBY,CRTDT,CRTTM)
+                              VALUES(NOTID,INCID,T1LB4,'0',SESSION_USER,CURRENT_DATE,CURRENT_TIME);
+   
+END IF;  
+END
+

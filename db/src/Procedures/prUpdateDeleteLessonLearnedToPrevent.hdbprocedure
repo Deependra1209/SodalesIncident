@@ -1,0 +1,25 @@
+/************************************* Project : Incident *******************************************/
+/* Developer Name 			  	: Gopal Birajdar							                        */
+/* Date      					: 10/10/2023	                                                    */
+/* Application Name             : Delete Lesson Learned                                             */
+/* Procedure Name 				: prUpdateDeleteLessonLearnedToPrevent.hdbprocedure                 */
+/* Functionality                : To delete lesson learned                                          */
+/****************************************************************************************************/
+
+PROCEDURE prUpdateDeleteLessonLearnedToPrevent ( 
+    
+    IN  LLRID   INTEGER,     -- Corrective Action   
+    IN  INCID   INTEGER      -- Incident Id
+) 
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   ---- DEFAULT SCHEMA SODLS1 
+   --READS SQL DATA 
+   AS
+BEGIN
+ 
+     -- Update data into table
+     UPDATE INC_T_LLRND
+     SET ISDEL='1',CHNBY=SESSION_USER,CHNDT=CURRENT_DATE,CHNTM=CURRENT_TIME
+     WHERE LLRID=:LLRID AND INCID=:INCID AND ISDEL='0';
+END

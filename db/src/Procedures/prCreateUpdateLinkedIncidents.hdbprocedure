@@ -1,0 +1,36 @@
+/************************************* Project : Incident ****************************************/
+/* Developer Name 			  	: Gopal Birajdar										         */
+/* Date      					: 10/07/2023	                                                 */
+/* Application Name             : Incident portal / pre investigation                            */
+/* Procedure Name 				: prCreateUpdateLinkedIncidents.hdbprocedure			         */
+/* Functionality                : To create and update linked incidents                          */
+/*************************************************************************************************/
+PROCEDURE prCreateUpdateLinkedIncidents (
+   
+     IN  LINID	INTEGER,      -- Unique key
+     IN  INCID	INTEGER,      -- Incident Id
+     IN  PRIID	INTEGER,      -- Pre Investigation Id	
+     IN  T1LB2	INTEGER,      -- Linked Incident Id
+     IN  ISDEL  NVARCHAR(1)   -- Is delete
+    
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   ---- DEFAULT SCHEMA SODLS1
+   --READS SQL DATA 
+   AS
+BEGIN
+
+IF :LINID = 0 THEN
+    -- Insert data into table 
+    INSERT INTO INC_T_LINKI (INCID,PRIID,T1LB2,ISDEL,CRTBY,CRTDT,CRTTM)
+                               VALUES (INCID,PRIID,T1LB2,ISDEL,SESSION_USER,CURRENT_DATE,CURRENT_TIME);
+    
+ELSE
+    -- update data 
+    UPDATE INC_T_LINKI 
+    SET ISDEL=:ISDEL,CHNBY = SESSION_USER,CHNDT = CURRENT_DATE,CHNTM = CURRENT_TIME 
+    WHERE LINID=:LINID AND INCID=:INCID AND PRIID=:PRIID;
+    
+END IF; 
+END

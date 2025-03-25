@@ -1,0 +1,39 @@
+/************************************* Project : Incident *******************************************/
+/* Developer Name 			  	: Deependra Pratap Singh							                */
+/* Date      					: 23/08/2023	                                                    */
+/* Application Name             : Report Incident                                                   */
+/* Procedure Name 				: prCreateUpdatePhysicalHarassmentType.hdbprocedure                 */
+/* Functionality                : To create and update physical harassment type                     */
+/****************************************************************************************************/
+
+PROCEDURE prCreateUpdatePhysicalHarassmentType (
+    
+    IN PHYID INTEGER,	    -- Unique id	
+    IN WHVID INTEGER,	    -- Workspace Harassment and Violence Id	
+    IN INCID INTEGER,	    -- Incident Id	
+    IN T3LB5 SMALLINT,	    -- Physical harasssments type	 
+    IN ISDEL NVARCHAR(1)    -- IS DELETED FLAG
+    
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   ---- DEFAULT SCHEMA SODLS1
+   --READS SQL DATA 
+   AS
+BEGIN 
+
+IF :PHYID = 0 THEN 
+   --Insert Data in to Table
+   INSERT INTO INC_T_PHYCL(WHVID,INCID,T3LB5,ISDEL,CRTBY,CRTDT,CRTTM,CHNBY,CHNDT,CHNTM)
+                             VALUES (WHVID,INCID,T3LB5,'0',SESSION_USER,CURRENT_DATE,CURRENT_TIME,SESSION_USER,CURRENT_DATE,CURRENT_TIME);
+  
+   
+ELSE 
+    --Update Data 
+   UPDATE INC_T_PHYCL 
+   SET ISDEL=:ISDEL,CHNBY=SESSION_USER,CHNDT=CURRENT_DATE,CHNTM=CURRENT_TIME
+   WHERE PHYID=:PHYID AND INCID=:INCID AND WHVID=:WHVID; 
+    
+END IF;
+   
+END

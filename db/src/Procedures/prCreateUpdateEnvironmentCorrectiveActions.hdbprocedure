@@ -1,0 +1,38 @@
+/************************************* Project : Incident ****************************************/
+/* Developer Name 			  	: Gopal Birajdar										         */
+/* Date      					: 10/07/2023	                                                 */
+/* Application Name             : Report Incident                                                */
+/* Procedure Name 				: prCreateUpdateEnvironmentCorrectiveActions.hdbprocedure		 */
+/* Functionality                : To create or update corrective actions - environmental         */
+/*************************************************************************************************/
+PROCEDURE prCreateUpdateEnvironmentCorrectiveActions (
+     
+     IN  ECAID	INTEGER,          -- Unique id	
+     IN  ENVID	INTEGER,          -- Environment Id
+     IN  INCID	INTEGER,          -- Incident id		
+     IN  T2LB2	NVARCHAR(1000),   -- Corractive Action Description	
+     IN  T2LB3	INTEGER,          -- Ca Type	
+     IN  T2LB4	INTEGER           -- Ca Category	
+    
+) 
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   ---- DEFAULT SCHEMA SODLS1 
+   --READS SQL DATA 
+   AS
+BEGIN
+
+IF :ECAID = 0 THEN 
+
+    INSERT INTO INC_T_ENVCA(INCID,ENVID,T2LB2,T2LB3,T2LB4,ISDEL,CRTBY,CRTDT,CRTTM)
+                               VALUES(INCID,ENVID,T2LB2,T2LB3,T2LB4,'0',SESSION_USER,CURRENT_DATE,CURRENT_TIME);
+       
+ELSE 
+
+    UPDATE INC_T_ENVCA
+    SET T2LB2=:T2LB2,T2LB3=:T2LB3,T2LB4=:T2LB4,CHNBY=SESSION_USER,CHNDT=CURRENT_DATE,CHNTM=CURRENT_TIME
+    WHERE ECAID=:ECAID AND ENVID=:ENVID AND INCID=:INCID AND ISDEL='0';      
+      
+END IF;      
+      
+END

@@ -1,0 +1,74 @@
+/************************************* Project : Incident *******************************************/
+/* Developer Name 			  	: Deependra Pratap Singh							                */
+/* Date      					: 25/08/2023	                                                    */
+/* Application Name             : Report Incident                                                   */
+/* Procedure Name 				: prCreateUpdateMotorVehicleDetails.hdbprocedure                    */
+/* Functionality                : To create and update motor/vehicle incident details               */
+/****************************************************************************************************/
+PROCEDURE prCreateUpdateMotorVehicleDetails ( 
+    
+    IN  MVDID    INTEGER,		           -- Unique id	
+    IN  INCID    INTEGER,		           -- Incident Id	
+    IN  IPLID    INTEGER,                  -- Involved Peolpe Id
+    IN  T1LB1    SMALLINT,	               -- Vehicle Owned By	
+    IN  T1LB2    NVARCHAR(50),	           -- Year	
+    IN  T1LB3    NVARCHAR(100),	           -- Model	
+    IN  T1LB4    NVARCHAR(250),	           -- Owner	
+    IN  T1LB5    SMALLINT,		           -- Class	
+    IN  T1LB7    SMALLINT,	               -- Was The Operator Permitted / Certified	
+    IN  T1LB8    SMALLINT,	               -- Was The Vehicle Damaged?	
+    IN  T1LB9    SMALLINT,		           -- Type Of Damage
+    IN  T1LB10   SMALLINT,		           -- Operator	
+    IN  T1LB11   SMALLINT,	               -- Were Seat Belt Worn?	
+    IN  T1LB12   NVARCHAR(1000),    	   -- Custom Filed 1
+    IN  T1LB13   NVARCHAR(1000),    	   -- Custom Filed 2
+    IN  T1LB14   NVARCHAR(1000),	       -- Make	
+    IN  T1LB15   NVARCHAR(100),	           -- Plate No	
+    IN  T1LB16   NVARCHAR(1000),	       -- License PIC#
+    IN  T1LB18   DATE,		               -- Expiry	
+    IN  T1LB19   NVARCHAR(50),	           -- Day Time Phone#	
+    IN  T1LB20   SMALLINT,	               -- Valid	
+    IN  T1LB21   SMALLINT,		           -- Direction Of Travel	
+    IN  T1LB22   SMALLINT,	               -- Mechanical Failure	
+    IN  T1LB23   NVARCHAR(1000),    	   -- Custom Filed 3
+    IN  T1LB24   NVARCHAR(1000),    	   -- Custom Filed 4
+    IN  T1LB25   NVARCHAR(5000),	       -- Describe Damage
+    IN  UNQID    NVARCHAR(20)             -- UNIQUE id
+    -- OUT OMVDID  INTEGER                    -- OUTPUT parameter
+)
+   LANGUAGE SQLSCRIPT 
+   SQL SECURITY INVOKER 
+   ---- DEFAULT SCHEMA SODLS1
+   --READS SQL DATA 
+   AS
+BEGIN
+
+    -- DECLARE COLUMN_ID INTEGER;
+    -- DECLARE QU NVARCHAR(150);
+    -- DECLARE SEQ NVARCHAR(100);
+    
+IF :MVDID = 0 THEN 
+   --Insert Data in to Table 
+   INSERT INTO INC_T_MTVDT(INCID,IPLID,T1LB1,T1LB2,T1LB3,T1LB4,T1LB5,T1LB7,T1LB8,T1LB9,T1LB10,T1LB11,
+                                     T1LB12,T1LB13,T1LB14,T1LB15,T1LB16,T1LB18,T1LB19,T1LB20,T1LB21,T1LB22,T1LB23,T1LB24,T1LB25,UNQID ,ISDEL,CRTBY,CRTDT,CRTTM)
+                             VALUES (INCID,IPLID,T1LB1,T1LB2,T1LB3,T1LB4,T1LB5,T1LB7,T1LB8,T1LB9,T1LB10,T1LB11,
+                                     T1LB12,T1LB13,T1LB14,T1LB15,T1LB16,T1LB18,T1LB19,T1LB20,T1LB21,T1LB22,T1LB23,T1LB24,T1LB25,UNQID ,'0',SESSION_USER,CURRENT_DATE,CURRENT_TIME);
+   /* sequence number */ 
+--    SELECT '_SYS_SEQUENCE_'|| COLUMN_ID||'_#0_#' INTO SEQ FROM TABLE_COLUMNS WHERE (TABLE_NAME='INC_T_MTVDT' and Schema_name='SODLS1') AND COLUMN_NAME='MVDID';
+--    QU :='select '||SEQ||'.CURRVAL from DUMMY';
+--    EXECUTE IMMEDIATE QU INTO OMVDID;
+   
+ELSE 
+    --Update Data 
+   UPDATE INC_T_MTVDT 
+   SET T1LB1=:T1LB1,T1LB2=:T1LB2,T1LB3=:T1LB3,T1LB4=:T1LB4,T1LB5=:T1LB5,T1LB7=:T1LB7,T1LB8=:T1LB8,T1LB9=:T1LB9,T1LB10=:T1LB10,T1LB11=:T1LB11,
+       T1LB12=:T1LB12,T1LB13=:T1LB13,T1LB14=:T1LB14,T1LB15=:T1LB15,T1LB16=:T1LB16,T1LB18=:T1LB18,T1LB19=:T1LB19,T1LB20=:T1LB20,T1LB21=:T1LB21,
+       T1LB22=:T1LB22,T1LB23=:T1LB23,T1LB24=:T1LB24,T1LB25=:T1LB25,UNQID=:UNQID,CHNBY=SESSION_USER,CHNDT=CURRENT_DATE,CHNTM=CURRENT_TIME
+   WHERE MVDID=:MVDID AND INCID=:INCID AND ISDEL = '0'; 
+   
+--    OMVDID:=:MVDID;
+   
+   
+END IF;
+   
+END

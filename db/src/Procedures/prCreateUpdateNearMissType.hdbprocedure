@@ -1,0 +1,39 @@
+/************************************* Project : Incident ****************************************/
+/* Developer Name 			  	: Deependra Pratap Singh								         */
+/* Date      					: 17/08/2023	                                                 */
+/* Application Name             : Report Incident                                                */
+/* Procedure Name 				: prCreateUpdateNearMissType.hdbprocedure			             */
+/* Functionality                : To create and update near miss type                            */
+/*************************************************************************************************/
+
+PROCEDURE prCreateUpdateNearMissType ( 
+    
+    IN NMTID INTEGER,        -- Unique Id
+    IN INCID INTEGER,        -- Incident Id
+    IN NRMID INTEGER,        -- Near Miss Id
+    IN T1LB1 SMALLINT,       -- Type of Near Miss Selected
+    IN ISDEL NVARCHAR(1)     -- Is delete
+
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   ---- DEFAULT SCHEMA SODLS1
+   --READS SQL DATA 
+   AS
+BEGIN 
+-- Insert data into table
+IF :NMTID = 0 THEN
+
+    INSERT INTO INC_T_NRMTP (INCID,NRMID,T1LB1,ISDEL,CRTBY,CRTDT,CRTTM) 
+    VALUES(INCID,NRMID,T1LB1,'0',SESSION_USER,CURRENT_DATE,CURRENT_TIME);
+    
+-- Update data into table                                
+ELSE
+
+    UPDATE INC_T_NRMTP 
+    SET ISDEL=:ISDEL,CHNBY=SESSION_USER,CHNDT=CURRENT_DATE,CHNTM=CURRENT_TIME 
+    WHERE NMTID=:NMTID AND INCID=:INCID AND NRMID=:NRMID ;
+    
+END IF;
+
+END;

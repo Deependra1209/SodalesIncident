@@ -1,0 +1,38 @@
+/************************************* Project : Incident *******************************************/
+/* Developer Name 			  	: Deependra Pratap Singh							                */
+/* Date      					: 28/08/2023	                                                    */
+/* Application Name             : Report Incident                                                   */
+/* Procedure Name 				: prCreateUpdateEndorsements.hdbprocedure                           */
+/* Functionality                : To create and update endorsements in motor/vehicle incident       */
+/****************************************************************************************************/
+
+PROCEDURE prCreateUpdateEndorsements ( 
+    
+    IN ENDID  INTEGER,	   -- Unique id
+    IN INCID  INTEGER,	   -- Incident Id
+    IN MVDID  INTEGER,	   -- Motor Vehicle Incident Id
+    IN T1LB17 SMALLINT,	   -- Selected Endorsements
+    IN ISDEL  NVARCHAR(1)   -- Is Deleted Flag (1=True/0=False)
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   ---- DEFAULT SCHEMA SODLS1
+   --READS SQL DATA 
+   AS  
+BEGIN 
+ 
+-- Insert data into table  
+IF :ENDID = 0 THEN
+        INSERT INTO INC_T_EDRMT(MVDID,INCID,T1LB17,ISDEL,CRTBY,CRTDT,CRTTM)
+								  VALUES (MVDID,INCID,T1LB17,'0',SESSION_USER,CURRENT_DATE,CURRENT_TIME);
+      
+        
+ELSE
+-- Update data into table
+        UPDATE INC_T_EDRMT
+        SET ISDEL=:ISDEL,CHNBY=SESSION_USER,CHNDT=CURRENT_DATE,CHNTM=CURRENT_TIME
+        WHERE ENDID=:ENDID AND INCID=:INCID AND MVDID=:MVDID;
+        
+END IF;
+
+END
