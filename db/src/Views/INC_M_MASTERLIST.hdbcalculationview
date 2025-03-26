@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="INC_M_MASTERLIST" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" hierarchyGeneration="SQL" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="true" application="BAS">
+<descriptions defaultDescription="INC_M_MASTERLIST"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="INC_M_MSTDT">
+    <resourceUri>INC_M_MSTDT</resourceUri>
+  </DataSource>
+</dataSources>
+<snapshotProcedures/>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
+    <viewAttributes>
+      <viewAttribute id="UNQID"/>
+      <viewAttribute id="TYVAL"/>
+      <viewAttribute id="TXVAL"/>
+      <viewAttribute id="COLID"/>
+      <viewAttribute id="TXDES"/>
+      <viewAttribute id="MODTY"/>
+      <viewAttribute id="ISEDT"/>
+      <viewAttribute id="ISADD"/>
+      <viewAttribute id="ISEMP"/>
+      <viewAttribute id="INCTY"/>
+      <viewAttribute id="ISDBL"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="INC_M_MSTDT"/>
+  </calculationView>
+</calculationViews>
+
+<logicalModel id="Projection_1">
+  <attributes>
+    <attribute id="UNQID" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Unique Mater Data ID"/>
+      <keyMapping columnObjectName="Projection_1" columnName="UNQID"/>
+    </attribute>
+    <attribute id="TYVAL" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Master Data Type Value"/>
+      <keyMapping columnObjectName="Projection_1" columnName="TYVAL"/>
+    </attribute>
+    <attribute id="TXVAL" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Master Data Text Value"/>
+      <keyMapping columnObjectName="Projection_1" columnName="TXVAL"/>
+    </attribute>
+    <attribute id="COLID" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Column Id"/>
+      <keyMapping columnObjectName="Projection_1" columnName="COLID"/>
+    </attribute>
+    <attribute id="TXDES" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Master Data Text Description"/>
+      <keyMapping columnObjectName="Projection_1" columnName="TXDES"/>
+    </attribute>
+    <attribute id="MODTY" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Module Type"/>
+      <keyMapping columnObjectName="Projection_1" columnName="MODTY"/>
+    </attribute>
+    <attribute id="ISEDT" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Is Editable Flag"/>
+      <keyMapping columnObjectName="Projection_1" columnName="ISEDT"/>
+    </attribute>
+    <attribute id="ISADD" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Is Addable Flag"/>
+      <keyMapping columnObjectName="Projection_1" columnName="ISADD"/>
+    </attribute>
+    <attribute id="INCTY" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Incident Type Id"/>
+      <keyMapping columnObjectName="Projection_1" columnName="INCTY"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="ISEMP" order="9" aggregationType="count" measureType="simple">
+      <descriptions defaultDescription="Flag for Employee Role Visibility"/>
+      <measureMapping columnObjectName="Projection_1" columnName="ISEMP"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+    <measure id="ISDBL" order="11" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Is Deleteble Flag"/>
+      <measureMapping columnObjectName="Projection_1" columnName="ISDBL"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="92" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+    
+  
+    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

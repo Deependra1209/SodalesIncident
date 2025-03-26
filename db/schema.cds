@@ -1,14 +1,15 @@
 namespace INC;
 context M{
     @cds.persistence.exists
-    entity MASTERDATA(){
+    @cds.persistence.calcview
+    entity MASTERLIST(){
         key UNQID : Integer;
         TYVAL : String(50);
         TXVAL : String(1000);
         COLID : Integer;
         INCTY : Integer;
         TXDES : String(5000);
-        ISDBL : Integer;
+        ISEMP : Integer;
         ISEDT : Integer;
         ISADD : Integer;
     }

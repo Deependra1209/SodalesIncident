@@ -1,4 +1,4 @@
-const { validateField, generateIncidentNumber,getSequenceNumber,lPad,setValue } = require('./Common');
+const { validateField,validateArray,generateIncidentNumber,getSequenceNumber,lPad,setValue } = require('./Common');
 //This is test.
 const cds = require('@sap/cds');
 let oInput,tx,tx1;
@@ -30,8 +30,8 @@ module.exports = cds.service.impl(function (){
 			let oCustomIncType5             = oInput.CustomIncType5;
 
             tx = cds.transaction(req);
-
-            result = await tx.run(`CALL "prCreateUpdateIncidentDetails"(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`, [
+            // if(validateField(oIncidentDetails.INCID)){
+            result = await tx.run(`CALL prCreateUpdateIncidentDetails(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`, [
                 setValue(oIncidentDetails.INCID),
                 setValue(oIncidentDetails.REBEH),
                 setValue(oIncidentDetails.T1LB1),
@@ -75,13 +75,15 @@ module.exports = cds.service.impl(function (){
             
             //Logic for Updating the Incident Number
 		    if(oIncidentDetails.ISAVE === '0'){
-		        IncidentNumber = generateIncidentNumber(tx);
+		        IncidentNumber = await generateIncidentNumber(tx);
 		        //Procedure for updating the Incident Number
-                result = await tx.run(`CALL "prUpdateIncidentNumber"(?,?)`,[setValue(oIncidentId),setValue(IncidentNumber)]);
+                result = await tx.run(`CALL prUpdateIncidentNumber(?,?)`,[setValue(oIncidentId),setValue(IncidentNumber)]);
+                // console.log(result);
             }
             let InvolvedPeople = oIncidentDetails.InvolvedPeople;
+            if(validateArray(InvolvedPeople)){
             for(let i=0;i < InvolvedPeople.length;i++){
-                result = await tx.run(`CALL "prCreateUpdateInvolvedPeopleDetails"(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`, [
+                result = await tx.run(`CALL prCreateUpdateInvolvedPeopleDetails(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`, [
                     setValue(InvolvedPeople[i].IPLID),
                     setValue(oIncidentId),
                     setValue(InvolvedPeople[i].UNQID),
@@ -110,8 +112,9 @@ module.exports = cds.service.impl(function (){
                 
                 oInvPeopleId = InvolvedPeople[i].IPLID == 0 ? await getSequenceNumber("INC_T_INVPL","IPLID") : InvolvedPeople[i].IPLID;
                 let PersonType = InvolvedPeople[i].PersonType;
+                if(validateArray(PersonType)){
                 for(let j=0;j < PersonType.length;j++){
-                    result = await tx.run(`CALL "prCreateUpdateInvolvedPeopleType"(?,?,?,?,?)`, [
+                    result = await tx.run(`CALL prCreateUpdateInvolvedPeopleType(?,?,?,?,?)`, [
                         setValue(PersonType[j].IPTID),
                         setValue(oInvPeopleId),
                         setValue(oIncidentId),
@@ -121,17 +124,18 @@ module.exports = cds.service.impl(function (){
 
                     // Deleting person type if applicable
                     if(PersonType[j].ISDEL === '1'){
-                        result = await tx.run(`CALL "prDeleteInvolvedPersonType"(?,?,?)`, [
+                        result = await tx.run(`CALL prDeleteInvolvedPersonType(?,?,?)`, [
                             setValue(oIncidentId),
                             setValue(PersonType[j].PPLB6),
                             setValue(oInvPeopleId)                            
                         ]);
                     }
                 }
+            }
                 // WorkPlace Injury Tab 
                 let WorkplaceInjury = InvolvedPeople[i].WorkplaceInjury
                 if(validateField(WorkplaceInjury.WPIID)){
-                    result = await tx.run(`CALL "prCreateUpdateWorkPlaceInjury"(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`, [
+                    result = await tx.run(`CALL prCreateUpdateWorkPlaceInjury(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`, [
                         setValue(WorkplaceInjury.WPIID),
                         setValue(oIncidentId),
                         setValue(oInvPeopleId),
@@ -161,9 +165,9 @@ module.exports = cds.service.impl(function (){
                     oWorkInjuryID = WorkplaceInjury.WPIID == 0 ? await getSequenceNumber("INC_T_WPIDT","WPIID") : WorkplaceInjury.WPIID;
 
                     let BodyPart = WorkplaceInjury.BodyPart;
-
+                    if(validateArray(BodyPart)){
                     for(let j=0;j<BodyPart.length;j++){
-                        result = await tx.run(`CALL "prCreateUpdateBodyParts"(?,?,?,?,?,?,?)`, [
+                        result = await tx.run(`CALL prCreateUpdateBodyParts(?,?,?,?,?,?,?)`, [
                             setValue(BodyPart[j].BDPID),
                             setValue(oWorkInjuryID),
                             setValue(oIncidentId),
@@ -174,8 +178,10 @@ module.exports = cds.service.impl(function (){
                         ]); 
                     }
                 }
+                }
                 let FirstAider = InvolvedPeople[i].FirstAider;
-                result = await tx.run(`CALL "prCreateUpdateFirstAider"(?,?,?,?,?,?,?,?,?)`, [
+                if(validateField(FirstAider.FISID)){
+                result = await tx.run(`CALL prCreateUpdateFirstAider(?,?,?,?,?,?,?,?,?)`, [
                     setValue(FirstAider.FISID),
                     setValue(oIncidentId),
                     setValue(oInvPeopleId),
@@ -186,472 +192,508 @@ module.exports = cds.service.impl(function (){
                     setValue(FirstAider.T1LB4),
                     setValue(FirstAider.T1LB5)
                 ]); 
+            }
 
                 let VehicleDetails = InvolvedPeople[i].VehicleDetails;
-
-                result = await tx.run(`call "prCreateUpdateMotorVehicleDetails"(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,[
-                    setvalue(VehicleDetails.MVDID),
-                    setvalue(oIncidentId),
-                    setvalue(oInvPeopleId),
-                    setvalue(VehicleDetails.T1LB1),
-                    setvalue(VehicleDetails.T1LB2),
-                    setvalue(VehicleDetails.T1LB3),
-                    setvalue(VehicleDetails.T1LB4),
-                    setvalue(VehicleDetails.T1LB5),
-                    setvalue(VehicleDetails.T1LB7),
-                    setvalue(VehicleDetails.T1LB8),
-                    setvalue(VehicleDetails.T1LB9),
-                    setvalue(VehicleDetails.T1LB10),
-                    setvalue(VehicleDetails.T1LB11),
-                    setvalue(VehicleDetails.T1LB12),
-                    setvalue(VehicleDetails.T1LB13),
-                    setvalue(VehicleDetails.T1LB14),
-                    setvalue(VehicleDetails.T1LB15),
-                    setvalue(VehicleDetails.T1LB16),
-                    setvalue(VehicleDetails.T1LB18),
-                    setvalue(VehicleDetails.T1LB19),
-                    setvalue(VehicleDetails.T1LB20),
-                    setvalue(VehicleDetails.T1LB21),
-                    setvalue(VehicleDetails.T1LB22),
-                    setvalue(VehicleDetails.T1LB23),
-                    setvalue(VehicleDetails.T1LB24),
-                    setvalue(VehicleDetails.T1LB25),
-                    setvalue(VehicleDetails.UNQID)
+                if(validateField(VehicleDetails.MVDID)){
+                result = await tx.run(`call prCreateUpdateMotorVehicleDetails(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,[
+                    setValue(VehicleDetails.MVDID),
+                    setValue(oIncidentId),
+                    setValue(oInvPeopleId),
+                    setValue(VehicleDetails.T1LB1),
+                    setValue(VehicleDetails.T1LB2),
+                    setValue(VehicleDetails.T1LB3),
+                    setValue(VehicleDetails.T1LB4),
+                    setValue(VehicleDetails.T1LB5),
+                    setValue(VehicleDetails.T1LB7),
+                    setValue(VehicleDetails.T1LB8),
+                    setValue(VehicleDetails.T1LB9),
+                    setValue(VehicleDetails.T1LB10),
+                    setValue(VehicleDetails.T1LB11),
+                    setValue(VehicleDetails.T1LB12),
+                    setValue(VehicleDetails.T1LB13),
+                    setValue(VehicleDetails.T1LB14),
+                    setValue(VehicleDetails.T1LB15),
+                    setValue(VehicleDetails.T1LB16),
+                    setValue(VehicleDetails.T1LB18),
+                    setValue(VehicleDetails.T1LB19),
+                    setValue(VehicleDetails.T1LB20),
+                    setValue(VehicleDetails.T1LB21),
+                    setValue(VehicleDetails.T1LB22),
+                    setValue(VehicleDetails.T1LB23),
+                    setValue(VehicleDetails.T1LB24),
+                    setValue(VehicleDetails.T1LB25),
+                    setValue(VehicleDetails.UNQID)
                 ]);
 
                 oVehicleId = VehicleDetails.MVDID == 0 ? await getSequenceNumber("INC_T_MTVDT","MVDID") : VehicleDetails.MVDID;
 
                 let Endorsements = VehicleDetails.Endorsements;
-
+                if(validateArray(Endorsements)){
                 for(let j=0;j<Endorsements.length;j++){
-                    result = await tx.run(`call "prCreateUpdateEndorsements"(?,?,?,?,?)`,[
-                        setvalue(Endorsements[j].ENDID),
-                        setvalue(oIncidentId),
-                        setvalue(oVehicleId),
-                        setvalue(Endorsements[j].T1LB17),
-                        setvalue(Endorsements[j].ISDEL)
+                    result = await tx.run(`call prCreateUpdateEndorsements(?,?,?,?,?)`,[
+                        setValue(Endorsements[j].ENDID),
+                        setValue(oIncidentId),
+                        setValue(oVehicleId),
+                        setValue(Endorsements[j].T1LB17),
+                        setValue(Endorsements[j].ISDEL)
                     ]);
                 }
+            }
                 // Restrictions
                 let Restrictions = VehicleDetails.Restrictions;
-
+                if(validateArray(Restrictions)){
                 for(let j=0;j<Restrictions.length;j++){
-                    result = await tx.run(`call "prCreateUpdateMotorVehicleRestrictions"(?,?,?,?,?)`,[
-                        setvalue(Restrictions[j].RESID),
-                        setvalue(oIncidentId),
-                        setvalue(oVehicleId),
-                        setvalue(Restrictions[j].T1LB6),
-                        setvalue(Restrictions[j].ISDEL)
+                    result = await tx.run(`call prCreateUpdateMotorVehicleRestrictions(?,?,?,?,?)`,[
+                        setValue(Restrictions[j].RESID),
+                        setValue(oIncidentId),
+                        setValue(oVehicleId),
+                        setValue(Restrictions[j].T1LB6),
+                        setValue(Restrictions[j].ISDEL)
                     ]);
                 }
+            }
 
                 // PassengerDetails
                 let PassengerDetails = VehicleDetails.PassengerDetails;
-
+                if(validateArray(PassengerDetails)){
                 for(let j=0;j<PassengerDetails.length;j++){
-                    result = await tx.run(`call "prCreateUpdatePassangerDetails"(?,?,?,?,?,?,?)`,[
-                        setvalue(PassengerDetails[j].PASID),
-                        setvalue(oVehicleId),
-                        setvalue(oIncidentId),
-                        setvalue(PassengerDetails[j].T3LB1),
-                        setvalue(PassengerDetails[j].T3LB2),
-                        setvalue(PassengerDetails[j].T3LB3),
-                        setvalue(PassengerDetails[j].T3LB4)
+                    result = await tx.run(`call prCreateUpdatePassangerDetails(?,?,?,?,?,?,?)`,[
+                        setValue(PassengerDetails[j].PASID),
+                        setValue(oVehicleId),
+                        setValue(oIncidentId),
+                        setValue(PassengerDetails[j].T3LB1),
+                        setValue(PassengerDetails[j].T3LB2),
+                        setValue(PassengerDetails[j].T3LB3),
+                        setValue(PassengerDetails[j].T3LB4)
                     ]);
                 }
-
+            }
+            }
                 // Complainant
                 let Complainant = InvolvedPeople[i].Complainant;
-
-                result = await tx.run(`call "prCreateUpdateComplainantAccused"(?,?,?,?,?)`,[
-                    setvalue(Complainant.CAAID),
-                    setvalue(oInvPeopleId),
-                    setvalue(oIncidentId),
-                    setvalue(Complainant.UNQID),
-                    setvalue(Complainant.COAAC)
-                ]);
-
-                // Accused
-                let Accused = InvolvedPeople[i].Accused;
-                result = await tx.run(`call "prCreateUpdateComplainantAccused"(?,?,?,?,?)`,[
-                    setvalue(Accused.CAAID),
-                    setvalue(oInvPeopleId),
-                    setvalue(oIncidentId),
-                    setvalue(Accused.UNQID),
-                    setvalue(Accused.COAAC)
+                if(validateField(Complainant.CAAID)){
+                result = await tx.run(`call prCreateUpdateComplainantAccused(?,?,?,?,?)`,[
+                    setValue(Complainant.CAAID),
+                    setValue(oInvPeopleId),
+                    setValue(oIncidentId),
+                    setValue(Complainant.UNQID),
+                    setValue(Complainant.COAAC)
                 ]);
             }
 
+                // Accused
+                let Accused = InvolvedPeople[i].Accused;
+                if(validateField(Accused.CAAID)){
+                result = await tx.run(`call prCreateUpdateComplainantAccused(?,?,?,?,?)`,[
+                    setValue(Accused.CAAID),
+                    setValue(oInvPeopleId),
+                    setValue(oIncidentId),
+                    setValue(Accused.UNQID),
+                    setValue(Accused.COAAC)
+                ]);
+            }
+            }
+        }
+            
             // Vehicle Additional Details
-            result = await tx.run(`call "prCreateUpdateMotorVehicleAdditionalDetails"(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,[
-                setvalue(oVehicleAdditionalDetails.MVAID),
-                setvalue(oIncidentId),
-                setvalue(oVehicleAdditionalDetails.T4LB1),
-                setvalue(oVehicleAdditionalDetails.T4LB2),
-                setvalue(oVehicleAdditionalDetails.T4LB3),
-                setvalue(oVehicleAdditionalDetails.T4LB4),
-                setvalue(oVehicleAdditionalDetails.T4LB5),
-                setvalue(oVehicleAdditionalDetails.T4LB6),
-                setvalue(oVehicleAdditionalDetails.T4LB7),
-                setvalue(oVehicleAdditionalDetails.T4LB8),
-                setvalue(oVehicleAdditionalDetails.T4LB9),
-                setvalue(oVehicleAdditionalDetails.RDMAP),
-                setvalue(oVehicleAdditionalDetails.T4LB10),
-                setvalue(oVehicleAdditionalDetails.T4LB11),
-                setvalue(oVehicleAdditionalDetails.T5LB1),
-                setvalue(oVehicleAdditionalDetails.T5LB2),
-                setvalue(oVehicleAdditionalDetails.T5LB3),
-                setvalue(oVehicleAdditionalDetails.T5LB4),
-                setvalue(oVehicleAdditionalDetails.T5LB5)
+            if(validateField(oVehicleAdditionalDetails.MVAID)){
+            result = await tx.run(`call prCreateUpdateMotorVehicleAdditionalDetails(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,[
+                setValue(oVehicleAdditionalDetails.MVAID),
+                setValue(oIncidentId),
+                setValue(oVehicleAdditionalDetails.T4LB1),
+                setValue(oVehicleAdditionalDetails.T4LB2),
+                setValue(oVehicleAdditionalDetails.T4LB3),
+                setValue(oVehicleAdditionalDetails.T4LB4),
+                setValue(oVehicleAdditionalDetails.T4LB5),
+                setValue(oVehicleAdditionalDetails.T4LB6),
+                setValue(oVehicleAdditionalDetails.T4LB7),
+                setValue(oVehicleAdditionalDetails.T4LB8),
+                setValue(oVehicleAdditionalDetails.T4LB9),
+                setValue(oVehicleAdditionalDetails.RDMAP),
+                setValue(oVehicleAdditionalDetails.T4LB10),
+                setValue(oVehicleAdditionalDetails.T4LB11),
+                setValue(oVehicleAdditionalDetails.T5LB1),
+                setValue(oVehicleAdditionalDetails.T5LB2),
+                setValue(oVehicleAdditionalDetails.T5LB3),
+                setValue(oVehicleAdditionalDetails.T5LB4),
+                setValue(oVehicleAdditionalDetails.T5LB5)
             ]);
-
+        }
+            
             // Workplace Harassment
-            result = await tx.run(`call "prCreateUpdateWorkplaceHarassment"(?,?,?,?,?,?,?,?,?,?,?,?)`,[
-                setvalue(oWorkplaceHarassment.WHVID),
-                setvalue(oIncidentId),
-                setvalue(oWorkplaceHarassment.T3LB1),
-                setvalue(oWorkplaceHarassment.T3LB2),
-                setvalue(oWorkplaceHarassment.T3LB3),
-                setvalue(oWorkplaceHarassment.T3LB6),
-                setvalue(oWorkplaceHarassment.T3LB8),
-                setvalue(oWorkplaceHarassment.T3LB10),
-                setvalue(oWorkplaceHarassment.T3LB11),
-                setvalue(oWorkplaceHarassment.T3LB14),
-                setvalue(oWorkplaceHarassment.T3LB15)
+            if(validateField(oWorkplaceHarassment.WHVID)){
+            result = await tx.run(`call prCreateUpdateWorkplaceHarassment(?,?,?,?,?,?,?,?,?,?,?,?)`,[
+                setValue(oWorkplaceHarassment.WHVID),
+                setValue(oIncidentId),
+                setValue(oWorkplaceHarassment.T3LB1),
+                setValue(oWorkplaceHarassment.T3LB2),
+                setValue(oWorkplaceHarassment.T3LB3),
+                setValue(oWorkplaceHarassment.T3LB6),
+                setValue(oWorkplaceHarassment.T3LB8),
+                setValue(oWorkplaceHarassment.T3LB10),
+                setValue(oWorkplaceHarassment.T3LB11),
+                setValue(oWorkplaceHarassment.T3LB14),
+                setValue(oWorkplaceHarassment.T3LB15)
             ]);
 
             oWorkplaceHarassmentId = oWorkplaceHarassment.WHVID == 0 ? await getSequenceNumber("INC_T_WPHAV","WHVID") : oWorkplaceHarassment.WHVID; 
 
             // Type of Occurance
             let TypeOfOccurrence = oWorkplaceHarassment.TypeOfOccurrence;
-
+            if(validateArray(TypeOfOccurrence)){
             for (let i=0;i < TypeOfOccurrence.length;i++){
-                result = await tx.run(`call "prCreateUpdateTypeOfOccurrenceRep"(?,?,?,?,?)`,[
-                    setvalue(TypeOfOccurrence[i].OCRID),
-                    setvalue(oWorkplaceHarassmentId),
-                    setvalue(oIncidentId),
-                    setvalue(TypeOfOccurrence[i].T3LB4),
-                    setvalue(TypeOfOccurrence[i].ISDEL)
+                result = await tx.run(`call prCreateUpdateTypeOfOccurrenceRep(?,?,?,?,?)`,[
+                    setValue(TypeOfOccurrence[i].OCRID),
+                    setValue(oWorkplaceHarassmentId),
+                    setValue(oIncidentId),
+                    setValue(TypeOfOccurrence[i].T3LB4),
+                    setValue(TypeOfOccurrence[i].ISDEL)
                 ]);
             }
+        }
             // Physical
             let Physical = oWorkplaceHarassment.Physical;
-
+            if(validateArray(Physical)){
             for (let i=0;i < Physical.length;i++){
-                result = await tx.run(`call "prCreateUpdatePhysicalHarassmentType"(?,?,?,?,?)`,[
-                    setvalue(Physical[i].PHYID),
-                    setvalue(oWorkplaceHarassmentId),
-                    setvalue(oIncidentId),
-                    setvalue(Physical[i].T3LB5),
-                    setvalue(Physical[i].ISDEL)
+                result = await tx.run(`call prCreateUpdatePhysicalHarassmentType(?,?,?,?,?)`,[
+                    setValue(Physical[i].PHYID),
+                    setValue(oWorkplaceHarassmentId),
+                    setValue(oIncidentId),
+                    setValue(Physical[i].T3LB5),
+                    setValue(Physical[i].ISDEL)
                 ]);
             }
+        }
 
             // Psychological
             let Psychological = oWorkplaceHarassment.Psychological;
-
+            if(validateArray(Psychological)){
             for (let i=0;i < Psychological.length;i++){
-                result = await tx.run(`call "prCreateUpdatePsychologicalHarassmentType"(?,?,?,?,?)`,[
-                    setvalue(Psychological[i].PSYID),
-                    setvalue(oWorkplaceHarassmentId),
-                    setvalue(oIncidentId),
-                    setvalue(Psychological[i].T3LB7),
-                    setvalue(Psychological[i].ISDEL)
+                result = await tx.run(`call prCreateUpdatePsychologicalHarassmentType(?,?,?,?,?)`,[
+                    setValue(Psychological[i].PSYID),
+                    setValue(oWorkplaceHarassmentId),
+                    setValue(oIncidentId),
+                    setValue(Psychological[i].T3LB7),
+                    setValue(Psychological[i].ISDEL)
                 ]);
             }
+        }
 
             // Verbal
             let Verbal = oWorkplaceHarassment.Verbal;
-
+            if(validateArray(Verbal)){
             for (let i=0;i < Verbal.length;i++){
-                result = await tx.run(`call "prCreateUpdateVerbalHarrasementType"(?,?,?,?,?)`,[
-                    setvalue(Verbal[i].VBLID),
-                    setvalue(oWorkplaceHarassmentId),
-                    setvalue(oIncidentId),
-                    setvalue(Verbal[i].T3LB9),
-                    setvalue(Verbal[i].ISDEL)
+                result = await tx.run(`call prCreateUpdateVerbalHarrasementType(?,?,?,?,?)`,[
+                    setValue(Verbal[i].VBLID),
+                    setValue(oWorkplaceHarassmentId),
+                    setValue(oIncidentId),
+                    setValue(Verbal[i].T3LB9),
+                    setValue(Verbal[i].ISDEL)
                 ]);
             }
+        }
 
             // Please select all that apply
             let PleaseSelectAll = oWorkplaceHarassment.PleaseSelectAll;
             if (oWorkplaceHarassment.T3LB11 === 0) {
+                if(validateArray(PleaseSelectAll)){
                 for (let i=0;i < PleaseSelectAll.length;i++){
-                    result = await tx.run(`call "prCreateUpdatePleaseSelectAllThatApply"(?,?,?,?,?)`,[
-                        setvalue(PleaseSelectAll[i].PSAID),
-                        setvalue(oWorkplaceHarassmentId),
-                        setvalue(oIncidentId),
-                        setvalue(PleaseSelectAll[i].T3LB12),
-                        setvalue(PleaseSelectAll[i].ISDEL)
+                    result = await tx.run(`call prCreateUpdatePleaseSelectAllThatApply(?,?,?,?,?)`,[
+                        setValue(PleaseSelectAll[i].PSAID),
+                        setValue(oWorkplaceHarassmentId),
+                        setValue(oIncidentId),
+                        setValue(PleaseSelectAll[i].T3LB12),
+                        setValue(PleaseSelectAll[i].ISDEL)
                     ]);
                 }
+            }
             }
 
             // Immediate Action
             let ImmediateAction = oWorkplaceHarassment.ImmediateAction;
-
+            if(validateArray(ImmediateAction)){
             for (let i=0;i < ImmediateAction.length;i++){
-                result = await tx.run(`call "prCreateUpdateImmediateActions"(?,?,?,?,?)`,[
-                    setvalue(ImmediateAction[i].IACID),
-                    setvalue(oWorkplaceHarassmentId),
-                    setvalue(oIncidentId),
-                    setvalue(ImmediateAction[i].T3LB13),
-                    setvalue(ImmediateAction[i].ISDEL)
+                result = await tx.run(`call prCreateUpdateImmediateActions(?,?,?,?,?)`,[
+                    setValue(ImmediateAction[i].IACID),
+                    setValue(oWorkplaceHarassmentId),
+                    setValue(oIncidentId),
+                    setValue(ImmediateAction[i].T3LB13),
+                    setValue(ImmediateAction[i].ISDEL)
                 ]);
             }
-
+        }
+        }
             // Incident Type
+            if(validateArray(aIncidentType)){
             for (let i=0;i < aIncidentType.length;i++){
-                result = await tx.run(`call "prCreateUpdateIncidentType"(?,?,?,?)`,[
-                    setvalue(aIncidentType[i].ICTID),
-                    setvalue(oIncidentId),
-                    setvalue(aIncidentType[i].INCTY),
-                    setvalue(aIncidentType[i].ISDEL)
+                result = await tx.run(`call prCreateUpdateIncidentType(?,?,?,?)`,[
+                    setValue(aIncidentType[i].ICTID),
+                    setValue(oIncidentId),
+                    setValue(aIncidentType[i].INCTY),
+                    setValue(aIncidentType[i].ISDEL)
                 ]);
                 if(aIncidentType[i].ISDEL === '1'){
-                    result = await tx.run(`call "PrDeleteIncTypeRecords"(?,?)`,[
-                        setvalue(oIncidentId),
-                        setvalue(aIncidentType[i].INCTY)
+                    result = await tx.run(`call prDeleteIncTypeRecords(?,?)`,[
+                        setValue(oIncidentId),
+                        setValue(aIncidentType[i].INCTY)
                     ]);
                 }
             }
+        }
 
             // Reported By
-            result = await tx.run(`call "prCreateUpdateReportedByDetails"(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,[
-                setvalue(oReportedBy.REPID),
-                setvalue(oIncidentId),
-                setvalue(oReportedBy.RPLB1),
-                setvalue(oReportedBy.RPLB2),
-                setvalue(oReportedBy.RPLB3),
-                setvalue(oReportedBy.RPLB4),
-                setvalue(oReportedBy.RPLB5),
-                setvalue(oReportedBy.RPLB6),
-                setvalue(oReportedBy.RPLB7),
-                setvalue(oReportedBy.RPLB8),
-                setvalue(oReportedBy.RPLB9),
-                setvalue(oReportedBy.MGRID),
-                setvalue(oReportedBy.RPLB10),
-                setvalue(oReportedBy.RPLB11),
-                setvalue(oReportedBy.RPLB12),
-                setvalue(oReportedBy.RPLB13),
-                setvalue(oReportedBy.RPLB14)
+            if(validateField(oReportedBy.REPID)){
+            result = await tx.run(`call prCreateUpdateReportedByDetails(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,[
+                setValue(oReportedBy.REPID),
+                setValue(oIncidentId),
+                setValue(oReportedBy.RPLB1),
+                setValue(oReportedBy.RPLB2),
+                setValue(oReportedBy.RPLB3),
+                setValue(oReportedBy.RPLB4),
+                setValue(oReportedBy.RPLB5),
+                setValue(oReportedBy.RPLB6),
+                setValue(oReportedBy.RPLB7),
+                setValue(oReportedBy.RPLB8),
+                setValue(oReportedBy.RPLB9),
+                setValue(oReportedBy.MGRID),
+                setValue(oReportedBy.RPLB10),
+                setValue(oReportedBy.RPLB11),
+                setValue(oReportedBy.RPLB12),
+                setValue(oReportedBy.RPLB13),
+                setValue(oReportedBy.RPLB14)
             ]);
+        }
 
             // Near Miss Tab
-            result = await tx.run(`call "prCreateUpdateNearMissDetails"(?,?,?,?,?,?,?,?,?)`,[
-                setvalue(oNearMissDetails.NRMID),
-                setvalue(oIncidentId),
-                setvalue(oNearMissDetails.T1LB3),
-                setvalue(oNearMissDetails.T1LB4),
-                setvalue(oNearMissDetails.T1LB5),
-                setvalue(oNearMissDetails.T1LB6),
-                setvalue(oNearMissDetails.T1LB7),
-                setvalue(oNearMissDetails.T1LB8)              
+            if(validateField(oNearMissDetails.NRMID)){
+            result = await tx.run(`call prCreateUpdateNearMissDetails(?,?,?,?,?,?,?,?,?)`,[
+                setValue(oNearMissDetails.NRMID),
+                setValue(oIncidentId),
+                setValue(oNearMissDetails.T1LB3),
+                setValue(oNearMissDetails.T1LB4),
+                setValue(oNearMissDetails.T1LB5),
+                setValue(oNearMissDetails.T1LB6),
+                setValue(oNearMissDetails.T1LB7),
+                setValue(oNearMissDetails.T1LB8)              
             ]);
 
             oNearMissId = oNearMissDetails.NRMID == 0 ? await getSequenceNumber("INC_T_NRMIS","NRMID") : oNearMissDetails.NRMID;
 
             // Near miss type
             let NearMissType = oNearMissDetails.NearMissType;
+            if(validateArray(NearMissType)){
             for (let i=0;i < NearMissType.length;i++){
-                result = await tx.run(`call "prCreateUpdateNearMissType"(?,?,?,?,?)`,[
-                    setvalue(NearMissType[i].NMTID),
-                    setvalue(oIncidentId),
-                    setvalue(oNearMissId),
-                    setvalue(NearMissType[i].T1LB1),
-                    setvalue(NearMissType[i].ISDEL)
+                result = await tx.run(`call prCreateUpdateNearMissType(?,?,?,?,?)`,[
+                    setValue(NearMissType[i].NMTID),
+                    setValue(oIncidentId),
+                    setValue(oNearMissId),
+                    setValue(NearMissType[i].T1LB1),
+                    setValue(NearMissType[i].ISDEL)
                 ]);
             }
+        }
 
             // Near miss potential
             let NearMissPotential = oNearMissDetails.NearMissPotential;
+            if(validateArray(NearMissPotential)){
             for (let i=0;i < NearMissPotential.length;i++){
-                result = await tx.run(`call "prCreateUpdatePotentialNearMiss"(?,?,?,?,?)`,[
-                    setvalue(NearMissPotential[i].NMPID),
-                    setvalue(oIncidentId),
-                    setvalue(oNearMissId),
-                    setvalue(NearMissPotential[i].T1LB2),
-                    setvalue(NearMissPotential[i].ISDEL)
+                result = await tx.run(`call prCreateUpdatePotentialNearMiss(?,?,?,?,?)`,[
+                    setValue(NearMissPotential[i].NMPID),
+                    setValue(oIncidentId),
+                    setValue(oNearMissId),
+                    setValue(NearMissPotential[i].T1LB2),
+                    setValue(NearMissPotential[i].ISDEL)
                 ]);
             }
+        }
+    }
 
             // Ergonomics Tab
             if (validateField(oErgonomics.ERGID)) {
-                result = await tx.run(`call "prCreateUpdateErgonomics"(?,?,?,?,?,?,?,?,?,?,?,?,?)`,[
-                    setvalue(oErgonomics.ERGID),
-                    setvalue(oIncidentId),
-                    setvalue(oErgonomics.T1LB3),
-                    setvalue(oErgonomics.T1LB4),
-                    setvalue(oErgonomics.T2LB1),
-                    setvalue(oErgonomics.T2LB2),
-                    setvalue(oErgonomics.T2LB3),
-                    setvalue(oErgonomics.T2LB4),
-                    setvalue(oErgonomics.T2LB5),
-                    setvalue(oErgonomics.T2LB6),
-                    setvalue(oErgonomics.T3LB1),
-                    setvalue(oErgonomics.T3LB2),
-                    setvalue(oErgonomics.T3LB3)
+                result = await tx.run(`call prCreateUpdateErgonomics(?,?,?,?,?,?,?,?,?,?,?,?,?)`,[
+                    setValue(oErgonomics.ERGID),
+                    setValue(oIncidentId),
+                    setValue(oErgonomics.T1LB3),
+                    setValue(oErgonomics.T1LB4),
+                    setValue(oErgonomics.T2LB1),
+                    setValue(oErgonomics.T2LB2),
+                    setValue(oErgonomics.T2LB3),
+                    setValue(oErgonomics.T2LB4),
+                    setValue(oErgonomics.T2LB5),
+                    setValue(oErgonomics.T2LB6),
+                    setValue(oErgonomics.T3LB1),
+                    setValue(oErgonomics.T3LB2),
+                    setValue(oErgonomics.T3LB3)
                 ]);
 
                 oErgonomicId = oErgonomics.ERGID == 0 ? await getSequenceNumber("INC_T_ERGTY","IPLID") : oErgonomics.ERGID; 
 
                 let ErgonomicsType = oErgonomics.ErgonomicsType;
-
+                if(validateArray(ErgonomicsType)){
                 for (let i=0;i < ErgonomicsType.length;i++){
-                    result = await tx.run(`call "prCreateUpdateErgonomicsTypes"(?,?,?,?,?)`,[
-                        setvalue(ErgonomicsType[i].EGTID),
-                        setvalue(oIncidentId),
-                        setvalue(oErgonomicId),
-                        setvalue(ErgonomicsType[i].T1LB1),
-                        setvalue(ErgonomicsType[i].ISDEL)
+                    result = await tx.run(`call prCreateUpdateErgonomicsTypes(?,?,?,?,?)`,[
+                        setValue(ErgonomicsType[i].EGTID),
+                        setValue(oIncidentId),
+                        setValue(oErgonomicId),
+                        setValue(ErgonomicsType[i].T1LB1),
+                        setValue(ErgonomicsType[i].ISDEL)
                     ]);
                 }
+            }
 
                 // Ergonomics type which are most applicable
                 let ErgonomicsMAType = oErgonomics.ErgonomicsMAType;
-
+                if(validateArray(ErgonomicsMAType)){
                 for (let i=0;i < ErgonomicsMAType.length;i++){
-                    result = await tx.run(`call "prCreateUpdateErgonomicsMostApplicableTypes"(?,?,?,?,?)`,[
-                        setvalue(ErgonomicsMAType[i].EMAID),
-                        setvalue(oIncidentId),
-                        setvalue(oErgonomicId),
-                        setvalue(ErgonomicsMAType[i].T1LB2),
-                        setvalue(ErgonomicsMAType[i].ISDEL)
+                    result = await tx.run(`call prCreateUpdateErgonomicsMostApplicableTypes(?,?,?,?,?)`,[
+                        setValue(ErgonomicsMAType[i].EMAID),
+                        setValue(oIncidentId),
+                        setValue(oErgonomicId),
+                        setValue(ErgonomicsMAType[i].T1LB2),
+                        setValue(ErgonomicsMAType[i].ISDEL)
                     ]);
                 }
-
+            }
             }
 
             // Property Damage
-            for (let i=0;i < ErgonomicsMAType.length;i++){
-                result = await tx.run(`call "prCreateUpdatePropertyEquipmentDamage"(?,?,?,?,?,?,?,?,?,?,?,?,?)`,[
-                    setvalue(aPropertyEquipment[i].PEDID),
-                    setvalue(oIncidentId),
-                    setvalue(aPropertyEquipment[i].T1LB2),
-                    setvalue(aPropertyEquipment[i].T1LB3),
-                    setvalue(aPropertyEquipment[i].T1LB4),
-                    setvalue(aPropertyEquipment[i].T1LB5),
-                    setvalue(aPropertyEquipment[i].T1LB6),
-                    setvalue(aPropertyEquipment[i].T1LB7),
-                    setvalue(aPropertyEquipment[i].T1LB8),
-                    setvalue(aPropertyEquipment[i].T1LB9),
-                    setvalue(aPropertyEquipment[i].T1LB10),
-                    setvalue(aPropertyEquipment[i].T1LB11),
-                    setvalue(aPropertyEquipment[i].T1LB12)
+            if(validateArray(aPropertyEquipment)){
+            for (let i=0;i < aPropertyEquipment.length;i++){
+                result = await tx.run(`call prCreateUpdatePropertyEquipmentDamage(?,?,?,?,?,?,?,?,?,?,?,?,?)`,[
+                    setValue(aPropertyEquipment[i].PEDID),
+                    setValue(oIncidentId),
+                    setValue(aPropertyEquipment[i].T1LB2),
+                    setValue(aPropertyEquipment[i].T1LB3),
+                    setValue(aPropertyEquipment[i].T1LB4),
+                    setValue(aPropertyEquipment[i].T1LB5),
+                    setValue(aPropertyEquipment[i].T1LB6),
+                    setValue(aPropertyEquipment[i].T1LB7),
+                    setValue(aPropertyEquipment[i].T1LB8),
+                    setValue(aPropertyEquipment[i].T1LB9),
+                    setValue(aPropertyEquipment[i].T1LB10),
+                    setValue(aPropertyEquipment[i].T1LB11),
+                    setValue(aPropertyEquipment[i].T1LB12)
                 ]);
 
                 oPropEqpDmgId = aPropertyEquipment[i].PEDID == 0 ? await getSequenceNumber("INC_T_PEDMG","PEDID") : aPropertyEquipment[i].PEDID; 
 
                 // Property Type
                 let PropertyType = aPropertyEquipment[i].PropertyType;
+                if(validateArray(PropertyType)){
                 for (let j=0;j < PropertyType.length;j++){
-                    result = await tx.run(`call "prCreateUpdatePropertyType"(?,?,?,?,?)`,[
-                        setvalue(PropertyType[j].PTYID),
-                        setvalue(oIncidentId),
-                        setvalue(oPropEqpDmgId),
-                        setvalue(PropertyType[j].T1LB1),
-                        setvalue(PropertyType[j].ISDEL)
+                    result = await tx.run(`call prCreateUpdatePropertyType(?,?,?,?,?)`,[
+                        setValue(PropertyType[j].PTYID),
+                        setValue(oIncidentId),
+                        setValue(oPropEqpDmgId),
+                        setValue(PropertyType[j].T1LB1),
+                        setValue(PropertyType[j].ISDEL)
                     ]);
                 }
             }
-
+            }
+         }
             // Other
             if (validateField(oOther.OTHID)) {
-                result = await tx.run(`call "prCreateUpdateOtherIncidentType"(?,?,?,?,?)`,[
-                    setvalue(oOther.OTHID),
-                    setvalue(oIncidentId),
-                    setvalue(oOther.T1LB1),
-                    setvalue(oOther.T1LB2),
-                    setvalue(oOther.T1LB3)
+                result = await tx.run(`call prCreateUpdateOtherIncidentType(?,?,?,?,?)`,[
+                    setValue(oOther.OTHID),
+                    setValue(oIncidentId),
+                    setValue(oOther.T1LB1),
+                    setValue(oOther.T1LB2),
+                    setValue(oOther.T1LB3)
                 ]);
             }
 
             // Fire / Explosion
             if (validateField(oFireExplosionDetails.FEPID)) {
-                result = await tx.run(`call "prCreateUpdateFireExplosionDetails"(?,?,?,?,?,?,?,?,?,?,?,?,?)`,[
-                    setvalue(oFireExplosionDetails.FEPID),
-                    setvalue(oIncidentId),
-                    setvalue(oFireExplosionDetails.T1LB1),
-                    setvalue(oFireExplosionDetails.T1LB2),
-                    setvalue(oFireExplosionDetails.T1LB3),
-                    setvalue(oFireExplosionDetails.T1LB4),
-                    setvalue(oFireExplosionDetails.T1LB5),
-                    setvalue(oFireExplosionDetails.T1LB6),
-                    setvalue(oFireExplosionDetails.T1LB7),
-                    setvalue(oFireExplosionDetails.T1LB8),
-                    setvalue(oFireExplosionDetails.T1LB9),
-                    setvalue(oFireExplosionDetails.T1LB10),
-                    setvalue(oFireExplosionDetails.T1LB11)
+                result = await tx.run(`call prCreateUpdateFireExplosionDetails(?,?,?,?,?,?,?,?,?,?,?,?,?)`,[
+                    setValue(oFireExplosionDetails.FEPID),
+                    setValue(oIncidentId),
+                    setValue(oFireExplosionDetails.T1LB1),
+                    setValue(oFireExplosionDetails.T1LB2),
+                    setValue(oFireExplosionDetails.T1LB3),
+                    setValue(oFireExplosionDetails.T1LB4),
+                    setValue(oFireExplosionDetails.T1LB5),
+                    setValue(oFireExplosionDetails.T1LB6),
+                    setValue(oFireExplosionDetails.T1LB7),
+                    setValue(oFireExplosionDetails.T1LB8),
+                    setValue(oFireExplosionDetails.T1LB9),
+                    setValue(oFireExplosionDetails.T1LB10),
+                    setValue(oFireExplosionDetails.T1LB11)
                 ]);
             }
 
             // Exposure
             if (validateField(oExposureDetails.EXPID)) {
-                result = await tx.run(`call "prCreateUpdateExposureTab"(?,?,?,?,?,?,?,?,?,?,?,?,?)`,[
-                    setvalue(oExposureDetails.EXPID),
-                    setvalue(oIncidentId),
-                    setvalue(oExposureDetails.T1LB1),
-                    setvalue(oExposureDetails.T1LB2),
-                    setvalue(oExposureDetails.T1LB3),
-                    setvalue(oExposureDetails.T1LB5),
-                    setvalue(oExposureDetails.T1LB6),
-                    setvalue(oExposureDetails.T1LB8),
-                    setvalue(oExposureDetails.T1LB9),
-                    setvalue(oExposureDetails.T1LB10),
-                    setvalue(oExposureDetails.T1LB11),
-                    setvalue(oExposureDetails.T1LB12),
-                    setvalue(oExposureDetails.T1LB13)
+                result = await tx.run(`call prCreateUpdateExposureTab(?,?,?,?,?,?,?,?,?,?,?,?,?)`,[
+                    setValue(oExposureDetails.EXPID),
+                    setValue(oIncidentId),
+                    setValue(oExposureDetails.T1LB1),
+                    setValue(oExposureDetails.T1LB2),
+                    setValue(oExposureDetails.T1LB3),
+                    setValue(oExposureDetails.T1LB5),
+                    setValue(oExposureDetails.T1LB6),
+                    setValue(oExposureDetails.T1LB8),
+                    setValue(oExposureDetails.T1LB9),
+                    setValue(oExposureDetails.T1LB10),
+                    setValue(oExposureDetails.T1LB11),
+                    setValue(oExposureDetails.T1LB12),
+                    setValue(oExposureDetails.T1LB13)
                 ]);
 
                 oExposureId = oExposureDetails.EXPID == 0 ? await getSequenceNumber("INC_T_EXPSR","EXPID") : oExposureDetails.EXPID; 
 
                 let RouteExposure = oExposureDetails.RouteExposure;
+                if(validateArray(RouteExposure)){
                 for (let i=0;i < RouteExposure.length;i++){
-                    result = await tx.run(`call "prCreateUpdateRouteExposure"(?,?,?,?,?)`,[
-                        setvalue(RouteExposure[i].EXRID),
-                        setvalue(oExposureId),
-                        setvalue(oIncidentId),
-                        setvalue(RouteExposure[i].T1LB7),
-                        setvalue(RouteExposure[i].ISDEL)
-                    ]);
-                }
-
-                let PPE = oExposureDetails.PPE;
-                for (let i=0;i < PPE.length;i++){
-                    result = await tx.run(`call "prCreateUpdatePPE"(?,?,?,?,?)`,[
-                        setvalue(PPE[i].PPEID),
-                        setvalue(oExposureId),
-                        setvalue(oIncidentId),
-                        setvalue(PPE[i].T1LB4),
-                        setvalue(PPE[i].ISDEL)
+                    result = await tx.run(`call prCreateUpdateRouteExposure(?,?,?,?,?)`,[
+                        setValue(RouteExposure[i].EXRID),
+                        setValue(oExposureId),
+                        setValue(oIncidentId),
+                        setValue(RouteExposure[i].T1LB7),
+                        setValue(RouteExposure[i].ISDEL)
                     ]);
                 }
             }
 
+                let PPE = oExposureDetails.PPE;
+                if(validateArray(PPE)){
+                for (let i=0;i < PPE.length;i++){
+                    result = await tx.run(`call prCreateUpdatePPE(?,?,?,?,?)`,[
+                        setValue(PPE[i].PPEID),
+                        setValue(oExposureId),
+                        setValue(oIncidentId),
+                        setValue(PPE[i].T1LB4),
+                        setValue(PPE[i].ISDEL)
+                    ]);
+                }
+            }
+            }
+
             // Environment Tab
             if (validateField(oEnvironmentalDetails.ENVID)) {
-                result = await tx.run(`call "prCreateUpdateEnvironmentalDetails"(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,[
-                    setvalue(oEnvironmentalDetails.ENVID),
-                    setvalue(oIncidentId),
-                    setvalue(oEnvironmentalDetails.T1LB1),
-                    setvalue(oEnvironmentalDetails.T1LB3),
-                    setvalue(oEnvironmentalDetails.T1LB4),
-                    setvalue(oEnvironmentalDetails.T1LB5),
-                    setvalue(oEnvironmentalDetails.T1LB6),
-                    setvalue(oEnvironmentalDetails.T1LB7),
-                    setvalue(oEnvironmentalDetails.T1LB8),
-                    setvalue(oEnvironmentalDetails.T1LB9),
-                    setvalue(oEnvironmentalDetails.T1LB10),
-                    setvalue(oEnvironmentalDetails.T1LB11),
-                    setvalue(oEnvironmentalDetails.T1LB12),
-                    setvalue(oEnvironmentalDetails.T1LB13),
-                    setvalue(oEnvironmentalDetails.T1LB14),
-                    setvalue(oEnvironmentalDetails.T1LB15),
-                    setvalue(oEnvironmentalDetails.T1LB17),
-                    setvalue(oEnvironmentalDetails.T1LB18),
-                    setvalue(oEnvironmentalDetails.T1LB19),
-                    setvalue(oEnvironmentalDetails.T1LB20),
-                    setvalue(oEnvironmentalDetails.T1LB21)
+                result = await tx.run(`call prCreateUpdateEnvironmentalDetails(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,[
+                    setValue(oEnvironmentalDetails.ENVID),
+                    setValue(oIncidentId),
+                    setValue(oEnvironmentalDetails.T1LB1),
+                    setValue(oEnvironmentalDetails.T1LB3),
+                    setValue(oEnvironmentalDetails.T1LB4),
+                    setValue(oEnvironmentalDetails.T1LB5),
+                    setValue(oEnvironmentalDetails.T1LB6),
+                    setValue(oEnvironmentalDetails.T1LB7),
+                    setValue(oEnvironmentalDetails.T1LB8),
+                    setValue(oEnvironmentalDetails.T1LB9),
+                    setValue(oEnvironmentalDetails.T1LB10),
+                    setValue(oEnvironmentalDetails.T1LB11),
+                    setValue(oEnvironmentalDetails.T1LB12),
+                    setValue(oEnvironmentalDetails.T1LB13),
+                    setValue(oEnvironmentalDetails.T1LB14),
+                    setValue(oEnvironmentalDetails.T1LB15),
+                    setValue(oEnvironmentalDetails.T1LB17),
+                    setValue(oEnvironmentalDetails.T1LB18),
+                    setValue(oEnvironmentalDetails.T1LB19),
+                    setValue(oEnvironmentalDetails.T1LB20),
+                    setValue(oEnvironmentalDetails.T1LB21)
                 ]);
 
                 
@@ -659,198 +701,205 @@ module.exports = cds.service.impl(function (){
 
                 // Release To
                 let ReleaseTo = oEnvironmentalDetails.ReleaseTo;
+                if(validateArray(ReleaseTo)){
                 for (let i=0;i < ReleaseTo.length;i++){
-                    result = await tx.run(`call "prCreateUpdateReleaseTo"(?,?,?,?,?)`,[
-                        setvalue(ReleaseTo[i].RLSID),
-                        setvalue(oEnvironmentId),
-                        setvalue(oIncidentId),
-                        setvalue(ReleaseTo[i].T1LB2),
-                        setvalue(ReleaseTo[i].ISDEL)
+                    result = await tx.run(`call prCreateUpdateReleaseTo(?,?,?,?,?)`,[
+                        setValue(ReleaseTo[i].RLSID),
+                        setValue(oEnvironmentId),
+                        setValue(oIncidentId),
+                        setValue(ReleaseTo[i].T1LB2),
+                        setValue(ReleaseTo[i].ISDEL)
                     ]);
                 }
+            }
 
                 // Enviormental Impact
                 let EnviormentalImpact = oEnvironmentalDetails.EnviormentalImpact;
+                if(validateArray(EnviormentalImpact)){
                 for (let i=0;i < EnviormentalImpact.length;i++){
-                    result = await tx.run(`call "prCreateUpdateEnvImpact"(?,?,?,?,?)`,[
-                        setvalue(EnviormentalImpact[i].EIMID),
-                        setvalue(oEnvironmentId),
-                        setvalue(oIncidentId),
-                        setvalue(EnviormentalImpact[i].T1LB16),
-                        setvalue(EnviormentalImpact[i].ISDEL)
+                    result = await tx.run(`call prCreateUpdateEnvImpact(?,?,?,?,?)`,[
+                        setValue(EnviormentalImpact[i].EIMID),
+                        setValue(oEnvironmentId),
+                        setValue(oIncidentId),
+                        setValue(EnviormentalImpact[i].T1LB16),
+                        setValue(EnviormentalImpact[i].ISDEL)
                     ]);
                 }
+            }
 
                 // Corrective Actions
                 let CorrectiveActions = oEnvironmentalDetails.CorrectiveActions;
-                for (let i=0;i < EnviormentalImpact.length;i++){
-                    result = await tx.run(`call "prCreateUpdateEnvironmentCorrectiveActions"(?,?,?,?,?,?)`,[
-                        setvalue(CorrectiveActions[i].ECAID),
-                        setvalue(oEnvironmentId),
-                        setvalue(oIncidentId),
-                        setvalue(CorrectiveActions[i].T2LB2),
-                        setvalue(CorrectiveActions[i].T2LB3),
+                if(validateArray(CorrectiveActions)){
+                for (let i=0;i < CorrectiveActions.length;i++){
+                    result = await tx.run(`call prCreateUpdateEnvironmentCorrectiveActions(?,?,?,?,?,?)`,[
+                        setValue(CorrectiveActions[i].ECAID),
+                        setValue(oEnvironmentId),
+                        setValue(oIncidentId),
+                        setValue(CorrectiveActions[i].T2LB2),
+                        setValue(CorrectiveActions[i].T2LB3),
                         setValue(CorrectiveActions[i].T2LB4)
                     ]);
                 }
             }
+            }
             // Custom Incident Type 1
-            if (common.validateField(oCustomIncType1.CSTID)) {
-                result = await tx.run(`call "prCreateUpdateCustomIncidentType_1"(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,[
-                    setvalue(oCustomIncType1.CSTID),
-                    setvalue(oIncidentId),
-                    setvalue(oCustomIncType1.T1LB1),
-                    setvalue(oCustomIncType1.T1LB2),
-                    setvalue(oCustomIncType1.T1LB3),
-                    setvalue(oCustomIncType1.T1LB4),
-                    setvalue(oCustomIncType1.T1LB5),
-                    setvalue(oCustomIncType1.T1LB6),
-                    setvalue(oCustomIncType1.T1LB7),
-                    setvalue(oCustomIncType1.T1LB8),
-                    setvalue(oCustomIncType1.T1LB9),
-                    setvalue(oCustomIncType1.T1LB10),
-                    setvalue(oCustomIncType1.T1LB11),
-                    setvalue(oCustomIncType1.T1LB12),
-                    setvalue(oCustomIncType1.T2LB1),
-                    setvalue(oCustomIncType1.T2LB2),
-                    setvalue(oCustomIncType1.T2LB3),
-                    setvalue(oCustomIncType1.T2LB4),
-                    setvalue(oCustomIncType1.T2LB5),
-                    setvalue(oCustomIncType1.T2LB6),
-                    setvalue(oCustomIncType1.T3LB1),
-                    setvalue(oCustomIncType1.T3LB2)
+            if (validateField(oCustomIncType1.CSTID)) {
+                result = await tx.run(`call prCreateUpdateCustomIncidentType_1(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,[
+                    setValue(oCustomIncType1.CSTID),
+                    setValue(oIncidentId),
+                    setValue(oCustomIncType1.T1LB1),
+                    setValue(oCustomIncType1.T1LB2),
+                    setValue(oCustomIncType1.T1LB3),
+                    setValue(oCustomIncType1.T1LB4),
+                    setValue(oCustomIncType1.T1LB5),
+                    setValue(oCustomIncType1.T1LB6),
+                    setValue(oCustomIncType1.T1LB7),
+                    setValue(oCustomIncType1.T1LB8),
+                    setValue(oCustomIncType1.T1LB9),
+                    setValue(oCustomIncType1.T1LB10),
+                    setValue(oCustomIncType1.T1LB11),
+                    setValue(oCustomIncType1.T1LB12),
+                    setValue(oCustomIncType1.T2LB1),
+                    setValue(oCustomIncType1.T2LB2),
+                    setValue(oCustomIncType1.T2LB3),
+                    setValue(oCustomIncType1.T2LB4),
+                    setValue(oCustomIncType1.T2LB5),
+                    setValue(oCustomIncType1.T2LB6),
+                    setValue(oCustomIncType1.T3LB1),
+                    setValue(oCustomIncType1.T3LB2)
                 ]);
             }
             // Custom Incident Type 2
-            if (common.validateField(oCustomIncType2.CSTID)) {
-                result = await tx.run(`call "prCreateUpdateCustomIncidentType_2"(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,[
-                    setvalue(oCustomIncType2.CSTID),
-                    setvalue(oIncidentId),
-                    setvalue(oCustomIncType2.T1LB1),
-                    setvalue(oCustomIncType2.T1LB2),
-                    setvalue(oCustomIncType2.T1LB3),
-                    setvalue(oCustomIncType2.T1LB4),
-                    setvalue(oCustomIncType2.T1LB5),
-                    setvalue(oCustomIncType2.T1LB6),
-                    setvalue(oCustomIncType2.T1LB7),
-                    setvalue(oCustomIncType2.T1LB8),
-                    setvalue(oCustomIncType2.T1LB9),
-                    setvalue(oCustomIncType2.T1LB10),
-                    setvalue(oCustomIncType2.T1LB11),
-                    setvalue(oCustomIncType2.T1LB12),
-                    setvalue(oCustomIncType2.T2LB1),
-                    setvalue(oCustomIncType2.T2LB2),
-                    setvalue(oCustomIncType2.T2LB3),
-                    setvalue(oCustomIncType2.T2LB4),
-                    setvalue(oCustomIncType2.T2LB5),
-                    setvalue(oCustomIncType2.T2LB6),
-                    setvalue(oCustomIncType2.T3LB1),
-                    setvalue(oCustomIncType2.T3LB2)
+            if (validateField(oCustomIncType2.CSTID)) {
+                result = await tx.run(`call prCreateUpdateCustomIncidentType_2(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,[
+                    setValue(oCustomIncType2.CSTID),
+                    setValue(oIncidentId),
+                    setValue(oCustomIncType2.T1LB1),
+                    setValue(oCustomIncType2.T1LB2),
+                    setValue(oCustomIncType2.T1LB3),
+                    setValue(oCustomIncType2.T1LB4),
+                    setValue(oCustomIncType2.T1LB5),
+                    setValue(oCustomIncType2.T1LB6),
+                    setValue(oCustomIncType2.T1LB7),
+                    setValue(oCustomIncType2.T1LB8),
+                    setValue(oCustomIncType2.T1LB9),
+                    setValue(oCustomIncType2.T1LB10),
+                    setValue(oCustomIncType2.T1LB11),
+                    setValue(oCustomIncType2.T1LB12),
+                    setValue(oCustomIncType2.T2LB1),
+                    setValue(oCustomIncType2.T2LB2),
+                    setValue(oCustomIncType2.T2LB3),
+                    setValue(oCustomIncType2.T2LB4),
+                    setValue(oCustomIncType2.T2LB5),
+                    setValue(oCustomIncType2.T2LB6),
+                    setValue(oCustomIncType2.T3LB1),
+                    setValue(oCustomIncType2.T3LB2)
                 ]);
             }
             // Custom Incident Type 3
-            if (common.validateField(oCustomIncType3.CSTID)) {
-                result = await tx.run(`call "prCreateUpdateCustomIncidentType_3"(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,[
-                    setvalue(oCustomIncType3.CSTID),
-                    setvalue(oIncidentId),
-                    setvalue(oCustomIncType3.T1LB1),
-                    setvalue(oCustomIncType3.T1LB2),
-                    setvalue(oCustomIncType3.T1LB3),
-                    setvalue(oCustomIncType3.T1LB4),
-                    setvalue(oCustomIncType3.T1LB5),
-                    setvalue(oCustomIncType3.T1LB6),
-                    setvalue(oCustomIncType3.T1LB7),
-                    setvalue(oCustomIncType3.T1LB8),
-                    setvalue(oCustomIncType3.T1LB9),
-                    setvalue(oCustomIncType3.T1LB10),
-                    setvalue(oCustomIncType3.T1LB11),
-                    setvalue(oCustomIncType3.T1LB12),
-                    setvalue(oCustomIncType3.T2LB1),
-                    setvalue(oCustomIncType3.T2LB2),
-                    setvalue(oCustomIncType3.T2LB3),
-                    setvalue(oCustomIncType3.T2LB4),
-                    setvalue(oCustomIncType3.T2LB5),
-                    setvalue(oCustomIncType3.T2LB6),
-                    setvalue(oCustomIncType3.T3LB1),
-                    setvalue(oCustomIncType3.T3LB2)
+            if (validateField(oCustomIncType3.CSTID)) {
+                result = await tx.run(`call prCreateUpdateCustomIncidentType_3(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,[
+                    setValue(oCustomIncType3.CSTID),
+                    setValue(oIncidentId),
+                    setValue(oCustomIncType3.T1LB1),
+                    setValue(oCustomIncType3.T1LB2),
+                    setValue(oCustomIncType3.T1LB3),
+                    setValue(oCustomIncType3.T1LB4),
+                    setValue(oCustomIncType3.T1LB5),
+                    setValue(oCustomIncType3.T1LB6),
+                    setValue(oCustomIncType3.T1LB7),
+                    setValue(oCustomIncType3.T1LB8),
+                    setValue(oCustomIncType3.T1LB9),
+                    setValue(oCustomIncType3.T1LB10),
+                    setValue(oCustomIncType3.T1LB11),
+                    setValue(oCustomIncType3.T1LB12),
+                    setValue(oCustomIncType3.T2LB1),
+                    setValue(oCustomIncType3.T2LB2),
+                    setValue(oCustomIncType3.T2LB3),
+                    setValue(oCustomIncType3.T2LB4),
+                    setValue(oCustomIncType3.T2LB5),
+                    setValue(oCustomIncType3.T2LB6),
+                    setValue(oCustomIncType3.T3LB1),
+                    setValue(oCustomIncType3.T3LB2)
                 ]);
             }
             // Custom Incident Type 4
-            if (common.validateField(oCustomIncType4.CSTID)) {
-                result = await tx.run(`call "prCreateUpdateCustomIncidentType_4"(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,[
-                    setvalue(oCustomIncType4.CSTID),
-                    setvalue(oIncidentId),
-                    setvalue(oCustomIncType4.T1LB1),
-                    setvalue(oCustomIncType4.T1LB2),
-                    setvalue(oCustomIncType4.T1LB3),
-                    setvalue(oCustomIncType4.T1LB4),
-                    setvalue(oCustomIncType4.T1LB5),
-                    setvalue(oCustomIncType4.T1LB6),
-                    setvalue(oCustomIncType4.T1LB7),
-                    setvalue(oCustomIncType4.T1LB8),
-                    setvalue(oCustomIncType4.T1LB9),
-                    setvalue(oCustomIncType4.T1LB10),
-                    setvalue(oCustomIncType4.T1LB11),
-                    setvalue(oCustomIncType4.T1LB12),
-                    setvalue(oCustomIncType4.T2LB1),
-                    setvalue(oCustomIncType4.T2LB2),
-                    setvalue(oCustomIncType4.T2LB3),
-                    setvalue(oCustomIncType4.T2LB4),
-                    setvalue(oCustomIncType4.T2LB5),
-                    setvalue(oCustomIncType4.T2LB6),
-                    setvalue(oCustomIncType4.T3LB1),
-                    setvalue(oCustomIncType4.T3LB2)
+            if (validateField(oCustomIncType4.CSTID)) {
+                result = await tx.run(`call prCreateUpdateCustomIncidentType_4(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,[
+                    setValue(oCustomIncType4.CSTID),
+                    setValue(oIncidentId),
+                    setValue(oCustomIncType4.T1LB1),
+                    setValue(oCustomIncType4.T1LB2),
+                    setValue(oCustomIncType4.T1LB3),
+                    setValue(oCustomIncType4.T1LB4),
+                    setValue(oCustomIncType4.T1LB5),
+                    setValue(oCustomIncType4.T1LB6),
+                    setValue(oCustomIncType4.T1LB7),
+                    setValue(oCustomIncType4.T1LB8),
+                    setValue(oCustomIncType4.T1LB9),
+                    setValue(oCustomIncType4.T1LB10),
+                    setValue(oCustomIncType4.T1LB11),
+                    setValue(oCustomIncType4.T1LB12),
+                    setValue(oCustomIncType4.T2LB1),
+                    setValue(oCustomIncType4.T2LB2),
+                    setValue(oCustomIncType4.T2LB3),
+                    setValue(oCustomIncType4.T2LB4),
+                    setValue(oCustomIncType4.T2LB5),
+                    setValue(oCustomIncType4.T2LB6),
+                    setValue(oCustomIncType4.T3LB1),
+                    setValue(oCustomIncType4.T3LB2)
                 ]);
             }
             // Custom Incident Type 5
-            if (common.validateField(oCustomIncType5.CSTID)) {
-                result = await tx.run(`call "prCreateUpdateCustomIncidentType_5"(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,[
-                    setvalue(oCustomIncType5.CSTID),
-                    setvalue(oIncidentId),
-                    setvalue(oCustomIncType5.T1LB1),
-                    setvalue(oCustomIncType5.T1LB2),
-                    setvalue(oCustomIncType5.T1LB3),
-                    setvalue(oCustomIncType5.T1LB4),
-                    setvalue(oCustomIncType5.T1LB5),
-                    setvalue(oCustomIncType5.T1LB6),
-                    setvalue(oCustomIncType5.T1LB7),
-                    setvalue(oCustomIncType5.T1LB8),
-                    setvalue(oCustomIncType5.T1LB9),
-                    setvalue(oCustomIncType5.T1LB10),
-                    setvalue(oCustomIncType5.T1LB11),
-                    setvalue(oCustomIncType5.T1LB12),
-                    setvalue(oCustomIncType5.T2LB1),
-                    setvalue(oCustomIncType5.T2LB2),
-                    setvalue(oCustomIncType5.T2LB3),
-                    setvalue(oCustomIncType5.T2LB4),
-                    setvalue(oCustomIncType5.T2LB5),
-                    setvalue(oCustomIncType5.T2LB6),
-                    setvalue(oCustomIncType5.T3LB1),
-                    setvalue(oCustomIncType5.T3LB2)
+            if (validateField(oCustomIncType5.CSTID)) {
+                result = await tx.run(`call prCreateUpdateCustomIncidentType_5(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,[
+                    setValue(oCustomIncType5.CSTID),
+                    setValue(oIncidentId),
+                    setValue(oCustomIncType5.T1LB1),
+                    setValue(oCustomIncType5.T1LB2),
+                    setValue(oCustomIncType5.T1LB3),
+                    setValue(oCustomIncType5.T1LB4),
+                    setValue(oCustomIncType5.T1LB5),
+                    setValue(oCustomIncType5.T1LB6),
+                    setValue(oCustomIncType5.T1LB7),
+                    setValue(oCustomIncType5.T1LB8),
+                    setValue(oCustomIncType5.T1LB9),
+                    setValue(oCustomIncType5.T1LB10),
+                    setValue(oCustomIncType5.T1LB11),
+                    setValue(oCustomIncType5.T1LB12),
+                    setValue(oCustomIncType5.T2LB1),
+                    setValue(oCustomIncType5.T2LB2),
+                    setValue(oCustomIncType5.T2LB3),
+                    setValue(oCustomIncType5.T2LB4),
+                    setValue(oCustomIncType5.T2LB5),
+                    setValue(oCustomIncType5.T2LB6),
+                    setValue(oCustomIncType5.T3LB1),
+                    setValue(oCustomIncType5.T3LB2)
                 ]);
             }
 
             // Creating Event Summary
 			if (oIncidentDetails.ISAVE === '0') {
-                result = await tx.run(`CALL "prCreateEventSummary"(?,?,?,?,?)`, [oIncidentId, 'Incident', 'Created', '',887]);
+                result = await tx.run(`CALL prCreateEventSummary(?,?,?,?,?)`, [oIncidentId, 'Incident', 'Created', '',887]);
 			}
             
             // Creating Audit log
-            result = await tx.run(`CALL "prCreateAuditLog"(?,?,?,?,?,?)`, [oIncidentId, oIncidentId, 'Incident Id', 'createIncident','Safety View',JSON.stringify(oInput)]);
+            result = await tx.run(`CALL prCreateAuditLog(?,?,?,?,?,?)`, [oIncidentId, oIncidentId, 'Incident Id', 'createIncident','Safety View',JSON.stringify(oInput)]);
 			
             returnObj = {
 				"IncidentId": oIncidentId.toString(),
 				"IncidentNumber":IncidentNumber,
-				"AttachmentPath" : folderpath + filename
+				"AttachmentPath" : "folderpath" + "filename"
 			};
 
             // await tx.commit();
             return JSON.stringify(returnObj);
         
-        }catch(error){
+        // }
+    }catch(error){
             try{
                 tx1 = cds.transaction(req);
-                result = await tx1.run(`CALL "prCreateErrorHandling"(?,?,?,?,?)`, ['Report Incident','createIncident',JSON.stringify(oInput),error.toString(),'Backend']);
+                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Report Incident','createIncident',JSON.stringify(oInput),error.toString(),'DB']);
                 console.log(result);
                 await tx1.commit();
             }catch (logError) {

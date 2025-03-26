@@ -7,7 +7,21 @@ function setValue(value){
         return null;
     }
 }
-
+function validateField(value){
+    if(value !== undefined && value !== null && value !== ''){
+        return value;
+    }else{
+        return null;
+    }
+}
+function validateArray(value) {
+    // Check if the value is neither undefined nor null and has elements (length > 0)
+    if ( Array.isArray(value)  && value.length > 0) {
+        return true; // Valid non-empty array
+    } else {
+        return false; // Invalid or empty array
+    }
+}
 async function lPad(str, len) {
     try {
         let s = str.toString();
@@ -21,19 +35,15 @@ async function lPad(str, len) {
 }
 
 
-async function generateIncidentNumber() {
+async function generateIncidentNumber(tx) {
     try {
         let incidentNumber = 0;
         const query = `SELECT INCNUM.NEXTVAL FROM DUMMY`;
         const rs = await tx.run(query);
-
+        
         if (rs.length !== 0) {
-            if (incidentNumber === 0) {
-                incidentNumber = Object.values(rs[0])[0];
-                return 'INC-' + new Date().getFullYear() + '-' + await lPad(incidentNumber, 5);
-            } else {
-                return 'INC-' + new Date().getFullYear() + '-' + await lPad('1', 5);
-            }
+            incidentNumber = Object.values(rs[0])[0];
+            return 'INC-' + new Date().getFullYear() + '-' + await lPad(incidentNumber, 5);
         } 
     } catch (error) {
         console.error('Error retrieving incident number:', error);
@@ -43,6 +53,7 @@ async function generateIncidentNumber() {
 
 async function getSequenceNumber(tableName, columnName) {
     try {
+        console.log(tableName);
         // Step 1: Find the sequence name
         const findSeqQuery = `
             SELECT COLUMN_ID
@@ -81,5 +92,7 @@ module.exports = {
     getSequenceNumber,
     generateIncidentNumber,
     lPad,
-    setValue
+    setValue,
+    validateField,
+    validateArray
   };
