@@ -40,37 +40,37 @@ service IncidentPortalRole1 {
     action b9q2fsan18bqxar0(D4OXYPALUYAIDNSO: LargeString) returns String;
 
     // Reassign Corrective Actions
-    action SGQtBRRcRCGqIj0f(D4OXYPALUYAIDNSO: LargeString) returns String;
+    action SGQtBRRcRCGqIj0f(D4OXYPALUYAIDNSO: String) returns String;
 
     // Update Notification Flag
-    action BLqy0dzTSxOAfOzu(D4OXYPALUYAIDNSO: LargeString) returns String;
+    action BLqy0dzTSxOAfOzu(D4OXYPALUYAIDNSO: String) returns String;
 
     // Assign Incident
-    action Hx4qjNkqmV4n356u(D4OXYPALUYAIDNSO: LargeString) returns String;
+    action Hx4qjNkqmV4n356u(D4OXYPALUYAIDNSO: String) returns String;
 
     // Custom Tab 1
-    action ZDsPAuKh77w3d6G5(D4OXYPALUYAIDNSO: LargeString) returns String;
+    action ZDsPAuKh77w3d6G5(D4OXYPALUYAIDNSO: String) returns String;
 
     // Custom Tab 2
-    action TF70gMmrN0sfaumZ(D4OXYPALUYAIDNSO: LargeString) returns String;
+    action TF70gMmrN0sfaumZ(D4OXYPALUYAIDNSO: String) returns String;
 
     // Custom Tab 3
-    action DOM3jmE2pjtlatjf(D4OXYPALUYAIDNSO: LargeString) returns String;
+    action DOM3jmE2pjtlatjf(D4OXYPALUYAIDNSO: String) returns String;
 
     // Absence Audit
-    action p6dmi7iqbx36prd9(D4OXYPALUYAIDNSO: LargeString) returns String;
+    action p6dmi7iqbx36prd9(D4OXYPALUYAIDNSO: String) returns String;
 
     // Restriction Limitation
-    action cx42wckg3ea6w53v(D4OXYPALUYAIDNSO: LargeString) returns String;
+    action cx42wckg3ea6w53v(D4OXYPALUYAIDNSO: String) returns String;
 
     // RTW Details
-    action NNyi8BHH5WTRSazc(D4OXYPALUYAIDNSO: LargeString) returns String;
+    action NNyi8BHH5WTRSazc(D4OXYPALUYAIDNSO: String) returns String;
 
     // Reopen Incident
-    action bVWeC9j8s27C5hn7(D4OXYPALUYAIDNSO: LargeString) returns String;
+    action bVWeC9j8s27C5hn7(D4OXYPALUYAIDNSO: String) returns String;
 
     // Update Corrective Action Status
-    action lMjgEa7FtVWpKj4g(D4OXYPALUYAIDNSO: LargeString) returns String;
+    action lMjgEa7FtVWpKj4g(D4OXYPALUYAIDNSO: String) returns String;
 
     
 } 
