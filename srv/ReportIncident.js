@@ -4,7 +4,7 @@ const cds = require('@sap/cds');
 let oInput,tx,tx1;
 
 module.exports = cds.service.impl(function (){
-
+    // Craete Incident
     this.on("b9q2fsan18bqxar0", async (req) => {
         try {
             let result,oIncidentId,IncidentNumber = '',oInvPeopleId,oWorkInjuryID,oVehicleId,oWorkplaceHarassmentId,oNearMissId,oErgonomicId,oPropEqpDmgId,oEnvironmentId;
@@ -915,4 +915,351 @@ module.exports = cds.service.impl(function (){
 
         }
     })
+
+    // Delete Involved people
+    this.on("HTFCBsan18bqxhgt", async (req) => {
+        try{
+            let result;
+            payload = req.data;
+            oInput = JSON.parse(payload.D4OXYPALUYAIDNSO);
+            // Extracting Payload
+            let oInvolvedPeople = oInput.InvolvedPeople; 
+
+            tx = cds.transaction(req);
+
+            result = await tx.run(`CALL prUpdateDeleteInvolvedPeopleDetail(?,?)`, [
+                setValue(oInvolvedPeople.IPLID),
+                setValue(oInvolvedPeople.INCID)
+            ]);
+
+            result = await tx.run(`CALL PrUpdateDeleteInvolvedPeopleRelatedData(?,?)`, [
+                setValue(oInvolvedPeople.INCID),
+                setValue(oInvolvedPeople.IPLID)
+            ]);
+            
+            // Creating Audit log
+            result = await tx.run(`CALL prCreateAuditLog(?,?,?,?,?,?)`, [oInvolvedPeople.INCID, oInvolvedPeople.IPLID, 'Involved People Id', 'DeleteInvolvedPeople','Safety View',JSON.stringify(oInput)]);
+
+            returnObj = {
+				"Success" : "Involved People Deleted Successfully."
+			};
+
+            // await tx.commit();
+            return JSON.stringify(returnObj);
+
+        }catch(error){
+            try{
+                tx1 = cds.transaction(req);
+                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Report Incident','DeleteInvolvedPeople',JSON.stringify(oInput),error.toString(),'DB']);
+                console.log(result);
+                await tx1.commit();
+            }catch (logError) {
+                console.error('Error logging failed:', logError);
+            }
+            if (tx) {
+                await tx.rollback();
+            }
+            return req.error({
+                code: 500, 
+                message: error.toString() 
+            });
+
+        }
+    })
+
+    // Delete Injured Body Part
+    this.on("T7QviTG4DnXQDbWo", async (req) => {
+        try{
+            let result;
+            payload = req.data;
+            oInput = JSON.parse(payload.D4OXYPALUYAIDNSO);
+            // Extracting Payload
+            let aBodyPart = oInput.BodyPart; 
+
+            tx = cds.transaction(req);
+
+            if(validateArray(aBodyPart)) {
+                for(let i = 0;i < aBodyPart.length;i++) {
+                    result = await tx.run(`CALL prUpdateDeleteInjuredBodyParts(?,?,?)`, [
+                        setValue(aBodyPart[i].BDPID),
+                        setValue(aBodyPart[i].WPIID),
+                        setValue(aBodyPart[i].INCID)
+                    ]);
+                }
+            }
+            
+            // Creating Audit log
+            result = await tx.run(`CALL prCreateAuditLog(?,?,?,?,?,?)`, [aBodyPart[0].INCID, aBodyPart[0].BDPID, 'Body Part Id', 'DeleteInjuredBodyParts','Safety View',JSON.stringify(oInput)]);
+
+            returnObj = {
+				"Success" : "Body Part Deleted Successfully."
+			};
+
+            // await tx.commit();
+            return JSON.stringify(returnObj);
+
+        }catch(error){
+            try{
+                tx1 = cds.transaction(req);
+                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Report Incident','DeleteInjuredBodyParts',JSON.stringify(oInput),error.toString(),'DB']);
+                console.log(result);
+                await tx1.commit();
+            }catch (logError) {
+                console.error('Error logging failed:', logError);
+            }
+            if (tx) {
+                await tx.rollback();
+            }
+            return req.error({
+                code: 500, 
+                message: error.toString() 
+            });
+
+        }
+    })
+
+    // Delete Property Equipment
+    this.on("NHeYVYv3d2RvARJK", async (req) => {
+        try{
+            let result;
+            payload = req.data;
+            oInput = JSON.parse(payload.D4OXYPALUYAIDNSO);
+            // Extracting Payload
+            let oPropertyEquipmentDamage = oInput.PropertyEquipmentDamage; 
+
+            tx = cds.transaction(req);
+
+            result = await tx.run(`CALL prUpdateDeletePropertyEquipmentDamage(?,?)`, [
+                setValue(oPropertyEquipmentDamage.PEDID),
+                setValue(oPropertyEquipmentDamage.INCID)
+            ]);
+
+            // Creating Audit log
+            result = await tx.run(`CALL prCreateAuditLog(?,?,?,?,?,?)`, [oPropertyEquipmentDamage.INCID, oPropertyEquipmentDamage.PEDID, 'Property-Equipment damage Id', 'DeletePropertyEquipmentDamage','Safety View',JSON.stringify(oInput)]);
+
+            returnObj = {
+				"Success" : "Property-Equipment Deleted Successfully."
+			};
+
+            // await tx.commit();
+            return JSON.stringify(returnObj);
+
+        }catch(error){
+            try{
+                tx1 = cds.transaction(req);
+                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Report Incident','DeletePropertyEquipmentDamage',JSON.stringify(oInput),error.toString(),'DB']);
+                console.log(result);
+                await tx1.commit();
+            }catch (logError) {
+                console.error('Error logging failed:', logError);
+            }
+            if (tx) {
+                await tx.rollback();
+            }
+            return req.error({
+                code: 500, 
+                message: error.toString() 
+            });
+
+        }
+    })
+
+    // Delete Passenger
+    this.on("nDIBCLhbYOJixpTn", async (req) => {
+        try{
+            let result;
+            payload = req.data;
+            oInput = JSON.parse(payload.D4OXYPALUYAIDNSO);
+            // Extracting Payload
+            let oPassenger = oInput.Passenger; 
+
+            tx = cds.transaction(req);
+
+            result = await tx.run(`CALL prUpdateDeletePassenger(?,?,?)`, [
+                setValue(oPassenger.PASID),
+                setValue(oPassenger.MVDID),
+                setValue(oPassenger.INCID)
+            ]);
+
+            // Creating Audit log
+            result = await tx.run(`CALL prCreateAuditLog(?,?,?,?,?,?)`, [oPassenger.INCID, oPassenger.PASID, 'Passenger Id', 'DeletePassenger','Safety View',JSON.stringify(oInput)]);
+
+            returnObj = {
+				"Success" : "Passenger Deleted Successfully."
+			};
+
+            // await tx.commit();
+            return JSON.stringify(returnObj);
+
+        }catch(error){
+            try{
+                tx1 = cds.transaction(req);
+                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Report Incident','DeletePassenger',JSON.stringify(oInput),error.toString(),'DB']);
+                console.log(result);
+                await tx1.commit();
+            }catch (logError) {
+                console.error('Error logging failed:', logError);
+            }
+            if (tx) {
+                await tx.rollback();
+            }
+            return req.error({
+                code: 500, 
+                message: error.toString() 
+            });
+
+        }
+    })
+
+    // Delete Environment Corrective Action
+    this.on("vwx9J4D07CWOGdds", async (req) => {
+        try{
+            let result;
+            payload = req.data;
+            oInput = JSON.parse(payload.D4OXYPALUYAIDNSO);
+            // Extracting Payload
+            let oCorrectiveAction = oInput.CorrectiveAction; 
+
+            tx = cds.transaction(req);
+
+            result = await tx.run(`CALL prUpdateDeleteEnvironmentCorrectiveActions(?,?)`, [
+                setValue(oCorrectiveAction.ECAID),
+                setValue(oCorrectiveAction.INCID)
+            ]);
+
+            // Creating Audit log
+            result = await tx.run(`CALL prCreateAuditLog(?,?,?,?,?,?)`, [oCorrectiveAction.INCID, oCorrectiveAction.ECAID, 'Corrective Action Id', 'DeleteEnvironmentCorrectiveAction','Safety View',JSON.stringify(oInput)]);
+
+            returnObj = {
+				"Success" : "Corrective Action Deleted Successfully."
+			};
+
+            // await tx.commit();
+            return JSON.stringify(returnObj);
+
+        }catch(error){
+            try{
+                tx1 = cds.transaction(req);
+                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Report Incident','DeleteEnvironmentCorrectiveAction',JSON.stringify(oInput),error.toString(),'DB']);
+                console.log(result);
+                await tx1.commit();
+            }catch (logError) {
+                console.error('Error logging failed:', logError);
+            }
+            if (tx) {
+                await tx.rollback();
+            }
+            return req.error({
+                code: 500, 
+                message: error.toString() 
+            });
+
+        }
+    })
+
+    // Attachments
+    this.on("vwxGTHJKICWOGdds", async (req) => {
+        try{
+            let result;
+            payload = req.data;
+            oInput = JSON.parse(payload.D4OXYPALUYAIDNSO);
+            // Extracting Payload
+            let aAttachment = oInput.Attachment;
+
+            tx = cds.transaction(req);
+            
+            if(validateArray(aAttachment)) {
+                for(let i = 0; i < aAttachment.length; i++) {
+                    result = await tx.run(`CALL prCreateUpdateAttachment(?,?,?,?,?,?,?,?,?,?,?)`, [
+                        setValue(aAttachment[i].ATTID),
+                        setValue(aAttachment[i].INCID),
+                        setValue(aAttachment[i].OBJID),
+                        setValue(aAttachment[i].ATTNM),
+                        setValue(aAttachment[i].FILTY),
+                        setValue(aAttachment[i].PRIST),
+                        setValue(aAttachment[i].DOCTY),
+                        setValue(aAttachment[i].UNQID),
+                        setValue(aAttachment[i].PERNM),
+                        setValue(aAttachment[i].DESCP),
+                        setValue(aAttachment[i].RTWID)
+                    ]);
+                }
+            }
+            
+            // Creating Audit log
+            result = await tx.run(`CALL prCreateAuditLog(?,?,?,?,?,?)`, [aAttachment[0].INCID, aAttachment[0].INCID, 'Incident Id', 'CreateAttachment','Safety View',JSON.stringify(oInput)]);
+			
+            returnObj = {
+				"Success" : "Attachment Submitted Successfully."
+			};
+
+            // await tx.commit();
+            return JSON.stringify(returnObj);
+        
+        }catch(error){
+            try{
+                tx1 = cds.transaction(req);
+                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Report Incident','CreateAttachment',JSON.stringify(oInput),error.toString(),'DB']);
+                console.log(result);
+                await tx1.commit();
+            }catch (logError) {
+                console.error('Error logging failed:', logError);
+            }
+            if (tx) {
+                await tx.rollback();
+            }
+            return req.error({
+                code: 500, 
+                message: error.toString() 
+            });
+
+        }
+    })
+
+    // Delete Attachment
+    this.on("d0beQXTd6nyEvm1v", async (req) => {
+        try{
+            let result;
+            payload = req.data;
+            oInput = JSON.parse(payload.D4OXYPALUYAIDNSO);
+            // Extracting Payload
+            let oAttachment = oInput.Attachment; 
+
+            tx = cds.transaction(req);
+
+            result = await tx.run(`CALL prUpdateDeleteAttachments(?,?)`, [
+                setValue(oAttachment.ATTID),
+                setValue(oAttachment.INCID)
+            ]);
+
+            // Creating Audit log
+            result = await tx.run(`CALL prCreateAuditLog(?,?,?,?,?,?)`, [oAttachment.INCID, oAttachment.ATTID, 'Attachment Id', 'DeleteAttachment','Safety View',JSON.stringify(oInput)]);
+
+            returnObj = {
+				"Success" : "Attachment Deleted Successfully."
+			};
+
+            // await tx.commit();
+            return JSON.stringify(returnObj);
+
+        }catch(error){
+            try{
+                tx1 = cds.transaction(req);
+                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Report Incident','DeleteAttachment',JSON.stringify(oInput),error.toString(),'DB']);
+                console.log(result);
+                await tx1.commit();
+            }catch (logError) {
+                console.error('Error logging failed:', logError);
+            }
+            if (tx) {
+                await tx.rollback();
+            }
+            return req.error({
+                code: 500, 
+                message: error.toString() 
+            });
+
+        }
+    })
+
 })

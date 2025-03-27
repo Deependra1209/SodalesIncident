@@ -9,14 +9,14 @@ PROCEDURE prCreateUpdateRestrictionAndLimitation (
     
      IN  ABRID    INTEGER,	            -- Unique id
      IN  INCID    INTEGER,	            -- Incident Id
-     IN  RSCL1    NVARCHAR(250),        -- Restriction Type
+     IN  RSCL1    SMALLINT,             -- Restriction Type
      IN  RSCL2    SMALLINT,	            -- Permanent or Temporary
      IN  RSCL3    DATE,	                -- Effective Date
      IN  RSCL4    DATE,	                -- End Date
      IN  RSCL5    INTEGER,              -- Total Restriction Days
      IN  RSCL6    SMALLINT,	            -- Duration
-     IN  RSCL8    NVARCHAR(5000)       -- Comments
-    --  OUT OABRID   INTEGER               -- out parameter
+     IN  RSCL8    NVARCHAR(5000)        -- Comments
+    --  OUT OABRID   INTEGER            -- out parameter
 )
    LANGUAGE SQLSCRIPT
    SQL SECURITY INVOKER 

@@ -89,7 +89,7 @@ module.exports = cds.service.impl(function (){
         }catch(error){
             try{
                 tx1 = cds.transaction(req);
-                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Incident Portal','CreateUpdatePreInvestigation',JSON.stringify(oInput),error.toString(),'Backend']);
+                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Incident Portal','CreateUpdatePreInvestigation',JSON.stringify(oInput),error.toString(),'DB']);
                 console.log(result);
                 await tx1.commit();
             }catch (logError) {
@@ -232,7 +232,7 @@ module.exports = cds.service.impl(function (){
         }catch(error){
             try{
                 tx1 = cds.transaction(req);
-                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Incident Portal','CreateUpdateInvestigation',JSON.stringify(oInput),error.toString(),'Backend']);
+                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Incident Portal','CreateUpdateInvestigation',JSON.stringify(oInput),error.toString(),'DB']);
                 console.log(result);
                 await tx1.commit();
             }catch (logError) {
@@ -285,11 +285,11 @@ module.exports = cds.service.impl(function (){
 
             // Creating Event Summary
             if (oCorrectiveActions.CRAID === 0) {
-                result = await tx.run(`CALL prCreateEventSummary(?,?,?,?,?)`, [oCorrectiveActions.INCID, 'Corrective Actions - '+CORRECTIVEACTIONID, 'Created (Assigned To - '+oCorrectiveActions.EMPNM +')', oCorrectiveActions.NOTES,0]);    
+                result = await tx.run(`CALL prCreateEventSummary(?,?,?,?,?)`, [oCorrectiveActions.INCID, 'Corrective Actions - '+oCorrectiveActionId, 'Created (Assigned To - '+oCorrectiveActions.EMPNM +')', oCorrectiveActions.NOTES,0]);    
             }else if(oCorrectiveActions.CRAID !== 0 && oCorrectiveActions.CASTS === 657){                   // Corrective Action Closed
-                result = await tx.run(`CALL prCreateEventSummary(?,?,?,?,?)`, [oCorrectiveActions.INCID, 'Corrective Actions - '+CORRECTIVEACTIONID, 'Closed', oCorrectiveActions.NOTES,0]);    
+                result = await tx.run(`CALL prCreateEventSummary(?,?,?,?,?)`, [oCorrectiveActions.INCID, 'Corrective Actions - '+oCorrectiveActionId, 'Closed', oCorrectiveActions.NOTES,0]);    
             }else{                                                                                          // CA Updated
-                result = await tx.run(`prCreateEventSummary(?,?,?,?,?)`, [oCorrectiveActions.INCID, 'Corrective Actions - '+CORRECTIVEACTIONID, 'Updated (Assigned To - '+oCorrectiveActions.EMPNM +')', oCorrectiveActions.NOTES,0]);    
+                result = await tx.run(`prCreateEventSummary(?,?,?,?,?)`, [oCorrectiveActions.INCID, 'Corrective Actions - '+oCorrectiveActionId, 'Updated (Assigned To - '+oCorrectiveActions.EMPNM +')', oCorrectiveActions.NOTES,0]);    
             }
             
             // Creating Audit log
@@ -305,7 +305,7 @@ module.exports = cds.service.impl(function (){
         }catch(error){
             try{
                 tx1 = cds.transaction(req);
-                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Incident Portal','CreateCorrectiveActions',JSON.stringify(oInput),error.toString(),'Backend']);
+                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Incident Portal','CreateCorrectiveActions',JSON.stringify(oInput),error.toString(),'DB']);
                 console.log(result);
                 await tx1.commit();
             }catch (logError) {
@@ -352,7 +352,7 @@ module.exports = cds.service.impl(function (){
         }catch(error){
             try{
                 tx1 = cds.transaction(req);
-                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Incident Portal','CreateLessonLearned',JSON.stringify(oInput),error.toString(),'Backend']);
+                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Incident Portal','CreateLessonLearned',JSON.stringify(oInput),error.toString(),'DB']);
                 console.log(result);
                 await tx1.commit();
             }catch (logError) {
@@ -412,7 +412,7 @@ module.exports = cds.service.impl(function (){
         }catch(error){
             try{
                 tx1 = cds.transaction(req);
-                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Incident Portal','CreateUpdateSignOff',JSON.stringify(oInput),error.toString(),'Backend']);
+                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Incident Portal','CreateUpdateSignOff',JSON.stringify(oInput),error.toString(),'DB']);
                 console.log(result);
                 await tx1.commit();
             }catch (logError) {
@@ -477,7 +477,7 @@ module.exports = cds.service.impl(function (){
         }catch(error){
             try{
                 tx1 = cds.transaction(req);
-                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Incident Portal','CreateUpdateNotes',JSON.stringify(oInput),error.toString(),'Backend']);
+                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Incident Portal','CreateUpdateNotes',JSON.stringify(oInput),error.toString(),'DB']);
                 console.log(result);
                 await tx1.commit();
             }catch (logError) {
@@ -536,7 +536,7 @@ module.exports = cds.service.impl(function (){
         }catch(error){
             try{
                 tx1 = cds.transaction(req);
-                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Incident Portal','CreateAttachment',JSON.stringify(oInput),error.toString(),'Backend']);
+                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Incident Portal','CreateAttachment',JSON.stringify(oInput),error.toString(),'DB']);
                 console.log(result);
                 await tx1.commit();
             }catch (logError) {
@@ -589,7 +589,7 @@ module.exports = cds.service.impl(function (){
         }catch(error){
             try{
                 tx1 = cds.transaction(req);
-                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Incident Portal','UpdateCloseIncident',JSON.stringify(oInput),error.toString(),'Backend']);
+                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Incident Portal','UpdateCloseIncident',JSON.stringify(oInput),error.toString(),'DB']);
                 console.log(result);
                 await tx1.commit();
             }catch (logError) {
@@ -638,7 +638,7 @@ module.exports = cds.service.impl(function (){
         }catch(error){
             try{
                 tx1 = cds.transaction(req);
-                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Incident Portal','UpdateTrackingFlag',JSON.stringify(oInput),error.toString(),'Backend']);
+                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Incident Portal','UpdateTrackingFlag',JSON.stringify(oInput),error.toString(),'DB']);
                 console.log(result);
                 await tx1.commit();
             }catch (logError) {
@@ -691,7 +691,7 @@ module.exports = cds.service.impl(function (){
         }catch(error){
             try{
                 tx1 = cds.transaction(req);
-                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Incident Portal','UpdateCompleteInvestigation',JSON.stringify(oInput),error.toString(),'Backend']);
+                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Incident Portal','UpdateCompleteInvestigation',JSON.stringify(oInput),error.toString(),'DB']);
                 console.log(result);
                 await tx1.commit();
             }catch (logError) {
@@ -1649,7 +1649,7 @@ module.exports = cds.service.impl(function (){
         }catch(error){
             try{
                 tx1 = cds.transaction(req);
-                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Incident Portal','UpdateReassignCorrectiveActions',JSON.stringify(oInput),error.toString(),'Backend']);
+                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Incident Portal','UpdateReassignCorrectiveActions',JSON.stringify(oInput),error.toString(),'DB']);
                 console.log(result);
                 await tx1.commit();
             }catch (logError) {
@@ -1692,7 +1692,7 @@ module.exports = cds.service.impl(function (){
         }catch(error){
             try{
                 tx1 = cds.transaction(req);
-                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Incident Portal','UpdateNotificationFlag',JSON.stringify(oInput),error.toString(),'Backend']);
+                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Incident Portal','UpdateNotificationFlag',JSON.stringify(oInput),error.toString(),'DB']);
                 console.log(result);
                 await tx1.commit();
             }catch (logError) {
@@ -1743,7 +1743,7 @@ module.exports = cds.service.impl(function (){
         }catch(error){
             try{
                 tx1 = cds.transaction(req);
-                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Incident Portal','UpdateIncidentAssign',JSON.stringify(oInput),error.toString(),'Backend']);
+                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Incident Portal','UpdateIncidentAssign',JSON.stringify(oInput),error.toString(),'DB']);
                 console.log(result);
                 await tx1.commit();
             }catch (logError) {
@@ -1813,7 +1813,7 @@ module.exports = cds.service.impl(function (){
         }catch(error){
             try{
                 tx1 = cds.transaction(req);
-                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Incident Portal','CreateUpdateCustomTab1',JSON.stringify(oInput),error.toString(),'Backend']);
+                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Incident Portal','CreateUpdateCustomTab1',JSON.stringify(oInput),error.toString(),'DB']);
                 console.log(result);
                 await tx1.commit();
             }catch (logError) {
@@ -1883,7 +1883,7 @@ module.exports = cds.service.impl(function (){
         }catch(error){
             try{
                 tx1 = cds.transaction(req);
-                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Incident Portal','CreateUpdateCustomTab2',JSON.stringify(oInput),error.toString(),'Backend']);
+                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Incident Portal','CreateUpdateCustomTab2',JSON.stringify(oInput),error.toString(),'DB']);
                 console.log(result);
                 await tx1.commit();
             }catch (logError) {
@@ -1953,7 +1953,7 @@ module.exports = cds.service.impl(function (){
         }catch(error){
             try{
                 tx1 = cds.transaction(req);
-                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Incident Portal','CreateUpdateCustomTab3',JSON.stringify(oInput),error.toString(),'Backend']);
+                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Incident Portal','CreateUpdateCustomTab3',JSON.stringify(oInput),error.toString(),'DB']);
                 console.log(result);
                 await tx1.commit();
             }catch (logError) {
@@ -2009,7 +2009,7 @@ module.exports = cds.service.impl(function (){
         }catch(error){
             try{
                 tx1 = cds.transaction(req);
-                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Incident Portal','CreateUpdateAbsenceAudit',JSON.stringify(oInput),error.toString(),'Backend']);
+                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Incident Portal','CreateUpdateAbsenceAudit',JSON.stringify(oInput),error.toString(),'DB']);
                 console.log(result);
                 await tx1.commit();
             }catch (logError) {
@@ -2050,7 +2050,7 @@ module.exports = cds.service.impl(function (){
             ]);
 
             oRestrictionId = oAbstractionRes.ABAID == 0 ? await getSequenceNumber("INC_T_ABSRS","ABRID") : oAbstractionRes.ABAID;
-
+            
             let BodyPart = oAbstractionRes.BodyPart;
             if(validateArray(BodyPart)) {
                 for(let i = 0; i < BodyPart.length; i++) {
@@ -2081,7 +2081,7 @@ module.exports = cds.service.impl(function (){
         }catch(error){
             try{
                 tx1 = cds.transaction(req);
-                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Incident Portal','CreateUpdateRestrictionLimitation',JSON.stringify(oInput),error.toString(),'Backend']);
+                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Incident Portal','CreateUpdateRestrictionLimitation',JSON.stringify(oInput),error.toString(),'DB']);
                 console.log(result);
                 await tx1.commit();
             }catch (logError) {
@@ -2155,7 +2155,7 @@ module.exports = cds.service.impl(function (){
         }catch(error){
             try{
                 tx1 = cds.transaction(req);
-                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Incident Portal','CreateUpdateRTWDetails',JSON.stringify(oInput),error.toString(),'Backend']);
+                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Incident Portal','CreateUpdateRTWDetails',JSON.stringify(oInput),error.toString(),'DB']);
                 console.log(result);
                 await tx1.commit();
             }catch (logError) {
@@ -2203,7 +2203,7 @@ module.exports = cds.service.impl(function (){
         }catch(error){
             try{
                 tx1 = cds.transaction(req);
-                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Incident Portal','ReopenIncident',JSON.stringify(oInput),error.toString(),'Backend']);
+                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Incident Portal','ReopenIncident',JSON.stringify(oInput),error.toString(),'DB']);
                 console.log(result);
                 await tx1.commit();
             }catch (logError) {
@@ -2253,7 +2253,7 @@ module.exports = cds.service.impl(function (){
         }catch(error){
             try{
                 tx1 = cds.transaction(req);
-                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Incident Portal','UpdateCorrectiveActionStatus',JSON.stringify(oInput),error.toString(),'Backend']);
+                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Incident Portal','UpdateCorrectiveActionStatus',JSON.stringify(oInput),error.toString(),'DB']);
                 console.log(result);
                 await tx1.commit();
             }catch (logError) {
@@ -2301,7 +2301,7 @@ module.exports = cds.service.impl(function (){
         }catch(error){
             try{
                 tx1 = cds.transaction(req);
-                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Incident Portal','DeleteAbsenceAudit',JSON.stringify(oInput),error.toString(),'Backend']);
+                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Incident Portal','DeleteAbsenceAudit',JSON.stringify(oInput),error.toString(),'DB']);
                 console.log(result);
                 await tx1.commit();
             }catch (logError) {
@@ -2349,7 +2349,7 @@ module.exports = cds.service.impl(function (){
         }catch(error){
             try{
                 tx1 = cds.transaction(req);
-                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Incident Portal','DeleteRestrictionLimitation',JSON.stringify(oInput),error.toString(),'Backend']);
+                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Incident Portal','DeleteRestrictionLimitation',JSON.stringify(oInput),error.toString(),'DB']);
                 console.log(result);
                 await tx1.commit();
             }catch (logError) {
@@ -2403,7 +2403,7 @@ module.exports = cds.service.impl(function (){
         }catch(error){
             try{
                 tx1 = cds.transaction(req);
-                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Incident Portal','DeleteInvolvedPeople',JSON.stringify(oInput),error.toString(),'Backend']);
+                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Incident Portal','DeleteInvolvedPeople',JSON.stringify(oInput),error.toString(),'DB']);
                 console.log(result);
                 await tx1.commit();
             }catch (logError) {
@@ -2454,7 +2454,7 @@ module.exports = cds.service.impl(function (){
         }catch(error){
             try{
                 tx1 = cds.transaction(req);
-                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Incident Portal','DeleteInjuredBodyParts',JSON.stringify(oInput),error.toString(),'Backend']);
+                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Incident Portal','DeleteInjuredBodyParts',JSON.stringify(oInput),error.toString(),'DB']);
                 console.log(result);
                 await tx1.commit();
             }catch (logError) {
@@ -2503,7 +2503,7 @@ module.exports = cds.service.impl(function (){
         }catch(error){
             try{
                 tx1 = cds.transaction(req);
-                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Incident Portal','DeletePropertyEquipmentDamage',JSON.stringify(oInput),error.toString(),'Backend']);
+                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Incident Portal','DeletePropertyEquipmentDamage',JSON.stringify(oInput),error.toString(),'DB']);
                 console.log(result);
                 await tx1.commit();
             }catch (logError) {
@@ -2553,7 +2553,7 @@ module.exports = cds.service.impl(function (){
         }catch(error){
             try{
                 tx1 = cds.transaction(req);
-                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Incident Portal','DeletePassenger',JSON.stringify(oInput),error.toString(),'Backend']);
+                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Incident Portal','DeletePassenger',JSON.stringify(oInput),error.toString(),'DB']);
                 console.log(result);
                 await tx1.commit();
             }catch (logError) {
@@ -2603,7 +2603,7 @@ module.exports = cds.service.impl(function (){
         }catch(error){
             try{
                 tx1 = cds.transaction(req);
-                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Incident Portal','DeleteChainOfEvent',JSON.stringify(oInput),error.toString(),'Backend']);
+                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Incident Portal','DeleteChainOfEvent',JSON.stringify(oInput),error.toString(),'DB']);
                 console.log(result);
                 await tx1.commit();
             }catch (logError) {
@@ -2652,7 +2652,7 @@ module.exports = cds.service.impl(function (){
         }catch(error){
             try{
                 tx1 = cds.transaction(req);
-                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Incident Portal','DeleteCorrectiveAction',JSON.stringify(oInput),error.toString(),'Backend']);
+                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Incident Portal','DeleteCorrectiveAction',JSON.stringify(oInput),error.toString(),'DB']);
                 console.log(result);
                 await tx1.commit();
             }catch (logError) {
@@ -2698,7 +2698,7 @@ module.exports = cds.service.impl(function (){
         }catch(error){
             try{
                 tx1 = cds.transaction(req);
-                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Incident Portal','DeleteEnvironmentCorrectiveAction',JSON.stringify(oInput),error.toString(),'Backend']);
+                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Incident Portal','DeleteEnvironmentCorrectiveAction',JSON.stringify(oInput),error.toString(),'DB']);
                 console.log(result);
                 await tx1.commit();
             }catch (logError) {
@@ -2747,7 +2747,7 @@ module.exports = cds.service.impl(function (){
         }catch(error){
             try{
                 tx1 = cds.transaction(req);
-                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Incident Portal','DeleteLessonLearnedToPrevent',JSON.stringify(oInput),error.toString(),'Backend']);
+                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Incident Portal','DeleteLessonLearnedToPrevent',JSON.stringify(oInput),error.toString(),'DB']);
                 console.log(result);
                 await tx1.commit();
             }catch (logError) {
@@ -2796,7 +2796,7 @@ module.exports = cds.service.impl(function (){
         }catch(error){
             try{
                 tx1 = cds.transaction(req);
-                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Incident Portal','DeleteNotes',JSON.stringify(oInput),error.toString(),'Backend']);
+                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Incident Portal','DeleteNotes',JSON.stringify(oInput),error.toString(),'DB']);
                 console.log(result);
                 await tx1.commit();
             }catch (logError) {
@@ -2845,7 +2845,7 @@ module.exports = cds.service.impl(function (){
         }catch(error){
             try{
                 tx1 = cds.transaction(req);
-                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Incident Portal','DeleteAttachment',JSON.stringify(oInput),error.toString(),'Backend']);
+                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Incident Portal','DeleteAttachment',JSON.stringify(oInput),error.toString(),'DB']);
                 console.log(result);
                 await tx1.commit();
             }catch (logError) {
@@ -2894,7 +2894,7 @@ module.exports = cds.service.impl(function (){
         }catch(error){
             try{
                 tx1 = cds.transaction(req);
-                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Incident Portal','DeleteInvestigationTeam',JSON.stringify(oInput),error.toString(),'Backend']);
+                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Incident Portal','DeleteInvestigationTeam',JSON.stringify(oInput),error.toString(),'DB']);
                 console.log(result);
                 await tx1.commit();
             }catch (logError) {
@@ -2940,7 +2940,7 @@ module.exports = cds.service.impl(function (){
         }catch(error){
             try{
                 tx1 = cds.transaction(req);
-                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Incident Portal','DeleteRootCauses',JSON.stringify(oInput),error.toString(),'Backend']);
+                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Incident Portal','DeleteRootCauses',JSON.stringify(oInput),error.toString(),'DB']);
                 console.log(result);
                 await tx1.commit();
             }catch (logError) {
@@ -2990,7 +2990,7 @@ module.exports = cds.service.impl(function (){
         }catch(error){
             try{
                 tx1 = cds.transaction(req);
-                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Incident Portal','DeleteRootCauseAnalysis',JSON.stringify(oInput),error.toString(),'Backend']);
+                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Incident Portal','DeleteRootCauseAnalysis',JSON.stringify(oInput),error.toString(),'DB']);
                 console.log(result);
                 await tx1.commit();
             }catch (logError) {
@@ -3038,7 +3038,7 @@ module.exports = cds.service.impl(function (){
         }catch(error){
             try{
                 tx1 = cds.transaction(req);
-                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Incident Portal','DeleteRTW',JSON.stringify(oInput),error.toString(),'Backend']);
+                result = await tx1.run(`CALL prCreateErrorHandling(?,?,?,?,?)`, ['Incident Portal','DeleteRTW',JSON.stringify(oInput),error.toString(),'DB']);
                 console.log(result);
                 await tx1.commit();
             }catch (logError) {
