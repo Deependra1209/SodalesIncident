@@ -9,7 +9,7 @@ service ReportIncidentRole1 {
     entity UtRfHkcx0nEJhiCM as projection on INC.M.NATUREOFINJURY;
     entity Phgfvkcx0nEJhiCM as projection on INC.M.BODYPARTSIDE;
     entity eshqzq378nwvnev6 as projection on INC.M.EMPLOYEES;
-    entity qfllxbGnRXlizI3G as projection on INC.M.SESSIONUSERINFO;
+    entity qfllxbGnRXlizI3G as projection on INC.M.SESSIONUSERINFO; 
     
 //__________________________________________________POST SERVICES__________________________________________________//
     // Create Incident
