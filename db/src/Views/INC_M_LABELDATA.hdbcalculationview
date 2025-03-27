@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="INC_M_LABELDATA" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" hierarchyGeneration="SQL" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="true" application="BAS">
+<descriptions defaultDescription="INC_M_LABELDATA"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="INC_M_LABEL">
+    <resourceUri>INC_M_LABEL</resourceUri>
+  </DataSource>
+</dataSources>
+<snapshotProcedures/>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="UNQID"/>
+      <viewAttribute id="LABTY"/>
+      <viewAttribute id="LABTX"/>
+      <viewAttribute id="AFLAG"/>
+      <viewAttribute id="LABIE"/>
+      <viewAttribute id="LABIV"/>
+      <viewAttribute id="LABIM"/>
+      <viewAttribute id="HTXIV"/>
+      <viewAttribute id="HLPTX"/>
+      <viewAttribute id="MAXLT"/>
+      <viewAttribute id="PLCHD"/>
+      <viewAttribute id="ISDEL"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="INC_M_LABEL"/>
+    <filter>&quot;ISDEL&quot;=0</filter>
+  </calculationView>
+</calculationViews>
+
+<logicalModel id="Projection_1">
+  <attributes>
+    <attribute id="UNQID" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Unique Id"/>
+      <keyMapping columnObjectName="Projection_1" columnName="UNQID"/>
+    </attribute>
+    <attribute id="LABTY" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Label key"/>
+      <keyMapping columnObjectName="Projection_1" columnName="LABTY"/>
+    </attribute>
+    <attribute id="LABTX" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Label Value"/>
+      <keyMapping columnObjectName="Projection_1" columnName="LABTX"/>
+    </attribute>
+    <attribute id="AFLAG" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Application Flag"/>
+      <keyMapping columnObjectName="Projection_1" columnName="AFLAG"/>
+    </attribute>
+    <attribute id="LABIE" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Is editable in config portal"/>
+      <keyMapping columnObjectName="Projection_1" columnName="LABIE"/>
+    </attribute>
+    <attribute id="LABIV" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Is visible in config portal"/>
+      <keyMapping columnObjectName="Projection_1" columnName="LABIV"/>
+    </attribute>
+    <attribute id="LABIM" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Is Mandatory"/>
+      <keyMapping columnObjectName="Projection_1" columnName="LABIM"/>
+    </attribute>
+    <attribute id="HTXIV" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Help text visibility"/>
+      <keyMapping columnObjectName="Projection_1" columnName="HTXIV"/>
+    </attribute>
+    <attribute id="HLPTX" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Help Text"/>
+      <keyMapping columnObjectName="Projection_1" columnName="HLPTX"/>
+    </attribute>
+    <attribute id="PLCHD" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Place Holder"/>
+      <keyMapping columnObjectName="Projection_1" columnName="PLCHD"/>
+    </attribute>
+    <attribute id="ISDEL" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Is delete flag"/>
+      <keyMapping columnObjectName="Projection_1" columnName="ISDEL"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="MAXLT" order="10" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Maxlength"/>
+      <measureMapping columnObjectName="Projection_1" columnName="MAXLT"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+    
+  
+    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="90" y="241"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

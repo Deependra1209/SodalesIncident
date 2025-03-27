@@ -1,0 +1,14 @@
+{
+    "format_version": 1,
+    "imports": [
+        {
+            "target_table": "M_EMPDT",
+            "source_data": {
+                "data_type": "CSV",
+                "file_name": "M_EMPDT.csv",
+                "has_header": true,
+                "delimiter": ","
+            }
+        }
+    ]
+}

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="INC_M_NATUREOFINJURY" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" hierarchyGeneration="SQL" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="true" application="BAS">
+<descriptions defaultDescription="INC_M_NATUREOFINJURY"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="INC_M_BDNTR">
+    <resourceUri>INC_M_BDNTR</resourceUri>
+  </DataSource>
+  <DataSource id="INC_M_BDPRT">
+    <resourceUri>INC_M_BDPRT</resourceUri>
+  </DataSource>
+</dataSources>
+<snapshotProcedures/>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="BDNID"/>
+      <viewAttribute id="BDPID"/>
+      <viewAttribute id="NATID"/>
+      <viewAttribute id="ISDEL"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="INC_M_BDNTR"/>
+    <filter>&quot;ISDEL&quot;='0'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_2" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="UNQID"/>
+      <viewAttribute id="TXVAL"/>
+      <viewAttribute id="ISDEL"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="INC_M_BDPRT"/>
+    <filter>&quot;ISDEL&quot;='0'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1" cardinality="CN_N" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="BDNID" aggregationType="sum"/>
+      <viewAttribute id="BDPID" aggregationType="sum"/>
+      <viewAttribute id="NATID" aggregationType="sum"/>
+      <viewAttribute id="UNQID" aggregationType="sum"/>
+      <viewAttribute id="TXVAL"/>
+      <viewAttribute hidden="true" id="JOIN$NATID$UNQID"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Projection_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="BDNID" source="BDNID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BDPID" source="BDPID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NATID" source="NATID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$NATID$UNQID" source="NATID"/>
+    </input>
+    <input node="Projection_2">
+      <mapping xsi:type="Calculation:AttributeMapping" target="UNQID" source="UNQID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TXVAL" source="TXVAL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$NATID$UNQID" source="UNQID"/>
+    </input>
+    <joinAttribute name="JOIN$NATID$UNQID"/>
+  </calculationView>
+</calculationViews>
+
+<logicalModel id="Join_1">
+  <attributes>
+    <attribute id="BDPID" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Body part Id"/>
+      <keyMapping columnObjectName="Join_1" columnName="BDPID"/>
+    </attribute>
+    <attribute id="NATID" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Nature of Injury Id"/>
+      <keyMapping columnObjectName="Join_1" columnName="NATID"/>
+    </attribute>
+    <attribute id="UNQID" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Unique Id"/>
+      <keyMapping columnObjectName="Join_1" columnName="UNQID"/>
+    </attribute>
+    <attribute id="TXVAL" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Text Value"/>
+      <keyMapping columnObjectName="Join_1" columnName="TXVAL"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="BDNID" order="1" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Unique key"/>
+      <measureMapping columnObjectName="Join_1" columnName="BDNID"/>
+      <exceptionAggregationMetadata/>
+    </measure></baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="221" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+    
+  
+    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="376"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_2" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="302" y="376"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="221" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Projection_1" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="136"/>
+    </shape>
+    <shape modelObjectName="Projection_2" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="136"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

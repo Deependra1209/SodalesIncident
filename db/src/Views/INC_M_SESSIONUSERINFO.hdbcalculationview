@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="INC_M_SESSIONUSERINFO" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" hierarchyGeneration="SQL" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="true" application="BAS">
+<descriptions defaultDescription="INC_M_SESSIONUSERINFO"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="M_EMPDT">
+    <resourceUri>M_EMPDT</resourceUri>
+  </DataSource>
+</dataSources>
+<snapshotProcedures/>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="EMPID"/>
+      <viewAttribute id="EMPNM"/>
+      <viewAttribute id="EMPPE"/>
+      <viewAttribute id="EMPST"/>
+      <viewAttribute id="CNTRY"/>
+      <viewAttribute id="ECITY"/>
+      <viewAttribute id="EMADD"/>
+      <viewAttribute id="MGRID"/>
+      <viewAttribute id="MGRNM"/>
+      <viewAttribute id="ORGNM"/>
+      <viewAttribute id="ISDEL"/>
+      <viewAttribute id="CRTBY"/>
+      <viewAttribute id="CRTDT"/>
+      <viewAttribute id="CRTTM"/>
+      <viewAttribute id="CHNBY"/>
+      <viewAttribute id="CHNDT"/>
+      <viewAttribute id="CHNTM"/>
+      <viewAttribute id="EMIFD"/>
+      <viewAttribute id="GENDR"/>
+      <viewAttribute id="EMPTP"/>
+      <viewAttribute id="USRID"/>
+      <viewAttribute id="DEPTC"/>
+      <viewAttribute id="DEPNM"/>
+      <viewAttribute id="VCPNM"/>
+      <viewAttribute id="VCPID"/>
+      <viewAttribute id="EUNIT"/>
+      <viewAttribute id="PHONE"/>
+      <viewAttribute id="MGREM"/>
+      <viewAttribute id="LICNM"/>
+      <viewAttribute id="SUPID"/>
+      <viewAttribute id="SUPNM"/>
+      <viewAttribute id="SUPML"/>
+      <viewAttribute id="EMAIL"/>
+      <viewAttribute id="HRBID"/>
+      <viewAttribute id="STRET"/>
+      <viewAttribute id="STATE"/>
+      <viewAttribute id="ZIPCD"/>
+      <viewAttribute id="BIRDT"/>
+      <viewAttribute id="HIRDT"/>
+      <viewAttribute id="EINDT"/>
+      <viewAttribute id="POSIT"/>
+      <viewAttribute id="DIVSN"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="M_EMPDT"/>
+    <filter>&quot;ISDEL&quot;='0' and &quot;USRID&quot;='SLS1209'</filter>
+  </calculationView>
+</calculationViews>
+
+<logicalModel id="Projection_1">
+  <attributes>
+    <attribute id="EMPID" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Employee Id"/>
+      <keyMapping columnObjectName="Projection_1" columnName="EMPID"/>
+    </attribute>
+    <attribute id="EMPNM" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Employee Name"/>
+      <keyMapping columnObjectName="Projection_1" columnName="EMPNM"/>
+    </attribute>
+    <attribute id="EMPPE" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Employee personal email"/>
+      <keyMapping columnObjectName="Projection_1" columnName="EMPPE"/>
+    </attribute>
+    <attribute id="EMPST" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Employee status"/>
+      <keyMapping columnObjectName="Projection_1" columnName="EMPST"/>
+    </attribute>
+    <attribute id="CNTRY" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Employee country"/>
+      <keyMapping columnObjectName="Projection_1" columnName="CNTRY"/>
+    </attribute>
+    <attribute id="ECITY" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Employee city"/>
+      <keyMapping columnObjectName="Projection_1" columnName="ECITY"/>
+    </attribute>
+    <attribute id="EMADD" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Employee Address"/>
+      <keyMapping columnObjectName="Projection_1" columnName="EMADD"/>
+    </attribute>
+    <attribute id="MGRID" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Manager Id"/>
+      <keyMapping columnObjectName="Projection_1" columnName="MGRID"/>
+    </attribute>
+    <attribute id="MGRNM" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Manager Name"/>
+      <keyMapping columnObjectName="Projection_1" columnName="MGRNM"/>
+    </attribute>
+    <attribute id="ORGNM" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Organization name"/>
+      <keyMapping columnObjectName="Projection_1" columnName="ORGNM"/>
+    </attribute>
+    <attribute id="ISDEL" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Is Deleted Flag (1=True/0=False)"/>
+      <keyMapping columnObjectName="Projection_1" columnName="ISDEL"/>
+    </attribute>
+    <attribute id="CRTBY" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Created By"/>
+      <keyMapping columnObjectName="Projection_1" columnName="CRTBY"/>
+    </attribute>
+    <attribute id="CRTDT" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Created Date"/>
+      <keyMapping columnObjectName="Projection_1" columnName="CRTDT"/>
+    </attribute>
+    <attribute id="CRTTM" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Created Time"/>
+      <keyMapping columnObjectName="Projection_1" columnName="CRTTM"/>
+    </attribute>
+    <attribute id="CHNBY" order="15" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Changed By"/>
+      <keyMapping columnObjectName="Projection_1" columnName="CHNBY"/>
+    </attribute>
+    <attribute id="CHNDT" order="16" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Changed Date"/>
+      <keyMapping columnObjectName="Projection_1" columnName="CHNDT"/>
+    </attribute>
+    <attribute id="CHNTM" order="17" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Changed Time"/>
+      <keyMapping columnObjectName="Projection_1" columnName="CHNTM"/>
+    </attribute>
+    <attribute id="GENDR" order="19" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Gender"/>
+      <keyMapping columnObjectName="Projection_1" columnName="GENDR"/>
+    </attribute>
+    <attribute id="EMPTP" order="20" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Employee Type"/>
+      <keyMapping columnObjectName="Projection_1" columnName="EMPTP"/>
+    </attribute>
+    <attribute id="USRID" order="21" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="USRID"/>
+      <keyMapping columnObjectName="Projection_1" columnName="USRID"/>
+    </attribute>
+    <attribute id="DEPTC" order="22" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Department Code"/>
+      <keyMapping columnObjectName="Projection_1" columnName="DEPTC"/>
+    </attribute>
+    <attribute id="DEPNM" order="23" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DEPNM"/>
+      <keyMapping columnObjectName="Projection_1" columnName="DEPNM"/>
+    </attribute>
+    <attribute id="VCPNM" order="24" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Vice Precident Name"/>
+      <keyMapping columnObjectName="Projection_1" columnName="VCPNM"/>
+    </attribute>
+    <attribute id="VCPID" order="25" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Vice Precident Id"/>
+      <keyMapping columnObjectName="Projection_1" columnName="VCPID"/>
+    </attribute>
+    <attribute id="EUNIT" order="26" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="EUNIT"/>
+      <keyMapping columnObjectName="Projection_1" columnName="EUNIT"/>
+    </attribute>
+    <attribute id="PHONE" order="27" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PHONE"/>
+      <keyMapping columnObjectName="Projection_1" columnName="PHONE"/>
+    </attribute>
+    <attribute id="MGREM" order="28" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Manager Email Address"/>
+      <keyMapping columnObjectName="Projection_1" columnName="MGREM"/>
+    </attribute>
+    <attribute id="LICNM" order="29" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Licence number"/>
+      <keyMapping columnObjectName="Projection_1" columnName="LICNM"/>
+    </attribute>
+    <attribute id="SUPID" order="30" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Supervisor Id"/>
+      <keyMapping columnObjectName="Projection_1" columnName="SUPID"/>
+    </attribute>
+    <attribute id="SUPNM" order="31" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Supervisor Name"/>
+      <keyMapping columnObjectName="Projection_1" columnName="SUPNM"/>
+    </attribute>
+    <attribute id="SUPML" order="32" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Supervisor Mail"/>
+      <keyMapping columnObjectName="Projection_1" columnName="SUPML"/>
+    </attribute>
+    <attribute id="EMAIL" order="33" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="EMAIL"/>
+      <keyMapping columnObjectName="Projection_1" columnName="EMAIL"/>
+    </attribute>
+    <attribute id="HRBID" order="34" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="HRBP Id"/>
+      <keyMapping columnObjectName="Projection_1" columnName="HRBID"/>
+    </attribute>
+    <attribute id="STRET" order="35" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Street"/>
+      <keyMapping columnObjectName="Projection_1" columnName="STRET"/>
+    </attribute>
+    <attribute id="STATE" order="36" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="State"/>
+      <keyMapping columnObjectName="Projection_1" columnName="STATE"/>
+    </attribute>
+    <attribute id="ZIPCD" order="37" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Zipcode"/>
+      <keyMapping columnObjectName="Projection_1" columnName="ZIPCD"/>
+    </attribute>
+    <attribute id="BIRDT" order="38" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Date Of Birth"/>
+      <keyMapping columnObjectName="Projection_1" columnName="BIRDT"/>
+    </attribute>
+    <attribute id="HIRDT" order="39" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Hired Date"/>
+      <keyMapping columnObjectName="Projection_1" columnName="HIRDT"/>
+    </attribute>
+    <attribute id="EINDT" order="40" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="EIN"/>
+      <keyMapping columnObjectName="Projection_1" columnName="EINDT"/>
+    </attribute>
+    <attribute id="POSIT" order="41" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Position"/>
+      <keyMapping columnObjectName="Projection_1" columnName="POSIT"/>
+    </attribute>
+    <attribute id="DIVSN" order="42" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Department Division"/>
+      <keyMapping columnObjectName="Projection_1" columnName="DIVSN"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="EMIFD" order="18" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription=" Primary Key of the Table"/>
+      <measureMapping columnObjectName="Projection_1" columnName="EMIFD"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+    
+  
+    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="113" y="208"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

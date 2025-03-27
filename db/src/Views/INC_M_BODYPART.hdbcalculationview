@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="INC_M_BODYPART" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" hierarchyGeneration="SQL" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="true" application="BAS">
+<descriptions defaultDescription="INC_M_BODYPART"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="INC_M_BDPRT">
+    <resourceUri>INC_M_BDPRT</resourceUri>
+  </DataSource>
+</dataSources>
+<snapshotProcedures/>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="UNQID"/>
+      <viewAttribute id="TXVAL"/>
+      <viewAttribute id="TYVAL"/>
+      <viewAttribute id="ISDEL"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="INC_M_BDPRT"/>
+    <filter>&quot;ISDEL&quot;=0 and &quot;TYVAL&quot;= 'BodyPart'</filter>
+  </calculationView>
+</calculationViews>
+
+<logicalModel id="Projection_1">
+  <attributes>
+    <attribute id="TXVAL" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Text Value"/>
+      <keyMapping columnObjectName="Projection_1" columnName="TXVAL"/>
+    </attribute>
+    <attribute id="TYVAL" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Type Value"/>
+      <keyMapping columnObjectName="Projection_1" columnName="TYVAL"/>
+    </attribute>
+    <attribute id="ISDEL" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Is Deleted Flag"/>
+      <keyMapping columnObjectName="Projection_1" columnName="ISDEL"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="UNQID" order="1" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Unique Id"/>
+      <measureMapping columnObjectName="Projection_1" columnName="UNQID"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+    
+  
+    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="87" y="213"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

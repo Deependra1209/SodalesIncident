@@ -23,7 +23,14 @@
   "cds": {
     "requires": {
       "db": "hana",
-      "auth": "mocked"
+      "auth": {
+        "kind":"basic",
+        "users":{
+          "DBADMIN":{
+            "password": "ProductGenAI1"
+          }
+        }
+      }
     }
   }
 }

@@ -1,0 +1,14 @@
+{
+    "format_version": 1,
+    "imports": [
+        {
+            "target_table": "INC_M_BDNTR",
+            "source_data": {
+                "data_type": "CSV",
+                "file_name": "INC_M_BDNTR.csv",
+                "has_header": true,
+                "delimiter": ","
+            }
+        }
+    ]
+}
