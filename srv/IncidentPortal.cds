@@ -6,6 +6,7 @@ service IncidentPortalRole1 {
     entity jn7BMoWpy6NGKkoe as select from INC.M.MASTERLIST;
     
 //__________________________________________________POST SERVICES__________________________________________________//
+
     // Pre Investigation
     action DBDHIPPZlqSDVFCE(D4OXYPALUYAIDNSO: String) returns String;
 
@@ -72,5 +73,52 @@ service IncidentPortalRole1 {
     // Update Corrective Action Status
     action lMjgEa7FtVWpKj4g(D4OXYPALUYAIDNSO: String) returns String;
 
-    
+    // Delete Absence Audit
+    action w7zw25hhn9i7mss7(D4OXYPALUYAIDNSO: String) returns String;
+
+    // Delete Restriction Limitation
+    action rq2zxcvr36jsb8zq(D4OXYPALUYAIDNSO: String) returns String;
+
+    // Delete Involved people
+    action HTFCBsan18bqxhgt(D4OXYPALUYAIDNSO: String) returns String;
+
+    // Delete Injured Body Part
+    action T7QviTG4DnXQDbWo(D4OXYPALUYAIDNSO: String) returns String;
+
+    // Delete Property Equipment
+    action NHeYVYv3d2RvARJK(D4OXYPALUYAIDNSO: String) returns String;
+
+    // Delete Passenger
+    action nDIBCLhbYOJixpTn(D4OXYPALUYAIDNSO: String) returns String;
+
+    // Delete Chain of Event
+    action AGYEL6P9S7S36RI7(D4OXYPALUYAIDNSO: String) returns String;
+
+    // Delete Corrective Action
+    action f1pUMehrwgjb69Lo(D4OXYPALUYAIDNSO: String) returns String;
+
+    // Delete Environment Corrective Action
+    action vwx9J4D07CWOGdds(D4OXYPALUYAIDNSO: String) returns String;
+
+    // Delete Lesson Learned
+    action yUmvi9VpKnnReNFn(D4OXYPALUYAIDNSO: String) returns String;
+
+    // Delete Notes
+    action DjF1dF3R03tsEWmF(D4OXYPALUYAIDNSO: String) returns String;
+
+    // Delete Attachment
+    action d0beQXTd6nyEvm1v(D4OXYPALUYAIDNSO: String) returns String;
+
+    // Delete Investigation Team
+    action jt5krfLWC6Z5K9D1(D4OXYPALUYAIDNSO: String) returns String;
+
+    // Delete Root Cause
+    action z9q1b0huwplxyw5q(D4OXYPALUYAIDNSO: String) returns String;
+
+    // Delete Root Cause Analysis
+    action yIWriPzYOfXsHGba(D4OXYPALUYAIDNSO: String) returns String;
+
+    // Delete RTW
+    action j0hbiystv2nse4e3(D4OXYPALUYAIDNSO: String) returns String;
+
 } 

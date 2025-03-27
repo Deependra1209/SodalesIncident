@@ -7,3 +7,200 @@ Content-Type: application/json
 {
     "D4OXYPALUYAIDNSO": "{\"IncidentType\":[{\"ICTID\":0,\"INCTY\":1,\"ISDEL\":\"0\"},{\"ICTID\":0,\"INCTY\":2,\"ISDEL\":\"0\"},{\"ICTID\":0,\"INCTY\":3,\"ISDEL\":\"0\"},{\"ICTID\":0,\"INCTY\":4,\"ISDEL\":\"0\"},{\"ICTID\":0,\"INCTY\":5,\"ISDEL\":\"0\"},{\"ICTID\":0,\"INCTY\":6,\"ISDEL\":\"0\"},{\"ICTID\":0,\"INCTY\":7,\"ISDEL\":\"0\"},{\"ICTID\":0,\"INCTY\":8,\"ISDEL\":\"0\"},{\"ICTID\":0,\"INCTY\":9,\"ISDEL\":\"0\"},{\"ICTID\":0,\"INCTY\":10,\"ISDEL\":\"0\"},{\"ICTID\":0,\"INCTY\":945,\"ISDEL\":\"0\"},{\"ICTID\":0,\"INCTY\":946,\"ISDEL\":\"0\"},{\"ICTID\":0,\"INCTY\":947,\"ISDEL\":\"0\"},{\"ICTID\":0,\"INCTY\":948,\"ISDEL\":\"0\"},{\"ICTID\":0,\"INCTY\":949,\"ISDEL\":\"0\"}],\"IncidentDetails\":{\"INCID\":0,\"REBEH\":1,\"T1LB1\":\"2025-02-26\",\"T1LB2\":\"01:05:20\",\"T1LB3\":\"2025-03-26\",\"T1LB4\":\"12:04:13\",\"T1LB5\":279,\"T1LB6\":\"Custom 1\",\"T1LB7\":\"Custom 2\",\"T1LB8\":287,\"T1LB9\":\"Atlantic Ocean\",\"T1LB10\":\"Describe Location\\n\",\"T1LB11\":\"Custom\",\"T1LB12\":\"Custom\",\"T1LB13\":\"Incident Description\",\"T1LB14\":\"Custom\\n\",\"T2LB1\":277,\"T2LB2\":1,\"T2LB3\":1,\"T2LB4\":\"Custom\",\"T2LB5\":\"Custom\",\"T2LB6\":271,\"T2LB7\":0,\"T2LB8\":\"Which emergency services notified?\\n\",\"T2LB9\":\"Custom\",\"T2LB10\":\"Custom\",\"SIGN1\":\"Deependra Pratap Singh\",\"SN1ST\":\"VladimirScript\",\"SN1DT\":\"2025-03-26\",\"SIGN2\":\"Deependra Pratap Singh\",\"SN2ST\":\"EdwardianScriptITC\",\"SN2DT\":\"2025-03-26\",\"LATIT\":\"1.285292579363511\",\"LONGI\":\"-2.999267578124203\",\"ISAVE\":\"0\",\"InvolvedPeople\":[{\"IPLID\":0,\"PPLB1\":614,\"PPLB2\":\"Abhay Dubule\",\"PPLB3\":\"64684513\",\"PPLB4\":\"Custom\",\"PPLB5\":\"Custom\",\"PersonType\":[{\"IPTID\":0,\"PPLB6\":617,\"ISDEL\":\"0\"},{\"IPTID\":0,\"PPLB6\":618,\"ISDEL\":\"0\"},{\"IPTID\":0,\"PPLB6\":619,\"ISDEL\":\"0\"},{\"IPTID\":0,\"PPLB6\":620,\"ISDEL\":\"0\"},{\"IPTID\":0,\"PPLB6\":622,\"ISDEL\":\"0\"}],\"PPLB7\":\"1234567890\",\"PPLB8\":\"abhay.d@sodalessolutions.com\",\"PPLB9\":\"Rahul Choudhari\",\"PPLB10\":\"Custom\",\"PPLB11\":\"Custom\",\"PPLB12\":\"Additional Information\\n\",\"PPLB13\":\"Customer Success\",\"PPLB14\":\"Product Lead\",\"PPLB15\":\"\",\"PPLB16\":\"100 King Street West Suite\",\"PPLB17\":\"Unit-1\",\"PPLB18\":\"Canada\",\"PPLB19\":\"\",\"PPLB20\":\"gopal.s@sodalessolutions.com\",\"UNQID\":\"195d128995d1.5xsrgwp\",\"WorkplaceInjury\":{\"WPIID\":0,\"UNQID\":\"195d128995d1.5xsrgwp\",\"T1LB1\":1,\"T1LB2\":1,\"T1LB3\":\"Custom\",\"T1LB4\":\"Custom\",\"T1LB5\":0,\"T1LB6\":0,\"T1LB7\":\"Facility name\",\"T1LB8\":\"Doctor name\",\"T1LB9\":\"Custom\",\"T1LB10\":\"Custom\",\"T1LB11\":\"Injury/illness description\\n\",\"T1LB12\":\"Custom\\n\",\"T1LB13\":\"Injured person statement\\n\",\"T2LB1\":\"casdcasd\",\"T2LB2\":\"csdcasd\",\"T2LB3\":1,\"T2LB4\":1,\"T2LB5\":\"\",\"T2LB6\":\"\",\"T2LB7\":\"sdacsdc\",\"BodyPart\":[{\"BDPID\":0,\"BDCL1\":13,\"BDCL2\":39,\"BDCL3\":88,\"BDCL4\":\"bafsjdc\"},{\"BDPID\":0,\"BDCL1\":14,\"BDCL2\":77,\"BDCL3\":89,\"BDCL4\":\"cadsc\"}]},\"FirstAider\":{\"FISID\":0,\"UNQID\":\"195d128995d1.5xsrgwp\",\"T1LB1\":\"Custom\",\"T1LB2\":\"Custom\",\"T1LB3\":\"What was the treatment rendered?\\n\",\"T1LB4\":\"Please describe what happened and what is the arrangement made for the ill/injured person?\\n\",\"T1LB5\":\"Custom\"},\"VehicleDetails\":{\"MVDID\":0,\"UNQID\":\"195d128995d1.5xsrgwp\",\"T1LB2\":\"vasdfvd\",\"T1LB3\":\"asdvasd\",\"T1LB4\":\"vasdvsd\",\"T1LB5\":544,\"Restrictions\":[{\"RESID\":0,\"T1LB6\":550,\"ISDEL\":\"0\"}],\"T1LB7\":1,\"T1LB8\":1,\"T1LB9\":\"\",\"T1LB10\":554,\"T1LB11\":1,\"T1LB12\":\"vasdv\",\"T1LB13\":\"asdvad\",\"T1LB14\":\"vasdv\",\"T1LB15\":\"asdv\",\"T1LB16\":\"asdvasd\",\"Endorsements\":[{\"ENDID\":0,\"T1LB17\":547,\"ISDEL\":\"0\"}],\"T1LB18\":\"2025-03-12\",\"T1LB19\":\"vasdvc\",\"T1LB20\":1,\"T1LB21\":608,\"T1LB22\":0,\"T1LB23\":\"vasdv\",\"T1LB24\":\"asdvcasd\",\"T1LB25\":\"vasdvasd\",\"PassengerDetails\":[{\"PASID\":0,\"UNQID\":\"195d12e2bd81.9lyyybj\",\"T3LB1\":614,\"T3LB2\":\"AbdulRazak Mulla\",\"T3LB3\":\"30578403\",\"T3LB4\":\"1234567890\"}]},\"Complainant\":{\"CAAID\":0,\"COAAC\":0},\"Accused\":{}},{\"IPLID\":0,\"PPLB1\":614,\"PPLB2\":\"AbdulRazak Mulla\",\"PPLB3\":\"30578403\",\"PPLB4\":\"Custom\",\"PPLB5\":\"Custom\",\"PersonType\":[{\"IPTID\":0,\"PPLB6\":623,\"ISDEL\":\"0\"}],\"PPLB7\":\"1234567890\",\"PPLB8\":\"abdul.m@sodalessolutions.com\",\"PPLB9\":\"Manoj Kumar R\",\"PPLB10\":\"Custom\",\"PPLB11\":\"Custom\",\"PPLB12\":\"Additional Information\\n\",\"PPLB13\":\"UI Development\",\"PPLB14\":\"Product Analyst\",\"PPLB15\":\"\",\"PPLB16\":\"100 King Street West Suite\",\"PPLB17\":\"Unit-1\",\"PPLB18\":\"Canada\",\"PPLB19\":\"\",\"PPLB20\":\"manoj.r@sodalessolutions.com\",\"UNQID\":\"195d12ae54f1.1rrq89m\",\"WorkplaceInjury\":{},\"FirstAider\":{},\"VehicleDetails\":{},\"Complainant\":{},\"Accused\":{\"CAAID\":0,\"COAAC\":1}}],\"DRFNM\":\"\",\"INCTY\":\"|1|2|3|4|5|6|7|8|9|10|945|946|947|948|949|\"},\"WorkplaceHarassment\":{\"WHVID\":0,\"T3LB1\":\"casdc\",\"T3LB2\":0,\"T3LB3\":\"2025-03-18\",\"T3LB8\":\"cZXCZ\",\"T3LB6\":\"xcDZxc\",\"T3LB10\":\"cZXcZX\",\"T3LB11\":0,\"T3LB14\":\"\",\"T3LB15\":\"cZXCZX\",\"TypeOfOccurrence\":[{\"OCRID\":0,\"T3LB4\":207,\"ISDEL\":\"0\"},{\"OCRID\":0,\"T3LB4\":208,\"ISDEL\":\"0\"},{\"OCRID\":0,\"T3LB4\":209,\"ISDEL\":\"0\"}],\"Physical\":[{\"PHYID\":0,\"T3LB5\":210,\"ISDEL\":\"0\"},{\"PHYID\":0,\"T3LB5\":211,\"ISDEL\":\"0\"},{\"PHYID\":0,\"T3LB5\":212,\"ISDEL\":\"0\"}],\"Psychological\":[{\"PSYID\":0,\"T3LB7\":222,\"ISDEL\":\"0\"},{\"PSYID\":0,\"T3LB7\":223,\"ISDEL\":\"0\"}],\"Verbal\":[{\"VBLID\":0,\"T3LB9\":231,\"ISDEL\":\"0\"},{\"VBLID\":0,\"T3LB9\":232,\"ISDEL\":\"0\"}],\"PleaseSelectAll\":[{\"PSAID\":0,\"T3LB12\":256,\"ISDEL\":\"0\"},{\"PSAID\":0,\"T3LB12\":255,\"ISDEL\":\"0\"},{\"PSAID\":0,\"T3LB12\":259,\"ISDEL\":\"0\"}],\"ImmediateAction\":[{\"IACID\":0,\"T3LB13\":261,\"ISDEL\":\"0\"},{\"IACID\":0,\"T3LB13\":262,\"ISDEL\":\"0\"},{\"IACID\":0,\"T3LB13\":263,\"ISDEL\":\"0\"}]},\"VehicleAdditionalDetails\":{\"MVAID\":0,\"T4LB1\":579,\"T4LB2\":\"casd\",\"T4LB3\":\"casdc\",\"T4LB4\":596,\"T4LB5\":\"csad\",\"T4LB6\":\"casdcasc\",\"T4LB7\":583,\"T4LB8\":587,\"T4LB9\":601,\"T4LB10\":\"casdc\",\"T4LB11\":\"asdca\",\"T5LB1\":\"casdc\",\"T5LB2\":\"asdcas\",\"T5LB3\":\"casdcasd\",\"T5LB4\":\"casdc\",\"T5LB5\":\"casdc\",\"RDMAP\":\"\"},\"ReportedBy\":{\"__metadata\":{\"type\":\"SODLS1.INC.Role1.slsincslsreincrl1.INCXDo8Z9GQEw0XPTyO3IDpYK2xQfg1Ytbg.qfllxbGnRXlizI3GType\",\"uri\":\"https://sls23dusi15jw3mjbn.us4.hana.ondemand.com:443/SODLS1/INC/Role1/slsincslsreincrl1/INCXDo8Z9GQEw0XPTyO3IDpYK2xQfg1Ytbg.xsodata/qfllxbGnRXlizI3G('41334357')\"},\"EMPID\":\"41334357\",\"EMPNM\":\"Deependra Pratap Singh\",\"EMAIL\":\"deependra.s@sodalessolutions.com\",\"MGRID\":\"22726114\",\"MGRNM\":\"Manoj Kumar R\",\"USRID\":\"SLS1209\",\"POSIT\":\"Product Analyst\",\"DEPTC\":null,\"DEPNM\":\"Database Development\",\"PHONE\":\"1234567890\",\"ORGNM\":\"ORG41334357\",\"BRNCH\":\"BRANCH41334357\",\"WRKAR\":\"Work41334357\",\"INCID\":0,\"REPID\":0,\"RPLB1\":\"Deependra Pratap Singh\",\"RPLB2\":\"41334357\",\"RPLB3\":\"deependra.s@sodalessolutions.com\",\"RPLB4\":\"Reporting Custom 1\",\"RPLB5\":\"Reporting Custom 2\",\"RPLB6\":\"Reporting Custom 3\",\"RPLB7\":\"Reporting Custom 4\",\"RPLB8\":\"Product Analyst\",\"RPLB9\":\"Database Development\",\"RPLB10\":\"Manoj Kumar R\",\"RPLB11\":\"Reporting Custom 5\",\"RPLB12\":\"Reporting Custom 6\",\"RPLB13\":\"Reporting Custom 7\",\"RPLB14\":\"Reporting Custom 8\"},\"NearMissDetails\":{\"NRMID\":0,\"NearMissType\":[{\"NMTID\":0,\"T1LB1\":196,\"ISDEL\":\"0\"}],\"NearMissPotential\":[{\"NMPID\":0,\"T1LB2\":205,\"ISDEL\":\"0\"}],\"T1LB3\":\"Custom1\",\"T1LB4\":\"Custom2\",\"T1LB5\":\"Near Miss Description\\n\",\"T1LB6\":\"How Near Miss can be avoided\\n\",\"T1LB7\":\"Immediate action to prevent\\n\",\"T1LB8\":\"Custom 3\\n\"},\"Ergonomics\":{\"ERGID\":0,\"T1LB3\":\"vasdfvasd\",\"T1LB4\":\"vasdvasd\",\"T2LB1\":1,\"T2LB2\":0,\"T2LB3\":532,\"T2LB4\":0,\"T2LB5\":\"\",\"T2LB6\":\"\",\"T3LB1\":\"vadfvasd\",\"T3LB2\":\"vasdvasd\",\"T3LB3\":\"vsdacvsd\",\"ErgonomicsType\":[{\"EGTID\":0,\"T1LB1\":160,\"ISDEL\":\"0\"},{\"EGTID\":0,\"T1LB1\":164,\"ISDEL\":\"0\"},{\"EGTID\":0,\"T1LB1\":165,\"ISDEL\":\"0\"}],\"ErgonomicsMAType\":[{\"EMAID\":0,\"T1LB2\":166,\"ISDEL\":\"0\"},{\"EMAID\":0,\"T1LB2\":167,\"ISDEL\":\"0\"},{\"EMAID\":0,\"T1LB2\":168,\"ISDEL\":\"0\"},{\"EMAID\":0,\"T1LB2\":169,\"ISDEL\":\"0\"},{\"EMAID\":0,\"T1LB2\":170,\"ISDEL\":\"0\"}]},\"ExposureDetails\":{\"EXPID\":0,\"T1LB1\":123,\"T1LB2\":624,\"T1LB3\":1,\"T1LB5\":\"bsdfb\",\"T1LB6\":\"sdfbdfb\",\"T1LB8\":138,\"T1LB9\":1,\"T1LB10\":\"bzfcb\",\"T1LB11\":\"zdfbdf\",\"T1LB12\":\"\",\"T1LB13\":\"\",\"RouteExposure\":[{\"EXRID\":0,\"T1LB7\":131,\"ISDEL\":\"0\"},{\"EXRID\":0,\"T1LB7\":130,\"ISDEL\":\"0\"},{\"EXRID\":0,\"T1LB7\":132,\"ISDEL\":\"0\"}],\"PPE\":[]},\"EnvironmentalDetails\":{\"ENVID\":0,\"T1LB1\":1,\"T1LB3\":123,\"T1LB4\":\" xfg xfgb\",\"T1LB5\":\"bgxfgcbxc\",\"T1LB6\":241,\"T1LB7\":\"bxfgcb\",\"T1LB8\":\"bfxgbxfg\",\"T1LB9\":\"2025-03-04\",\"T1LB10\":\"12:14:03\",\"T1LB11\":\"2025-03-19\",\"T1LB12\":\"12:14:08\",\"T1LB13\":1,\"T1LB14\":\"\",\"T1LB15\":1,\"T1LB17\":\"gbdfzb\",\"T1LB18\":\"zdfxv\",\"T1LB19\":\"\",\"T1LB20\":\"vdfvxd\",\"T1LB21\":\"vdfvxdfb\",\"ReleaseTo\":[{\"RLSID\":0,\"T1LB2\":157,\"ISDEL\":\"0\"}],\"EnviormentalImpact\":[{\"EIMID\":0,\"T1LB16\":152,\"ISDEL\":\"0\"},{\"EIMID\":0,\"T1LB16\":150,\"ISDEL\":\"0\"},{\"EIMID\":0,\"T1LB16\":151,\"ISDEL\":\"0\"}],\"CorrectiveActions\":[{\"UNIQUE\":\"195d131e0521.luvd633\",\"ECAID\":0,\"T2LB2\":\"sbdfgbsfgcv\",\"T2LB3\":630,\"T2LB4\":639}]},\"PropertyEquipment\":[{\"PEDID\":0,\"PropertyType\":[{\"PTYID\":0,\"T1LB1\":111,\"ISDEL\":\"0\"},{\"PTYID\":0,\"T1LB1\":112,\"ISDEL\":\"0\"},{\"PTYID\":0,\"T1LB1\":113,\"ISDEL\":\"0\"},{\"PTYID\":0,\"T1LB1\":114,\"ISDEL\":\"0\"}],\"T1LB2\":0,\"T1LB3\":0,\"T1LB4\":\"ZCZX\",\"T1LB5\":\"BSFGBSFB\",\"T1LB6\":194,\"T1LB7\":\"bsfdb\",\"T1LB8\":\"sdfb\",\"T1LB9\":\"sdfbdsfb\",\"T1LB10\":\"sdbfb\",\"T1LB11\":\"sdfbf\",\"T1LB12\":\"bvsdfb\"}],\"FireExplosion\":{\"FEPID\":0,\"T1LB1\":143,\"T1LB2\":1,\"T1LB3\":\"\",\"T1LB4\":\"bzdfxb\",\"T1LB5\":\"dfzbb\",\"T1LB6\":1,\"T1LB7\":\"bfgxb\",\"T1LB8\":\"gfxbxfg\",\"T1LB9\":\"\",\"T1LB10\":\"bgfxcbsfgx\",\"T1LB11\":\"fbzdsbfgxbbxfg\"},\"Other\":{\"OTHID\":0,\"T1LB1\":\"vafsdv\",\"T1LB2\":\"dsvasd\",\"T1LB3\":\"vsdavsdf\"},\"CustomIncType1\":{\"CSTID\":0,\"T1LB1\":0,\"T1LB2\":\"2025-03-13\",\"T1LB3\":\"12:14:52\",\"T1LB4\":\"avdsv\",\"T1LB5\":\"asdvas\",\"T1LB6\":903,\"T1LB7\":0,\"T1LB8\":\"2025-03-13\",\"T1LB9\":\"12:15:00\",\"T1LB10\":\"vasdv\",\"T1LB11\":\"sdvadv\",\"T1LB12\":904,\"T2LB1\":0,\"T2LB2\":\"2025-03-14\",\"T2LB3\":\"12:15:14\",\"T2LB4\":\"vasdvasdv\",\"T2LB5\":\"vafsdv\",\"T2LB6\":905,\"T3LB1\":\"vasDvzd\",\"T3LB2\":\"vzdxcvc\"},\"CustomIncType2\":{\"CSTID\":0,\"T1LB1\":0,\"T1LB2\":\"2025-03-19\",\"T1LB3\":\"12:15:29\",\"T1LB4\":\"zcffvb\",\"T1LB5\":\"zcv zv\",\"T1LB6\":912,\"T1LB7\":0,\"T1LB8\":\"2025-03-12\",\"T1LB9\":\"12:15:37\",\"T1LB10\":\"vdfzxv\",\"T1LB11\":\"zdfxvzdf\",\"T1LB12\":913,\"T2LB1\":0,\"T2LB2\":\"2025-03-12\",\"T2LB3\":\"12:15:45\",\"T2LB4\":\"vzdfx\",\"T2LB5\":\"vdfzxcv\",\"T2LB6\":914,\"T3LB1\":\"vdfzxv\",\"T3LB2\":\"adfzxvc\"},\"CustomIncType3\":{\"CSTID\":0,\"T1LB1\":0,\"T1LB2\":\"2025-03-26\",\"T1LB3\":\"12:15:58\",\"T1LB4\":\"fgsdf\",\"T1LB5\":\"dfgs\",\"T1LB6\":921,\"T1LB7\":0,\"T1LB8\":\"2025-03-26\",\"T1LB9\":\"12:16:00\",\"T1LB10\":\"kftgj\",\"T1LB11\":\"dfhjd\",\"T1LB12\":922,\"T2LB1\":0,\"T2LB2\":\"2025-03-26\",\"T2LB3\":\"12:16:10\",\"T2LB4\":\"vasdv\",\"T2LB5\":\"sadv\",\"T2LB6\":923,\"T3LB1\":\"vadsf\",\"T3LB2\":\"vasdzv\"},\"CustomIncType4\":{\"CSTID\":0,\"T1LB1\":0,\"T1LB2\":\"2025-03-26\",\"T1LB3\":\"12:16:25\",\"T1LB4\":\"vsdfv\",\"T1LB5\":\"adfvadfv\",\"T1LB6\":930,\"T1LB7\":0,\"T1LB8\":\"2025-03-26\",\"T1LB9\":\"12:16:30\",\"T1LB10\":\"fda\",\"T1LB11\":\"vadf\",\"T1LB12\":931,\"T2LB1\":0,\"T2LB2\":\"2025-03-26\",\"T2LB3\":\"12:16:29\",\"T2LB4\":\"vdfv\",\"T2LB5\":\"adfv\",\"T2LB6\":932,\"T3LB1\":\"vadfv\",\"T3LB2\":\"adfv\"},\"CustomIncType5\":{\"CSTID\":0,\"T1LB1\":0,\"T1LB2\":\"2025-03-13\",\"T1LB3\":\"12:16:52\",\"T1LB4\":\"vadfv\",\"T1LB5\":\"vafv\",\"T1LB6\":939,\"T1LB7\":0,\"T1LB8\":\"2025-03-26\",\"T1LB9\":\"12:17:00\",\"T1LB10\":\"asdvasd\",\"T1LB11\":\"vasdv\",\"T1LB12\":940,\"T2LB1\":0,\"T2LB2\":\"2025-03-05\",\"T2LB3\":\"12:17:09\",\"T2LB4\":\"vadfv\",\"T2LB5\":\"adfv\",\"T2LB6\":941,\"T3LB1\":\"vasdv\",\"T3LB2\":\"asdvas\"}}"
 }
+
+//*********************************** Incident Portal *********************************//
+
+
+// Pre Investigation
+###
+POST http://localhost:4004/odata/v4/incident-portal-role1/DBDHIPPZlqSDVFCE
+Content-Type: application/json
+
+{"D4OXYPALUYAIDNSO":"{\"PreInvestigation\":{\"PRIID\":0,\"INCID\":34,\"T1LB1\":1,\"T1LB2\":[],\"LinkedIncidents\":[{\"LINID\":0,\"T1LB2\":4,\"ISDEL\":\"0\"}],\"T1LB3\":\"General location at time of injury\",\"T1LB4\":\"General conditions at time of injury\",\"T1LB5\":1,\"T1LB6\":\"Known hazard description\\n\",\"T1LB7\":\"Injury due to equipment / machine\",\"T1LB8\":1,\"ChainOfEvents\":[{\"UNIQUE\":\"195d6a169da1.4x7ae5d\",\"EIJID\":0,\"T2LB1\":\"Events\"}],\"T3LB1\":\"Staff statement\\n\",\"T3LB2\":\"Witness statement\\n\",\"T3LB3\":\"Sketch\\n\",\"T3LB4\":\"Notes\",\"PRFLG\":1},\"ChainOfEvents\":[{\"UNIQUE\":\"195d6a169da1.4x7ae5d\",\"EIJID\":0,\"T2LB1\":\"Events\"}]}"}
+
+// Investigation
+###
+POST http://localhost:4004/odata/v4/incident-portal-role1/b9q2fsan18bqIUHT
+Content-Type: application/json
+
+{"D4OXYPALUYAIDNSO":"{\"Investigation\":{\"INVID\":10,\"INCID\":34,\"T1LB1\":\"Executive summary\\n\",\"T2LB1\":\"Investigation summary\",\"T2LB2\":\"Conclusion\\n\",\"RCFAC\":651,\"PRFLG\":2},\"InvestigationTeam\":[{\"__metadata\":{\"type\":\"SODLS1.INC.Role1.slsincslsincprrl1.INCPZZngdlVuM30sGwXzAk5Qb2w9yy8EmqT.AdrbwMNdSHICTr2mType\",\"uri\":\"https://sls23dusi15jw3mjbn.us4.hana.ondemand.com:443/SODLS1/INC/Role1/slsincslsincprrl1/INCPZZngdlVuM30sGwXzAk5Qb2w9yy8EmqT.xsodata/AdrbwMNdSHICTr2m(15)\"},\"ITMID\":15,\"INCID\":34,\"INVID\":10,\"EMPID\":\"52008442\",\"EMPNM\":\"Gopal Birajdar\",\"TITLE\":\"Product Analyst\"}],\"RootCause\":[],\"RootCauseAnalysis\":[{\"UNIQUE\":\"195d6a80f6b1.xg8aqxv\",\"RCSID\":0,\"RCA1ID\":5,\"RCA1PH\":\"5\",\"RCA2ID\":50,\"RCA2PH\":\"29,50\",\"RCA3ID\":245,\"RCA3PH\":\"88,173,226,245\",\"RCA4ID\":332,\"RCA4PH\":\"324,332\",\"RCA1PH_TEXT\":\"1.Caught In (Pinch and Nip Points) \",\"RCA1IDTXT\":\"Caught In (Pinch and Nip Points)\",\"RCA2PH_TEXT\":\"1.Substandard Acts 2.Failure to Follow Documented Instructions \",\"RCA2IDTXT\":\"Failure to Follow Documented Instructions\",\"RCA3PH_TEXT\":\"1.Job Factors 2.Inadequate Contracting 3.Contractors/Suppliers 4.Inadequate execution/compliance with contract \",\"RCA3IDTXT\":\"Inadequate execution/compliance with contract\",\"RCA4PH_TEXT\":\"1.Commitment, Leadership and Accountability 2.Commitment and Leadership \",\"RCA4IDTXT\":\"Commitment and Leadership\"}],\"GraphicalAnalysis\":[{\"__metadata\":{\"type\":\"SODLS1.INC.Role1.slsincslsincprrl1.INCPZZngdlVuM30sGwXzAk5Qb2w9yy8EmqT.sHrWC7mKk23UgZfNType\",\"uri\":\"https://sls23dusi15jw3mjbn.us4.hana.ondemand.com:443/SODLS1/INC/Role1/slsincslsincprrl1/INCPZZngdlVuM30sGwXzAk5Qb2w9yy8EmqT.xsodata/sHrWC7mKk23UgZfN(47)\"},\"GRPID\":47,\"INVID\":10,\"INCID\":34,\"UNQID\":3,\"SCAT_TXT\":\"Procedure Not Applied\",\"TYVAL\":\"Man\"},{\"__metadata\":{\"type\":\"SODLS1.INC.Role1.slsincslsincprrl1.INCPZZngdlVuM30sGwXzAk5Qb2w9yy8EmqT.sHrWC7mKk23UgZfNType\",\"uri\":\"https://sls23dusi15jw3mjbn.us4.hana.ondemand.com:443/SODLS1/INC/Role1/slsincslsincprrl1/INCPZZngdlVuM30sGwXzAk5Qb2w9yy8EmqT.xsodata/sHrWC7mKk23UgZfN(48)\"},\"GRPID\":48,\"INVID\":10,\"INCID\":34,\"UNQID\":4,\"SCAT_TXT\":\"Negligence\",\"TYVAL\":\"Man\"},{\"__metadata\":{\"type\":\"SODLS1.INC.Role1.slsincslsincprrl1.INCPZZngdlVuM30sGwXzAk5Qb2w9yy8EmqT.sHrWC7mKk23UgZfNType\",\"uri\":\"https://sls23dusi15jw3mjbn.us4.hana.ondemand.com:443/SODLS1/INC/Role1/slsincslsincprrl1/INCPZZngdlVuM30sGwXzAk5Qb2w9yy8EmqT.xsodata/sHrWC7mKk23UgZfN(49)\"},\"GRPID\":49,\"INVID\":10,\"INCID\":34,\"UNQID\":11,\"SCAT_TXT\":\"Operating Ergonomics\",\"TYVAL\":\"Machine\"},{\"__metadata\":{\"type\":\"SODLS1.INC.Role1.slsincslsincprrl1.INCPZZngdlVuM30sGwXzAk5Qb2w9yy8EmqT.sHrWC7mKk23UgZfNType\",\"uri\":\"https://sls23dusi15jw3mjbn.us4.hana.ondemand.com:443/SODLS1/INC/Role1/slsincslsincprrl1/INCPZZngdlVuM30sGwXzAk5Qb2w9yy8EmqT.xsodata/sHrWC7mKk23UgZfN(50)\"},\"GRPID\":50,\"INVID\":10,\"INCID\":34,\"UNQID\":12,\"SCAT_TXT\":\"Building Condition\",\"TYVAL\":\"Machine\"},{\"__metadata\":{\"type\":\"SODLS1.INC.Role1.slsincslsincprrl1.INCPZZngdlVuM30sGwXzAk5Qb2w9yy8EmqT.sHrWC7mKk23UgZfNType\",\"uri\":\"https://sls23dusi15jw3mjbn.us4.hana.ondemand.com:443/SODLS1/INC/Role1/slsincslsincprrl1/INCPZZngdlVuM30sGwXzAk5Qb2w9yy8EmqT.xsodata/sHrWC7mKk23UgZfN(51)\"},\"GRPID\":51,\"INVID\":10,\"INCID\":34,\"UNQID\":13,\"SCAT_TXT\":\"Machine Condition\",\"TYVAL\":\"Machine\"},{\"__metadata\":{\"type\":\"SODLS1.INC.Role1.slsincslsincprrl1.INCPZZngdlVuM30sGwXzAk5Qb2w9yy8EmqT.sHrWC7mKk23UgZfNType\",\"uri\":\"https://sls23dusi15jw3mjbn.us4.hana.ondemand.com:443/SODLS1/INC/Role1/slsincslsincprrl1/INCPZZngdlVuM30sGwXzAk5Qb2w9yy8EmqT.xsodata/sHrWC7mKk23UgZfN(52)\"},\"GRPID\":52,\"INVID\":10,\"INCID\":34,\"UNQID\":17,\"SCAT_TXT\":\"Unsuitable Tools\",\"TYVAL\":\"Material\"},{\"__metadata\":{\"type\":\"SODLS1.INC.Role1.slsincslsincprrl1.INCPZZngdlVuM30sGwXzAk5Qb2w9yy8EmqT.sHrWC7mKk23UgZfNType\",\"uri\":\"https://sls23dusi15jw3mjbn.us4.hana.ondemand.com:443/SODLS1/INC/Role1/slsincslsincprrl1/INCPZZngdlVuM30sGwXzAk5Qb2w9yy8EmqT.xsodata/sHrWC7mKk23UgZfN(53)\"},\"GRPID\":53,\"INVID\":10,\"INCID\":34,\"UNQID\":18,\"SCAT_TXT\":\"Shape, Size, Weight\",\"TYVAL\":\"Material\"},{\"__metadata\":{\"type\":\"SODLS1.INC.Role1.slsincslsincprrl1.INCPZZngdlVuM30sGwXzAk5Qb2w9yy8EmqT.sHrWC7mKk23UgZfNType\",\"uri\":\"https://sls23dusi15jw3mjbn.us4.hana.ondemand.com:443/SODLS1/INC/Role1/slsincslsincprrl1/INCPZZngdlVuM30sGwXzAk5Qb2w9yy8EmqT.xsodata/sHrWC7mKk23UgZfN(54)\"},\"GRPID\":54,\"INVID\":10,\"INCID\":34,\"UNQID\":19,\"SCAT_TXT\":\"PPE Not Suitable\",\"TYVAL\":\"Material\"},{\"__metadata\":{\"type\":\"SODLS1.INC.Role1.slsincslsincprrl1.INCPZZngdlVuM30sGwXzAk5Qb2w9yy8EmqT.sHrWC7mKk23UgZfNType\",\"uri\":\"https://sls23dusi15jw3mjbn.us4.hana.ondemand.com:443/SODLS1/INC/Role1/slsincslsincprrl1/INCPZZngdlVuM30sGwXzAk5Qb2w9yy8EmqT.xsodata/sHrWC7mKk23UgZfN(55)\"},\"GRPID\":55,\"INVID\":10,\"INCID\":34,\"UNQID\":23,\"SCAT_TXT\":\"LOTO\",\"TYVAL\":\"Method\"},{\"__metadata\":{\"type\":\"SODLS1.INC.Role1.slsincslsincprrl1.INCPZZngdlVuM30sGwXzAk5Qb2w9yy8EmqT.sHrWC7mKk23UgZfNType\",\"uri\":\"https://sls23dusi15jw3mjbn.us4.hana.ondemand.com:443/SODLS1/INC/Role1/slsincslsincprrl1/INCPZZngdlVuM30sGwXzAk5Qb2w9yy8EmqT.xsodata/sHrWC7mKk23UgZfN(56)\"},\"GRPID\":56,\"INVID\":10,\"INCID\":34,\"UNQID\":25,\"SCAT_TXT\":\"No Written Procedure\",\"TYVAL\":\"Method\"}]}"}
+
+// Corrective Action
+###
+POST http://localhost:4004/odata/v4/incident-portal-role1/FxzlEmezqgGBuqfq
+Content-Type: application/json
+
+// Lesson Learned
+###
+POST http://localhost:4004/odata/v4/incident-portal-role1/xGx7YodvNNbU5uKU
+Content-Type: application/json
+
+// Report Sign-Off
+###
+POST http://localhost:4004/odata/v4/incident-portal-role1/AzsKzyfS5Kmcs86d
+Content-Type: application/json
+
+// Notes
+###
+POST http://localhost:4004/odata/v4/incident-portal-role1/QGByRBtgVZREybOU
+Content-Type: application/json
+
+// Attachments
+###
+POST http://localhost:4004/odata/v4/incident-portal-role1/vwxGTHJKICWOGdds
+Content-Type: application/json
+
+// Close Incident
+###
+POST http://localhost:4004/odata/v4/incident-portal-role1/wuScnYBi9xs01U3U
+Content-Type: application/json
+
+// Track Incident
+###
+POST http://localhost:4004/odata/v4/incident-portal-role1/Dh23XLBkWJ0Ard
+Content-Type: application/json
+
+// Complete Investigation
+###
+POST http://localhost:4004/odata/v4/incident-portal-role1/obcS75AWUW8IBMIH
+Content-Type: application/json
+
+// Update Incident
+###
+POST http://localhost:4004/odata/v4/incident-portal-role1/b9q2fsan18bqxar0
+Content-Type: application/json
+
+// Reassign Corrective 
+###
+POST http://localhost:4004/odata/v4/incident-portal-role1/SGQtBRRcRCGqIj0f
+Content-Type: application/json
+
+// Update Notification Flag
+###
+POST http://localhost:4004/odata/v4/incident-portal-role1/BLqy0dzTSxOAfOzu
+Content-Type: application/json
+
+// Assign Incident
+###
+POST http://localhost:4004/odata/v4/incident-portal-role1/Hx4qjNkqmV4n356u
+Content-Type: application/json
+
+// Custom Tab 1
+###
+POST http://localhost:4004/odata/v4/incident-portal-role1/ZDsPAuKh77w3d6G5
+Content-Type: application/json
+
+// Custom Tab 2
+###
+POST http://localhost:4004/odata/v4/incident-portal-role1/TF70gMmrN0sfaumZ
+Content-Type: application/json
+
+// Custom Tab 3
+###
+POST http://localhost:4004/odata/v4/incident-portal-role1/DOM3jmE2pjtlatjf
+Content-Type: application/json
+
+// Absence Audit
+###
+POST http://localhost:4004/odata/v4/incident-portal-role1/p6dmi7iqbx36prd9
+Content-Type: application/json
+
+// Restriction Limitation
+###
+POST http://localhost:4004/odata/v4/incident-portal-role1/cx42wckg3ea6w53v
+Content-Type: application/json
+
+// RTW Details
+###
+POST http://localhost:4004/odata/v4/incident-portal-role1/NNyi8BHH5WTRSazc
+Content-Type: application/json
+
+// Reopen Incident
+###
+POST http://localhost:4004/odata/v4/incident-portal-role1/bVWeC9j8s27C5hn7
+Content-Type: application/json
+
+// Update Corrective
+###
+POST http://localhost:4004/odata/v4/incident-portal-role1/lMjgEa7FtVWpKj4g
+Content-Type: application/json
+
+// Delete Absence Audit
+###
+POST http://localhost:4004/odata/v4/incident-portal-role1/w7zw25hhn9i7mss7
+Content-Type: application/json
+
+// Delete Restriction Limitation
+###
+POST http://localhost:4004/odata/v4/incident-portal-role1/rq2zxcvr36jsb8zq
+Content-Type: application/json
+
+// Delete Involved people
+###
+POST http://localhost:4004/odata/v4/incident-portal-role1/HTFCBsan18bqxhgt
+Content-Type: application/json
+
+// Delete Injured Body Part
+###
+POST http://localhost:4004/odata/v4/incident-portal-role1/T7QviTG4DnXQDbWo
+Content-Type: application/json
+
+// Delete Property Equipment
+###
+POST http://localhost:4004/odata/v4/incident-portal-role1/NHeYVYv3d2RvARJK
+Content-Type: application/json
+
+// Delete Passenger
+###
+POST http://localhost:4004/odata/v4/incident-portal-role1/nDIBCLhbYOJixpTn
+Content-Type: application/json
+
+// Delete Chain of Event
+###
+POST http://localhost:4004/odata/v4/incident-portal-role1/AGYEL6P9S7S36RI7
+Content-Type: application/json
+
+// Delete Corrective
+###
+POST http://localhost:4004/odata/v4/incident-portal-role1/f1pUMehrwgjb69Lo
+Content-Type: application/json
+
+// Delete Environment Corrective
+###
+POST http://localhost:4004/odata/v4/incident-portal-role1/vwx9J4D07CWOGdds
+Content-Type: application/json
+
+// Delete Lesson Learned
+###
+POST http://localhost:4004/odata/v4/incident-portal-role1/yUmvi9VpKnnReNFn
+Content-Type: application/json
+
+// Delete Notes
+###
+POST http://localhost:4004/odata/v4/incident-portal-role1/DjF1dF3R03tsEWmF
+Content-Type: application/json
+
+// Delete Attachment
+###
+POST http://localhost:4004/odata/v4/incident-portal-role1/d0beQXTd6nyEvm1v
+Content-Type: application/json
+
+// Delete Investigation Team
+###
+POST http://localhost:4004/odata/v4/incident-portal-role1/jt5krfLWC6Z5K9D1
+Content-Type: application/json
+
+// Delete Root Cause
+###
+POST http://localhost:4004/odata/v4/incident-portal-role1/z9q1b0huwplxyw5q
+Content-Type: application/json
+
+// Delete Root Cause Analysis
+###
+POST http://localhost:4004/odata/v4/incident-portal-role1/yIWriPzYOfXsHGba
+Content-Type: application/json
+
+// Delete RTW
+###
+POST http://localhost:4004/odata/v4/incident-portal-role1/j0hbiystv2nse4e3
+Content-Type: application/json
