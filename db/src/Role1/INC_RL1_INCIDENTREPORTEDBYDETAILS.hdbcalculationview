@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="INC_RL1_INCIDENTREPORTEDBYDETAILS" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" hierarchyGeneration="SQL" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="true" application="BAS">
+<descriptions defaultDescription="INC_RL1_INCIDENTREPORTEDBYDETAILS"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="INC_T_REPBY">
+    <resourceUri>INC_T_REPBY</resourceUri>
+  </DataSource>
+  <DataSource id="INC_T_INCDT">
+    <resourceUri>INC_T_INCDT</resourceUri>
+  </DataSource>
+</dataSources>
+<snapshotProcedures/>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="REPID"/>
+      <viewAttribute id="INCID"/>
+      <viewAttribute id="RPLB1"/>
+      <viewAttribute id="RPLB2"/>
+      <viewAttribute id="RPLB3"/>
+      <viewAttribute id="RPLB4"/>
+      <viewAttribute id="RPLB5"/>
+      <viewAttribute id="RPLB6"/>
+      <viewAttribute id="RPLB7"/>
+      <viewAttribute id="RPLB8"/>
+      <viewAttribute id="RPLB9"/>
+      <viewAttribute id="RPLB10"/>
+      <viewAttribute id="RPLB11"/>
+      <viewAttribute id="RPLB12"/>
+      <viewAttribute id="RPLB13"/>
+      <viewAttribute id="RPLB14"/>
+      <viewAttribute id="MGRID"/>
+      <viewAttribute id="ISDEL"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="INC_T_REPBY"/>
+    <filter>&quot;ISDEL&quot;='0'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_2" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="INCID"/>
+      <viewAttribute id="ISDEL"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="INC_T_INCDT"/>
+    <filter>&quot;ISDEL&quot;='0'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1" cardinality="CN_N" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="REPID" aggregationType="sum"/>
+      <viewAttribute id="INCID" aggregationType="sum"/>
+      <viewAttribute id="RPLB1"/>
+      <viewAttribute id="RPLB2"/>
+      <viewAttribute id="RPLB3"/>
+      <viewAttribute id="RPLB4"/>
+      <viewAttribute id="RPLB5"/>
+      <viewAttribute id="RPLB6"/>
+      <viewAttribute id="RPLB7"/>
+      <viewAttribute id="RPLB8"/>
+      <viewAttribute id="RPLB9"/>
+      <viewAttribute id="RPLB10"/>
+      <viewAttribute id="RPLB11"/>
+      <viewAttribute id="RPLB12"/>
+      <viewAttribute id="RPLB13"/>
+      <viewAttribute id="RPLB14"/>
+      <viewAttribute id="MGRID"/>
+      <viewAttribute hidden="true" id="JOIN$INCID$INCID"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Projection_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="REPID" source="REPID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="INCID" source="INCID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RPLB1" source="RPLB1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RPLB2" source="RPLB2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RPLB3" source="RPLB3"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RPLB4" source="RPLB4"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RPLB5" source="RPLB5"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RPLB6" source="RPLB6"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RPLB7" source="RPLB7"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RPLB8" source="RPLB8"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RPLB9" source="RPLB9"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RPLB10" source="RPLB10"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RPLB11" source="RPLB11"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RPLB12" source="RPLB12"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RPLB13" source="RPLB13"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RPLB14" source="RPLB14"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MGRID" source="MGRID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$INCID$INCID" source="INCID"/>
+    </input>
+    <input node="Projection_2">
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$INCID$INCID" source="INCID"/>
+    </input>
+    <joinAttribute name="JOIN$INCID$INCID"/>
+  </calculationView>
+</calculationViews>
+
+<logicalModel id="Join_1">
+  <attributes>
+    <attribute id="INCID" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Incident id "/>
+      <keyMapping columnObjectName="Join_1" columnName="INCID"/>
+    </attribute>
+    <attribute id="RPLB1" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Reported By Name"/>
+      <keyMapping columnObjectName="Join_1" columnName="RPLB1"/>
+    </attribute>
+    <attribute id="RPLB2" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Reported By Employee Id"/>
+      <keyMapping columnObjectName="Join_1" columnName="RPLB2"/>
+    </attribute>
+    <attribute id="RPLB3" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Email Address"/>
+      <keyMapping columnObjectName="Join_1" columnName="RPLB3"/>
+    </attribute>
+    <attribute id="RPLB4" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Custom"/>
+      <keyMapping columnObjectName="Join_1" columnName="RPLB4"/>
+    </attribute>
+    <attribute id="RPLB5" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Custom"/>
+      <keyMapping columnObjectName="Join_1" columnName="RPLB5"/>
+    </attribute>
+    <attribute id="RPLB6" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Custom"/>
+      <keyMapping columnObjectName="Join_1" columnName="RPLB6"/>
+    </attribute>
+    <attribute id="RPLB7" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Custom"/>
+      <keyMapping columnObjectName="Join_1" columnName="RPLB7"/>
+    </attribute>
+    <attribute id="RPLB8" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Position"/>
+      <keyMapping columnObjectName="Join_1" columnName="RPLB8"/>
+    </attribute>
+    <attribute id="RPLB9" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Department"/>
+      <keyMapping columnObjectName="Join_1" columnName="RPLB9"/>
+    </attribute>
+    <attribute id="RPLB10" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Manager Name"/>
+      <keyMapping columnObjectName="Join_1" columnName="RPLB10"/>
+    </attribute>
+    <attribute id="RPLB11" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Custom"/>
+      <keyMapping columnObjectName="Join_1" columnName="RPLB11"/>
+    </attribute>
+    <attribute id="RPLB12" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Custom"/>
+      <keyMapping columnObjectName="Join_1" columnName="RPLB12"/>
+    </attribute>
+    <attribute id="RPLB13" order="15" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Custom"/>
+      <keyMapping columnObjectName="Join_1" columnName="RPLB13"/>
+    </attribute>
+    <attribute id="RPLB14" order="16" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Custom"/>
+      <keyMapping columnObjectName="Join_1" columnName="RPLB14"/>
+    </attribute>
+    <attribute id="MGRID" order="17" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Manager Id"/>
+      <keyMapping columnObjectName="Join_1" columnName="MGRID"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="REPID" order="1" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Unique id"/>
+      <measureMapping columnObjectName="Join_1" columnName="REPID"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+    
+  
+    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="-60" y="347"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_2" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="308" y="347"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="97" y="201"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Projection_1" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="136.0234375"/>
+    </shape>
+    <shape modelObjectName="Projection_2" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="136.0234375"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
