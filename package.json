@@ -10,7 +10,8 @@
     "@cap-js/hana": "^1",
     "@sap/cds": "^8",
     "@sap/cds-odata-v2-adapter-proxy": "^1.9.21",
-    "express": "^4"
+    "express": "^4",
+    "hana-cli": "^3.202405.1"
   },
   "devDependencies": {
     "@cap-js/cds-types": "^0.9.0",
@@ -24,9 +25,9 @@
     "requires": {
       "db": "hana",
       "auth": {
-        "kind":"basic",
-        "users":{
-          "DBADMIN":{
+        "kind": "basic",
+        "users": {
+          "DBADMIN": {
             "password": "ProductGenAI1"
           }
         }

@@ -93,3 +93,15 @@ context M{
         LICNM:String(250);
     }   
 }
+
+context RL1 {
+    @cds.persistence.exists 
+    @cds.persistence.calcview 
+    entity SAVEASDRAFT {
+        key INCID: Integer; 
+        DRFNM: String(150); 
+        CHNDT: Date  @sql.alias: 'UPDDT' ; 
+        CRTBY: String(100);
+        EMPNM: String(250) @sql.alias: 'UPDBY';
+    }    
+}
