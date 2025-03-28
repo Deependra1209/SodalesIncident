@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="INC_RL1_INCIDENTTYPE" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" hierarchyGeneration="SQL" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="true" application="BAS">
-<descriptions defaultDescription="INC_RL1_INCIDENTTYPE"/>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="INC_RL1_ERGONOMICSMOSTAPPLICABLETYPES" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" hierarchyGeneration="SQL" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="true" application="BAS">
+<descriptions defaultDescription="INC_RL1_ERGONOMICSMOSTAPPLICABLETYPES"/>
 <localVariables/>
 <variableMappings/>
 <dataSources>
-  <DataSource id="INC_T_INCTP">
-    <resourceUri>INC_T_INCTP</resourceUri>
+  <DataSource id="INC_T_ERTMA">
+    <resourceUri>INC_T_ERTMA</resourceUri>
   </DataSource>
   <DataSource id="INC_T_INCDT">
     <resourceUri>INC_T_INCDT</resourceUri>
@@ -18,13 +18,14 @@
 <calculationViews>
   <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1" filterExpressionLanguage="SQL">
     <viewAttributes>
-      <viewAttribute id="ICTID"/>
+      <viewAttribute id="EMAID"/>
       <viewAttribute id="INCID"/>
-      <viewAttribute id="INCTY"/>
+      <viewAttribute id="ERGID"/>
+      <viewAttribute id="T1LB2"/>
       <viewAttribute id="ISDEL"/>
     </viewAttributes>
     <calculatedViewAttributes/>
-    <input node="INC_T_INCTP"/>
+    <input node="INC_T_ERTMA"/>
     <filter>&quot;ISDEL&quot;='0'</filter>
   </calculationView>
   <calculationView xsi:type="Calculation:ProjectionView" id="Projection_2" filterExpressionLanguage="SQL">
@@ -40,52 +41,56 @@
     <viewAttributes>
       <viewAttribute id="UNQID"/>
       <viewAttribute id="TYVAL"/>
-      <viewAttribute id="ISDEL"/>
       <viewAttribute id="TXVAL"/>
+      <viewAttribute id="ISDEL"/>
     </viewAttributes>
     <calculatedViewAttributes/>
     <input node="INC_M_MSTDT"/>
-    <filter>&quot;TYVAL&quot;='Incident Type' AND &quot;ISDEL&quot;='0'</filter>
+    <filter>&quot;ISDEL&quot;='0' AND &quot;TYVAL&quot;='Ergonomics Manual'</filter>
   </calculationView>
   <calculationView xsi:type="Calculation:JoinView" id="Join_1_1" cardinality="CN_N" joinType="leftOuter" multiJoinNode="Join_1" multiJoinCentralTable="Projection_1" multiJoinOrder="Outside In">
     <viewAttributes>
-      <viewAttribute id="ICTID" aggregationType="sum"/>
+      <viewAttribute id="EMAID" aggregationType="sum"/>
       <viewAttribute id="INCID" aggregationType="sum"/>
-      <viewAttribute id="INCTY" aggregationType="sum"/>
-      <viewAttribute id="ISDEL"/>
+      <viewAttribute id="ERGID" aggregationType="sum"/>
+      <viewAttribute id="T1LB2" aggregationType="sum"/>
       <viewAttribute id="TXVAL"/>
-      <viewAttribute hidden="true" id="JOIN$INCTY$UNQID"/>
+      <viewAttribute id="ISDEL"/>
+      <viewAttribute hidden="true" id="JOIN$T1LB2$UNQID"/>
     </viewAttributes>
     <calculatedViewAttributes/>
     <input node="Projection_1">
-      <mapping xsi:type="Calculation:AttributeMapping" target="ICTID" source="ICTID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMAID" source="EMAID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="INCID" source="INCID"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="INCTY" source="INCTY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ERGID" source="ERGID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="T1LB2" source="T1LB2"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="ISDEL" source="ISDEL"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$INCTY$UNQID" source="INCTY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$T1LB2$UNQID" source="T1LB2"/>
     </input>
     <input node="Projection_3">
       <mapping xsi:type="Calculation:AttributeMapping" target="TXVAL" source="TXVAL"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$INCTY$UNQID" source="UNQID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$T1LB2$UNQID" source="UNQID"/>
     </input>
-    <joinAttribute name="JOIN$INCTY$UNQID"/>
+    <joinAttribute name="JOIN$T1LB2$UNQID"/>
   </calculationView>
   <calculationView xsi:type="Calculation:JoinView" id="Join_1_2" cardinality="CN_N" joinType="inner" multiJoinNode="Join_1" multiJoinCentralTable="Projection_1" multiJoinOrder="Outside In">
     <viewAttributes>
-      <viewAttribute id="ICTID" aggregationType="sum"/>
+      <viewAttribute id="EMAID" aggregationType="sum"/>
       <viewAttribute id="INCID" aggregationType="sum"/>
-      <viewAttribute id="INCTY" aggregationType="sum"/>
-      <viewAttribute id="ISDEL"/>
+      <viewAttribute id="ERGID" aggregationType="sum"/>
+      <viewAttribute id="T1LB2" aggregationType="sum"/>
       <viewAttribute id="TXVAL"/>
+      <viewAttribute id="ISDEL"/>
       <viewAttribute hidden="true" id="JOIN$INCID$INCID"/>
     </viewAttributes>
     <calculatedViewAttributes/>
     <input node="Join_1_1">
-      <mapping xsi:type="Calculation:AttributeMapping" target="ICTID" source="ICTID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMAID" source="EMAID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="INCID" source="INCID"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="INCTY" source="INCTY"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="ISDEL" source="ISDEL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ERGID" source="ERGID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="T1LB2" source="T1LB2"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="TXVAL" source="TXVAL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ISDEL" source="ISDEL"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$INCID$INCID" source="INCID"/>
     </input>
     <input node="Projection_2">
@@ -101,24 +106,28 @@
       <descriptions defaultDescription="Incident Id"/>
       <keyMapping columnObjectName="Join_1_2" columnName="INCID"/>
     </attribute>
-    <attribute id="INCTY" order="3" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="Incident Type"/>
-      <keyMapping columnObjectName="Join_1_2" columnName="INCTY"/>
+    <attribute id="ERGID" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Ergonomics Id"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="ERGID"/>
     </attribute>
-    <attribute id="ISDEL" order="4" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="Is Deleted Flag (1=True/0=False)"/>
-      <keyMapping columnObjectName="Join_1_2" columnName="ISDEL"/>
+    <attribute id="T1LB2" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Selected Ergonomics Most Applicable Type"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="T1LB2"/>
     </attribute>
-    <attribute id="INCTYTXT" order="5" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="T1LB2TXT" order="5" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Master Data Text Value"/>
       <keyMapping columnObjectName="Join_1_2" columnName="TXVAL"/>
+    </attribute>
+    <attribute id="ISDEL" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Is Deleted Flag (1=True/0=False)"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="ISDEL"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>
   <baseMeasures>
-    <measure id="ICTID" order="1" aggregationType="sum" measureType="simple">
-      <descriptions defaultDescription="Unique Id"/>
-      <measureMapping columnObjectName="Join_1_2" columnName="ICTID"/>
+    <measure id="EMAID" order="1" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Unique id"/>
+      <measureMapping columnObjectName="Join_1_2" columnName="EMAID"/>
       <exceptionAggregationMetadata/>
     </measure>
   </baseMeasures>
@@ -152,15 +161,15 @@
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Projection_2" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Join_1">
-      <upperLeftCorner x="502" y="28"/>
+      <upperLeftCorner x="320" y="30"/>
       <rectangleSize width="136"/>
     </shape>
     <shape modelObjectName="Projection_1" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Join_1">
-      <upperLeftCorner x="291" y="6"/>
+      <upperLeftCorner x="20" y="30"/>
       <rectangleSize width="136"/>
     </shape>
     <shape modelObjectName="Projection_3" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Join_1">
-      <upperLeftCorner x="12" y="12"/>
+      <upperLeftCorner x="620" y="30"/>
       <rectangleSize width="136"/>
     </shape>
   </shapes>

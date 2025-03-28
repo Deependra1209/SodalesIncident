@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="INC_RL1_ENVIRONMENTCORRACTIVEACTION" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" hierarchyGeneration="SQL" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="true" application="BAS">
+<descriptions defaultDescription="INC_RL1_ENVIRONMENTCORRACTIVEACTION"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="INC_T_ENVCA">
+    <resourceUri>INC_T_ENVCA</resourceUri>
+  </DataSource>
+  <DataSource id="INC_M_MSTDT">
+    <resourceUri>INC_M_MSTDT</resourceUri>
+  </DataSource>
+  <DataSource id="Projection_3$$$$INC_M_MSTDT$$">
+    <resourceUri>INC_M_MSTDT</resourceUri>
+  </DataSource>
+  <DataSource id="M_EMPDT">
+    <resourceUri>M_EMPDT</resourceUri>
+  </DataSource>
+</dataSources>
+<snapshotProcedures/>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="ECAID"/>
+      <viewAttribute id="INCID"/>
+      <viewAttribute id="ENVID"/>
+      <viewAttribute id="T2LB2"/>
+      <viewAttribute id="T2LB3"/>
+      <viewAttribute id="T2LB4"/>
+      <viewAttribute id="ISDEL"/>
+      <viewAttribute id="CRTBY"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="INC_T_ENVCA"/>
+    <filter>&quot;ISDEL&quot;='0' AND &quot;ENVID&quot; IS NOT NULL</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_2" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="UNQID"/>
+      <viewAttribute id="TYVAL"/>
+      <viewAttribute id="TXVAL"/>
+      <viewAttribute id="ISDEL"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="INC_M_MSTDT"/>
+    <filter>&quot;TYVAL&quot;='CA Type' AND &quot;ISDEL&quot;='0'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_3" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="UNQID"/>
+      <viewAttribute id="TYVAL"/>
+      <viewAttribute id="TXVAL"/>
+      <viewAttribute id="ISDEL"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Projection_3$$$$INC_M_MSTDT$$"/>
+    <filter>&quot;TYVAL&quot;='CA Category' AND &quot;ISDEL&quot;='0'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_4" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="EMPNM"/>
+      <viewAttribute id="ISDEL"/>
+      <viewAttribute id="USRID"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="M_EMPDT"/>
+    <filter>&quot;ISDEL&quot;='0'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1_1" cardinality="CN_N" joinType="leftOuter" multiJoinNode="Join_1" multiJoinCentralTable="Projection_1" multiJoinOrder="Outside In">
+    <viewAttributes>
+      <viewAttribute id="ECAID" aggregationType="sum"/>
+      <viewAttribute id="INCID" aggregationType="sum"/>
+      <viewAttribute id="ENVID" aggregationType="sum"/>
+      <viewAttribute id="T2LB2"/>
+      <viewAttribute id="T2LB3" aggregationType="sum"/>
+      <viewAttribute id="T2LB4" aggregationType="sum"/>
+      <viewAttribute id="T2LB5"/>
+      <viewAttribute hidden="true" id="JOIN$CRTBY$USRID"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Projection_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ECAID" source="ECAID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="INCID" source="INCID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ENVID" source="ENVID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="T2LB2" source="T2LB2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="T2LB3" source="T2LB3"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="T2LB4" source="T2LB4"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$CRTBY$USRID" source="CRTBY"/>
+    </input>
+    <input node="Projection_4">
+      <mapping xsi:type="Calculation:AttributeMapping" target="T2LB5" source="EMPNM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$CRTBY$USRID" source="USRID"/>
+    </input>
+    <joinAttribute name="JOIN$CRTBY$USRID"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1_2" cardinality="CN_N" joinType="leftOuter" multiJoinNode="Join_1" multiJoinCentralTable="Projection_1" multiJoinOrder="Outside In">
+    <viewAttributes>
+      <viewAttribute id="ECAID" aggregationType="sum"/>
+      <viewAttribute id="INCID" aggregationType="sum"/>
+      <viewAttribute id="ENVID" aggregationType="sum"/>
+      <viewAttribute id="T2LB2"/>
+      <viewAttribute id="T2LB3" aggregationType="sum"/>
+      <viewAttribute id="T2LB4" aggregationType="sum"/>
+      <viewAttribute id="T2LB5"/>
+      <viewAttribute id="TXVAL_T2LB3TXT"/>
+      <viewAttribute hidden="true" id="JOIN$T2LB3$UNQID"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Join_1_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ECAID" source="ECAID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="INCID" source="INCID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ENVID" source="ENVID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="T2LB2" source="T2LB2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="T2LB3" source="T2LB3"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="T2LB4" source="T2LB4"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="T2LB5" source="T2LB5"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$T2LB3$UNQID" source="T2LB3"/>
+    </input>
+    <input node="Projection_2">
+      <mapping xsi:type="Calculation:AttributeMapping" target="TXVAL_T2LB3TXT" source="TXVAL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$T2LB3$UNQID" source="UNQID"/>
+    </input>
+    <joinAttribute name="JOIN$T2LB3$UNQID"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1_3" cardinality="CN_N" joinType="leftOuter" multiJoinNode="Join_1" multiJoinCentralTable="Projection_1" multiJoinOrder="Outside In">
+    <viewAttributes>
+      <viewAttribute id="ECAID" aggregationType="sum"/>
+      <viewAttribute id="INCID" aggregationType="sum"/>
+      <viewAttribute id="ENVID" aggregationType="sum"/>
+      <viewAttribute id="T2LB2"/>
+      <viewAttribute id="T2LB3" aggregationType="sum"/>
+      <viewAttribute id="T2LB4" aggregationType="sum"/>
+      <viewAttribute id="T2LB5"/>
+      <viewAttribute id="TXVAL_T2LB3TXT"/>
+      <viewAttribute id="TXVAL_T2LB4TXT"/>
+      <viewAttribute hidden="true" id="JOIN$T2LB4$UNQID"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Join_1_2">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ECAID" source="ECAID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="INCID" source="INCID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ENVID" source="ENVID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="T2LB2" source="T2LB2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="T2LB3" source="T2LB3"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="T2LB4" source="T2LB4"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="T2LB5" source="T2LB5"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TXVAL_T2LB3TXT" source="TXVAL_T2LB3TXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$T2LB4$UNQID" source="T2LB4"/>
+    </input>
+    <input node="Projection_3">
+      <mapping xsi:type="Calculation:AttributeMapping" target="TXVAL_T2LB4TXT" source="TXVAL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$T2LB4$UNQID" source="UNQID"/>
+    </input>
+    <joinAttribute name="JOIN$T2LB4$UNQID"/>
+  </calculationView>
+</calculationViews>
+
+<logicalModel id="Join_1_3">
+  <attributes>
+    <attribute id="INCID" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Incident Id"/>
+      <keyMapping columnObjectName="Join_1_3" columnName="INCID"/>
+    </attribute>
+    <attribute id="ENVID" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Environment Id"/>
+      <keyMapping columnObjectName="Join_1_3" columnName="ENVID"/>
+    </attribute>
+    <attribute id="T2LB2" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CA Description"/>
+      <keyMapping columnObjectName="Join_1_3" columnName="T2LB2"/>
+    </attribute>
+    <attribute id="T2LB3" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CA Type"/>
+      <keyMapping columnObjectName="Join_1_3" columnName="T2LB3"/>
+    </attribute>
+    <attribute id="T2LB4" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CA Category"/>
+      <keyMapping columnObjectName="Join_1_3" columnName="T2LB4"/>
+    </attribute>
+    <attribute id="T2LB3TXT" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Master Data Text Value"/>
+      <keyMapping columnObjectName="Join_1_3" columnName="TXVAL_T2LB3TXT"/>
+    </attribute>
+    <attribute id="T2LB4TXT" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TXVAL_T2LB4TXT"/>
+      <keyMapping columnObjectName="Join_1_3" columnName="TXVAL_T2LB4TXT"/>
+    </attribute>
+    <attribute id="T2LB5" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Employee Name"/>
+      <keyMapping columnObjectName="Join_1_3" columnName="T2LB5"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="ECAID" order="1" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Unique Id"/>
+      <measureMapping columnObjectName="Join_1_3" columnName="ECAID"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="474" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+    
+  
+    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="302" y="406"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_2" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="722" y="406"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_3" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="512" y="406"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_4" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="406"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="474" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Projection_3" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Join_1">
+      <upperLeftCorner x="336" y="107"/>
+      <rectangleSize width="136"/>
+    </shape>
+    <shape modelObjectName="Projection_2" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Join_1">
+      <upperLeftCorner x="195" y="-14"/>
+      <rectangleSize width="136"/>
+    </shape>
+    <shape modelObjectName="Projection_1" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Join_1">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="136"/>
+    </shape>
+    <shape modelObjectName="Projection_4" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Join_1">
+      <upperLeftCorner x="184" y="217"/>
+      <rectangleSize width="136"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="INC_RL1_BODYPARTSNATUREINJURY" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" hierarchyGeneration="SQL" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="true" application="BAS">
+<descriptions defaultDescription="INC_RL1_BODYPARTSNATUREINJURY"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="INC_T_BDPRT">
+    <resourceUri>INC_T_BDPRT</resourceUri>
+  </DataSource>
+  <DataSource id="INC_M_BDPRT">
+    <resourceUri>INC_M_BDPRT</resourceUri>
+  </DataSource>
+  <DataSource id="Projection_3$$$$INC_M_BDPRT$$">
+    <resourceUri>INC_M_BDPRT</resourceUri>
+  </DataSource>
+  <DataSource id="Projection_4$$$$INC_M_BDPRT$$">
+    <resourceUri>INC_M_BDPRT</resourceUri>
+  </DataSource>
+</dataSources>
+<snapshotProcedures/>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="BDPID"/>
+      <viewAttribute id="INCID"/>
+      <viewAttribute id="WPIID"/>
+      <viewAttribute id="BDCL1"/>
+      <viewAttribute id="BDCL2"/>
+      <viewAttribute id="BDCL3"/>
+      <viewAttribute id="BDCL4"/>
+      <viewAttribute id="ISDEL"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="INC_T_BDPRT"/>
+    <filter>&quot;ISDEL&quot;='0'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_2" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="UNQID"/>
+      <viewAttribute id="TXVAL"/>
+      <viewAttribute id="TYVAL"/>
+      <viewAttribute id="ISDEL"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="INC_M_BDPRT"/>
+    <filter>&quot;ISDEL&quot;='0' AND &quot;TYVAL&quot;='BodyPart'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_3" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="UNQID"/>
+      <viewAttribute id="TXVAL"/>
+      <viewAttribute id="TYVAL"/>
+      <viewAttribute id="ISDEL"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Projection_3$$$$INC_M_BDPRT$$"/>
+    <filter>&quot;ISDEL&quot;='0' AND &quot;TYVAL&quot;='NatureOfInjury'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_4" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="UNQID"/>
+      <viewAttribute id="TXVAL"/>
+      <viewAttribute id="TYVAL"/>
+      <viewAttribute id="ISDEL"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Projection_4$$$$INC_M_BDPRT$$"/>
+    <filter>&quot;ISDEL&quot;='0' AND &quot;TYVAL&quot;='InjurySide'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1_1" cardinality="CN_N" joinType="leftOuter" multiJoinNode="Join_1" multiJoinCentralTable="Projection_1" multiJoinOrder="Outside In">
+    <viewAttributes>
+      <viewAttribute id="BDPID" aggregationType="sum"/>
+      <viewAttribute id="INCID" aggregationType="sum"/>
+      <viewAttribute id="WPIID" aggregationType="sum"/>
+      <viewAttribute id="BDCL1" aggregationType="sum"/>
+      <viewAttribute id="BDCL2" aggregationType="sum"/>
+      <viewAttribute id="BDCL3" aggregationType="sum"/>
+      <viewAttribute id="BDCL4"/>
+      <viewAttribute id="TXVAL_BDCL3TXT"/>
+      <viewAttribute hidden="true" id="JOIN$BDCL3$UNQID"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Projection_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="BDPID" source="BDPID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="INCID" source="INCID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WPIID" source="WPIID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BDCL1" source="BDCL1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BDCL2" source="BDCL2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BDCL3" source="BDCL3"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BDCL4" source="BDCL4"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$BDCL3$UNQID" source="BDCL3"/>
+    </input>
+    <input node="Projection_4">
+      <mapping xsi:type="Calculation:AttributeMapping" target="TXVAL_BDCL3TXT" source="TXVAL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$BDCL3$UNQID" source="UNQID"/>
+    </input>
+    <joinAttribute name="JOIN$BDCL3$UNQID"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1_2" cardinality="CN_N" joinType="leftOuter" multiJoinNode="Join_1" multiJoinCentralTable="Projection_1" multiJoinOrder="Outside In">
+    <viewAttributes>
+      <viewAttribute id="BDPID" aggregationType="sum"/>
+      <viewAttribute id="INCID" aggregationType="sum"/>
+      <viewAttribute id="WPIID" aggregationType="sum"/>
+      <viewAttribute id="BDCL1" aggregationType="sum"/>
+      <viewAttribute id="BDCL2" aggregationType="sum"/>
+      <viewAttribute id="BDCL3" aggregationType="sum"/>
+      <viewAttribute id="BDCL4"/>
+      <viewAttribute id="TXVAL_BDCL3TXT"/>
+      <viewAttribute id="TXVAL_BDCL2TXT"/>
+      <viewAttribute hidden="true" id="JOIN$BDCL2$UNQID"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Join_1_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="BDPID" source="BDPID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="INCID" source="INCID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WPIID" source="WPIID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BDCL1" source="BDCL1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BDCL2" source="BDCL2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BDCL3" source="BDCL3"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BDCL4" source="BDCL4"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TXVAL_BDCL3TXT" source="TXVAL_BDCL3TXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$BDCL2$UNQID" source="BDCL2"/>
+    </input>
+    <input node="Projection_3">
+      <mapping xsi:type="Calculation:AttributeMapping" target="TXVAL_BDCL2TXT" source="TXVAL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$BDCL2$UNQID" source="UNQID"/>
+    </input>
+    <joinAttribute name="JOIN$BDCL2$UNQID"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1_3" cardinality="CN_N" joinType="leftOuter" multiJoinNode="Join_1" multiJoinCentralTable="Projection_1" multiJoinOrder="Outside In">
+    <viewAttributes>
+      <viewAttribute id="BDPID" aggregationType="sum"/>
+      <viewAttribute id="INCID" aggregationType="sum"/>
+      <viewAttribute id="WPIID" aggregationType="sum"/>
+      <viewAttribute id="BDCL1" aggregationType="sum"/>
+      <viewAttribute id="BDCL2" aggregationType="sum"/>
+      <viewAttribute id="BDCL3" aggregationType="sum"/>
+      <viewAttribute id="BDCL4"/>
+      <viewAttribute id="TXVAL_BDCL3TXT"/>
+      <viewAttribute id="TXVAL_BDCL2TXT"/>
+      <viewAttribute id="TXVAL_BDCL1TXT"/>
+      <viewAttribute hidden="true" id="JOIN$BDCL1$UNQID"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Join_1_2">
+      <mapping xsi:type="Calculation:AttributeMapping" target="BDPID" source="BDPID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="INCID" source="INCID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WPIID" source="WPIID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BDCL1" source="BDCL1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BDCL2" source="BDCL2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BDCL3" source="BDCL3"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BDCL4" source="BDCL4"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TXVAL_BDCL3TXT" source="TXVAL_BDCL3TXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TXVAL_BDCL2TXT" source="TXVAL_BDCL2TXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$BDCL1$UNQID" source="BDCL1"/>
+    </input>
+    <input node="Projection_2">
+      <mapping xsi:type="Calculation:AttributeMapping" target="TXVAL_BDCL1TXT" source="TXVAL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$BDCL1$UNQID" source="UNQID"/>
+    </input>
+    <joinAttribute name="JOIN$BDCL1$UNQID"/>
+  </calculationView>
+</calculationViews>
+
+<logicalModel id="Join_1_3">
+  <attributes>
+    <attribute id="INCID" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Incident id"/>
+      <keyMapping columnObjectName="Join_1_3" columnName="INCID"/>
+    </attribute>
+    <attribute id="WPIID" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="wORKPLACE INJURY ID"/>
+      <keyMapping columnObjectName="Join_1_3" columnName="WPIID"/>
+    </attribute>
+    <attribute id="BDCL1" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Body Parts"/>
+      <keyMapping columnObjectName="Join_1_3" columnName="BDCL1"/>
+    </attribute>
+    <attribute id="BDCL2" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Nature Of injury"/>
+      <keyMapping columnObjectName="Join_1_3" columnName="BDCL2"/>
+    </attribute>
+    <attribute id="BDCL3" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Body Part Side"/>
+      <keyMapping columnObjectName="Join_1_3" columnName="BDCL3"/>
+    </attribute>
+    <attribute id="BDCL4" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Body Part Description"/>
+      <keyMapping columnObjectName="Join_1_3" columnName="BDCL4"/>
+    </attribute>
+    <attribute id="BDCL1TXT" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Text Value"/>
+      <keyMapping columnObjectName="Join_1_3" columnName="TXVAL_BDCL1TXT"/>
+    </attribute>
+    <attribute id="BDCL2TXT" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TXVAL_BDCL2TXT"/>
+      <keyMapping columnObjectName="Join_1_3" columnName="TXVAL_BDCL2TXT"/>
+    </attribute>
+    <attribute id="BDCL3TXT" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TXVAL_BDCL3TXT"/>
+      <keyMapping columnObjectName="Join_1_3" columnName="TXVAL_BDCL3TXT"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="BDPID" order="1" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Unique id"/>
+      <measureMapping columnObjectName="Join_1_3" columnName="BDPID"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="474.7377768962724" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+    
+  
+    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="302.0000000000001" y="406.9999988079071"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_2" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="722.0000000000001" y="406.9999988079071"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_3" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="512.0000000000001" y="406.9999988079071"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_4" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="91.99999999999997" y="406.9999988079071"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="474.7377768962724" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Projection_2" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Join_1">
+      <upperLeftCorner x="212" y="30"/>
+      <rectangleSize width="136"/>
+    </shape>
+    <shape modelObjectName="Projection_3" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Join_1">
+      <upperLeftCorner x="297" y="153"/>
+      <rectangleSize width="136"/>
+    </shape>
+    <shape modelObjectName="Projection_1" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Join_1">
+      <upperLeftCorner x="42" y="128"/>
+      <rectangleSize width="136"/>
+    </shape>
+    <shape modelObjectName="Projection_4" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Join_1">
+      <upperLeftCorner x="241" y="300"/>
+      <rectangleSize width="136"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

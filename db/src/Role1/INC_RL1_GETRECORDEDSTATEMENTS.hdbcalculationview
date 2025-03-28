@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="INC_RL1_GETRECORDEDSTATEMENTS" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" hierarchyGeneration="SQL" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="true" application="BAS">
+<descriptions defaultDescription="INC_RL1_GETRECORDEDSTATEMENTS"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="INC_T_ATACH">
+    <resourceUri>INC_T_ATACH</resourceUri>
+  </DataSource>
+  <DataSource id="INC_T_INCDT">
+    <resourceUri>INC_T_INCDT</resourceUri>
+  </DataSource>
+  <DataSource id="INC_M_MSTDT">
+    <resourceUri>INC_M_MSTDT</resourceUri>
+  </DataSource>
+  <DataSource id="Projection_4$$$$INC_M_MSTDT$$">
+    <resourceUri>INC_M_MSTDT</resourceUri>
+  </DataSource>
+  <DataSource id="M_EMPDT">
+    <resourceUri>M_EMPDT</resourceUri>
+  </DataSource>
+</dataSources>
+<snapshotProcedures/>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="ATTID"/>
+      <viewAttribute id="INCID"/>
+      <viewAttribute id="OBJID"/>
+      <viewAttribute id="ATTNM"/>
+      <viewAttribute id="FILTY"/>
+      <viewAttribute id="PRIST"/>
+      <viewAttribute id="DESCP"/>
+      <viewAttribute id="DOCTY"/>
+      <viewAttribute id="UNQID"/>
+      <viewAttribute id="ISDEL"/>
+      <viewAttribute id="CRTBY"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="INC_T_ATACH"/>
+    <filter>&quot;ISDEL&quot;='0' AND &quot;DOCTY&quot;='Recorded Statement'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_2" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="INCID"/>
+      <viewAttribute id="ISDEL"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="INC_T_INCDT"/>
+    <filter>&quot;ISDEL&quot;='0'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_3" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="UNQID"/>
+      <viewAttribute id="TYVAL"/>
+      <viewAttribute id="TXVAL"/>
+      <viewAttribute id="ISDEL"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="INC_M_MSTDT"/>
+    <filter>&quot;ISDEL&quot;='0'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_4" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="UNQID"/>
+      <viewAttribute id="TYVAL"/>
+      <viewAttribute id="TXVAL"/>
+      <viewAttribute id="ISDEL"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Projection_4$$$$INC_M_MSTDT$$"/>
+    <filter>&quot;ISDEL&quot;='0'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_5" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="EMPNM"/>
+      <viewAttribute id="ISDEL"/>
+      <viewAttribute id="USRID"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="M_EMPDT"/>
+    <filter>&quot;ISDEL&quot;='0'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1_1" cardinality="CN_N" joinType="leftOuter" multiJoinNode="Join_1" multiJoinCentralTable="Projection_1" multiJoinOrder="Outside In">
+    <viewAttributes>
+      <viewAttribute id="ATTID" aggregationType="sum"/>
+      <viewAttribute id="INCID" aggregationType="sum"/>
+      <viewAttribute id="OBJID"/>
+      <viewAttribute id="ATTNM"/>
+      <viewAttribute id="FILTY" aggregationType="sum"/>
+      <viewAttribute id="PRIST" aggregationType="sum"/>
+      <viewAttribute id="DESCP"/>
+      <viewAttribute id="DOCTY"/>
+      <viewAttribute id="UNQID"/>
+      <viewAttribute id="EMPNM"/>
+      <viewAttribute hidden="true" id="JOIN$CRTBY$USRID"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Projection_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ATTID" source="ATTID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="INCID" source="INCID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OBJID" source="OBJID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ATTNM" source="ATTNM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FILTY" source="FILTY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRIST" source="PRIST"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DESCP" source="DESCP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DOCTY" source="DOCTY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="UNQID" source="UNQID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$CRTBY$USRID" source="CRTBY"/>
+    </input>
+    <input node="Projection_5">
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMPNM" source="EMPNM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$CRTBY$USRID" source="USRID"/>
+    </input>
+    <joinAttribute name="JOIN$CRTBY$USRID"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1_2" cardinality="CN_N" joinType="leftOuter" multiJoinNode="Join_1" multiJoinCentralTable="Projection_1" multiJoinOrder="Outside In">
+    <viewAttributes>
+      <viewAttribute id="ATTID" aggregationType="sum"/>
+      <viewAttribute id="INCID" aggregationType="sum"/>
+      <viewAttribute id="OBJID"/>
+      <viewAttribute id="ATTNM"/>
+      <viewAttribute id="FILTY" aggregationType="sum"/>
+      <viewAttribute id="PRIST" aggregationType="sum"/>
+      <viewAttribute id="DESCP"/>
+      <viewAttribute id="DOCTY"/>
+      <viewAttribute id="UNQID"/>
+      <viewAttribute id="EMPNM"/>
+      <viewAttribute id="TXVAL_PRISTTXT"/>
+      <viewAttribute hidden="true" id="JOIN$PRIST$UNQID"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Join_1_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ATTID" source="ATTID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="INCID" source="INCID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OBJID" source="OBJID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ATTNM" source="ATTNM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FILTY" source="FILTY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRIST" source="PRIST"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DESCP" source="DESCP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DOCTY" source="DOCTY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="UNQID" source="UNQID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMPNM" source="EMPNM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PRIST$UNQID" source="PRIST"/>
+    </input>
+    <input node="Projection_4">
+      <mapping xsi:type="Calculation:AttributeMapping" target="TXVAL_PRISTTXT" source="TXVAL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PRIST$UNQID" source="UNQID"/>
+    </input>
+    <joinAttribute name="JOIN$PRIST$UNQID"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1_3" cardinality="CN_N" joinType="leftOuter" multiJoinNode="Join_1" multiJoinCentralTable="Projection_1" multiJoinOrder="Outside In">
+    <viewAttributes>
+      <viewAttribute id="ATTID" aggregationType="sum"/>
+      <viewAttribute id="INCID" aggregationType="sum"/>
+      <viewAttribute id="OBJID"/>
+      <viewAttribute id="ATTNM"/>
+      <viewAttribute id="FILTY" aggregationType="sum"/>
+      <viewAttribute id="PRIST" aggregationType="sum"/>
+      <viewAttribute id="DESCP"/>
+      <viewAttribute id="DOCTY"/>
+      <viewAttribute id="UNQID"/>
+      <viewAttribute id="EMPNM"/>
+      <viewAttribute id="TXVAL_PRISTTXT"/>
+      <viewAttribute id="TXVAL"/>
+      <viewAttribute hidden="true" id="JOIN$FILTY$UNQID"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Join_1_2">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ATTID" source="ATTID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="INCID" source="INCID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OBJID" source="OBJID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ATTNM" source="ATTNM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FILTY" source="FILTY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRIST" source="PRIST"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DESCP" source="DESCP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DOCTY" source="DOCTY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="UNQID" source="UNQID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMPNM" source="EMPNM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TXVAL_PRISTTXT" source="TXVAL_PRISTTXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$FILTY$UNQID" source="FILTY"/>
+    </input>
+    <input node="Projection_3">
+      <mapping xsi:type="Calculation:AttributeMapping" target="TXVAL" source="TXVAL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$FILTY$UNQID" source="UNQID"/>
+    </input>
+    <joinAttribute name="JOIN$FILTY$UNQID"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1_4" cardinality="CN_N" joinType="inner" multiJoinNode="Join_1" multiJoinCentralTable="Projection_1" multiJoinOrder="Outside In">
+    <viewAttributes>
+      <viewAttribute id="ATTID" aggregationType="sum"/>
+      <viewAttribute id="INCID" aggregationType="sum"/>
+      <viewAttribute id="OBJID"/>
+      <viewAttribute id="ATTNM"/>
+      <viewAttribute id="FILTY" aggregationType="sum"/>
+      <viewAttribute id="PRIST" aggregationType="sum"/>
+      <viewAttribute id="DESCP"/>
+      <viewAttribute id="DOCTY"/>
+      <viewAttribute id="UNQID"/>
+      <viewAttribute id="EMPNM"/>
+      <viewAttribute id="TXVAL_PRISTTXT"/>
+      <viewAttribute id="TXVAL"/>
+      <viewAttribute hidden="true" id="JOIN$INCID$INCID"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Join_1_3">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ATTID" source="ATTID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="INCID" source="INCID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OBJID" source="OBJID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ATTNM" source="ATTNM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FILTY" source="FILTY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRIST" source="PRIST"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DESCP" source="DESCP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DOCTY" source="DOCTY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="UNQID" source="UNQID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMPNM" source="EMPNM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TXVAL_PRISTTXT" source="TXVAL_PRISTTXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TXVAL" source="TXVAL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$INCID$INCID" source="INCID"/>
+    </input>
+    <input node="Projection_2">
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$INCID$INCID" source="INCID"/>
+    </input>
+    <joinAttribute name="JOIN$INCID$INCID"/>
+  </calculationView>
+</calculationViews>
+
+<logicalModel id="Join_1_4">
+  <attributes>
+    <attribute id="INCID" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Incident Id"/>
+      <keyMapping columnObjectName="Join_1_4" columnName="INCID"/>
+    </attribute>
+    <attribute id="OBJID" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Object ID"/>
+      <keyMapping columnObjectName="Join_1_4" columnName="OBJID"/>
+    </attribute>
+    <attribute id="ATTNM" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Attachment Name"/>
+      <keyMapping columnObjectName="Join_1_4" columnName="ATTNM"/>
+    </attribute>
+    <attribute id="FILTY" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="File Type"/>
+      <keyMapping columnObjectName="Join_1_4" columnName="FILTY"/>
+    </attribute>
+    <attribute id="PRIST" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Privacy setting"/>
+      <keyMapping columnObjectName="Join_1_4" columnName="PRIST"/>
+    </attribute>
+    <attribute id="DESCP" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Description"/>
+      <keyMapping columnObjectName="Join_1_4" columnName="DESCP"/>
+    </attribute>
+    <attribute id="DOCTY" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Document Type"/>
+      <keyMapping columnObjectName="Join_1_4" columnName="DOCTY"/>
+    </attribute>
+    <attribute id="UNQID" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Unique Id"/>
+      <keyMapping columnObjectName="Join_1_4" columnName="UNQID"/>
+    </attribute>
+    <attribute id="FILTYTXT" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Master Data Text Value"/>
+      <keyMapping columnObjectName="Join_1_4" columnName="TXVAL"/>
+    </attribute>
+    <attribute id="PRISTTXT" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TXVAL_PRISTTXT"/>
+      <keyMapping columnObjectName="Join_1_4" columnName="TXVAL_PRISTTXT"/>
+    </attribute>
+    <attribute id="UPDBY" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Employee Name"/>
+      <keyMapping columnObjectName="Join_1_4" columnName="EMPNM"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="ATTID" order="1" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Unique Id"/>
+      <measureMapping columnObjectName="Join_1_4" columnName="ATTID"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="576.6157254646171" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+    
+  
+    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="302.00000000000017" y="441.9999976158142"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_2" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="722.0000000000001" y="441.9999976158142"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_3" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="512.0000000000001" y="441.9999976158142"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_4" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="441.9999976158142"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_5" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="932.0000000000001" y="441.9999976158142"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="512.0000000000001" y="236.9999988079071"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Projection_2" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Join_1">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="136"/>
+    </shape>
+    <shape modelObjectName="Projection_3" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Join_1">
+      <upperLeftCorner x="331" y="155"/>
+      <rectangleSize width="136"/>
+    </shape>
+    <shape modelObjectName="Projection_4" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Join_1">
+      <upperLeftCorner x="331" y="306"/>
+      <rectangleSize width="136"/>
+    </shape>
+    <shape modelObjectName="Projection_1" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Join_1">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="136"/>
+    </shape>
+    <shape modelObjectName="Projection_5" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Join_1">
+      <upperLeftCorner x="31" y="356"/>
+      <rectangleSize width="136"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

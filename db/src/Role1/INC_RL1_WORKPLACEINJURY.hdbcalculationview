@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="INC_RL1_WORKPLACEINJURY" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" hierarchyGeneration="SQL" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="true" application="BAS">
+<descriptions defaultDescription="INC_RL1_WORKPLACEINJURY"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="INC_T_WPIDT">
+    <resourceUri>INC_T_WPIDT</resourceUri>
+  </DataSource>
+  <DataSource id="INC_T_INCDT">
+    <resourceUri>INC_T_INCDT</resourceUri>
+  </DataSource>
+</dataSources>
+<snapshotProcedures/>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="WPIID"/>
+      <viewAttribute id="INCID"/>
+      <viewAttribute id="IPLID"/>
+      <viewAttribute id="UNQID"/>
+      <viewAttribute id="T1LB1"/>
+      <viewAttribute id="T1LB2"/>
+      <viewAttribute id="T1LB3"/>
+      <viewAttribute id="T1LB4"/>
+      <viewAttribute id="T1LB5"/>
+      <viewAttribute id="T1LB6"/>
+      <viewAttribute id="T1LB7"/>
+      <viewAttribute id="T1LB8"/>
+      <viewAttribute id="T1LB9"/>
+      <viewAttribute id="T1LB10"/>
+      <viewAttribute id="T1LB11"/>
+      <viewAttribute id="T1LB12"/>
+      <viewAttribute id="T1LB13"/>
+      <viewAttribute id="T2LB1"/>
+      <viewAttribute id="T2LB2"/>
+      <viewAttribute id="T2LB3"/>
+      <viewAttribute id="T2LB4"/>
+      <viewAttribute id="T2LB5"/>
+      <viewAttribute id="T2LB6"/>
+      <viewAttribute id="T2LB7"/>
+      <viewAttribute id="ISDEL"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="INC_T_WPIDT"/>
+    <filter>&quot;ISDEL&quot;='0'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_2" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="INCID"/>
+      <viewAttribute id="ISDEL"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="INC_T_INCDT"/>
+    <filter>&quot;ISDEL&quot;='0'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1" cardinality="CN_N" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="WPIID" aggregationType="sum"/>
+      <viewAttribute id="INCID" aggregationType="sum"/>
+      <viewAttribute id="IPLID" aggregationType="sum"/>
+      <viewAttribute id="UNQID"/>
+      <viewAttribute id="T1LB1" aggregationType="sum"/>
+      <viewAttribute id="T1LB2" aggregationType="sum"/>
+      <viewAttribute id="T1LB3"/>
+      <viewAttribute id="T1LB4"/>
+      <viewAttribute id="T1LB5" aggregationType="sum"/>
+      <viewAttribute id="T1LB6" aggregationType="sum"/>
+      <viewAttribute id="T1LB7"/>
+      <viewAttribute id="T1LB8"/>
+      <viewAttribute id="T1LB9"/>
+      <viewAttribute id="T1LB10"/>
+      <viewAttribute id="T1LB11"/>
+      <viewAttribute id="T1LB12"/>
+      <viewAttribute id="T1LB13"/>
+      <viewAttribute id="T2LB1"/>
+      <viewAttribute id="T2LB2"/>
+      <viewAttribute id="T2LB3" aggregationType="sum"/>
+      <viewAttribute id="T2LB4" aggregationType="sum"/>
+      <viewAttribute id="T2LB5" aggregationType="sum"/>
+      <viewAttribute id="T2LB6"/>
+      <viewAttribute id="T2LB7"/>
+      <viewAttribute hidden="true" id="JOIN$INCID$INCID"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Projection_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="WPIID" source="WPIID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="INCID" source="INCID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="IPLID" source="IPLID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="UNQID" source="UNQID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="T1LB1" source="T1LB1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="T1LB2" source="T1LB2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="T1LB3" source="T1LB3"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="T1LB4" source="T1LB4"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="T1LB5" source="T1LB5"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="T1LB6" source="T1LB6"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="T1LB7" source="T1LB7"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="T1LB8" source="T1LB8"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="T1LB9" source="T1LB9"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="T1LB10" source="T1LB10"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="T1LB11" source="T1LB11"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="T1LB12" source="T1LB12"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="T1LB13" source="T1LB13"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="T2LB1" source="T2LB1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="T2LB2" source="T2LB2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="T2LB3" source="T2LB3"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="T2LB4" source="T2LB4"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="T2LB5" source="T2LB5"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="T2LB6" source="T2LB6"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="T2LB7" source="T2LB7"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$INCID$INCID" source="INCID"/>
+    </input>
+    <input node="Projection_2">
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$INCID$INCID" source="INCID"/>
+    </input>
+    <joinAttribute name="JOIN$INCID$INCID"/>
+  </calculationView>
+</calculationViews>
+
+<logicalModel id="Join_1">
+  <attributes>
+    <attribute id="INCID" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Incident Id"/>
+      <keyMapping columnObjectName="Join_1" columnName="INCID"/>
+    </attribute>
+    <attribute id="IPLID" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="People Involved Id"/>
+      <keyMapping columnObjectName="Join_1" columnName="IPLID"/>
+    </attribute>
+    <attribute id="UNQID" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Unique Id"/>
+      <keyMapping columnObjectName="Join_1" columnName="UNQID"/>
+    </attribute>
+    <attribute id="T1LB1" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Is Recordable"/>
+      <keyMapping columnObjectName="Join_1" columnName="T1LB1"/>
+    </attribute>
+    <attribute id="T1LB2" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Type of Injury / Illness"/>
+      <keyMapping columnObjectName="Join_1" columnName="T1LB2"/>
+    </attribute>
+    <attribute id="T1LB3" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Custom Field 1"/>
+      <keyMapping columnObjectName="Join_1" columnName="T1LB3"/>
+    </attribute>
+    <attribute id="T1LB4" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Custom Field 2"/>
+      <keyMapping columnObjectName="Join_1" columnName="T1LB4"/>
+    </attribute>
+    <attribute id="T1LB5" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Is Reportable"/>
+      <keyMapping columnObjectName="Join_1" columnName="T1LB5"/>
+    </attribute>
+    <attribute id="T1LB6" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Was the injured taken to a medical facility?"/>
+      <keyMapping columnObjectName="Join_1" columnName="T1LB6"/>
+    </attribute>
+    <attribute id="T1LB7" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Facility Name"/>
+      <keyMapping columnObjectName="Join_1" columnName="T1LB7"/>
+    </attribute>
+    <attribute id="T1LB8" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Doctor Name"/>
+      <keyMapping columnObjectName="Join_1" columnName="T1LB8"/>
+    </attribute>
+    <attribute id="T1LB9" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Custom Field 7"/>
+      <keyMapping columnObjectName="Join_1" columnName="T1LB9"/>
+    </attribute>
+    <attribute id="T1LB10" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Custom Field 8"/>
+      <keyMapping columnObjectName="Join_1" columnName="T1LB10"/>
+    </attribute>
+    <attribute id="T1LB11" order="15" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Injury / Illness Description"/>
+      <keyMapping columnObjectName="Join_1" columnName="T1LB11"/>
+    </attribute>
+    <attribute id="T1LB12" order="16" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Custom Field 3"/>
+      <keyMapping columnObjectName="Join_1" columnName="T1LB12"/>
+    </attribute>
+    <attribute id="T1LB13" order="17" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Injured person statement"/>
+      <keyMapping columnObjectName="Join_1" columnName="T1LB13"/>
+    </attribute>
+    <attribute id="T2LB1" order="18" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Custom Field 4"/>
+      <keyMapping columnObjectName="Join_1" columnName="T2LB1"/>
+    </attribute>
+    <attribute id="T2LB2" order="19" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Custom Field 5"/>
+      <keyMapping columnObjectName="Join_1" columnName="T2LB2"/>
+    </attribute>
+    <attribute id="T2LB3" order="20" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Any alternative duties available?"/>
+      <keyMapping columnObjectName="Join_1" columnName="T2LB3"/>
+    </attribute>
+    <attribute id="T2LB4" order="21" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Any impact on work ability?"/>
+      <keyMapping columnObjectName="Join_1" columnName="T2LB4"/>
+    </attribute>
+    <attribute id="T2LB5" order="22" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Alternative Duties Options"/>
+      <keyMapping columnObjectName="Join_1" columnName="T2LB5"/>
+    </attribute>
+    <attribute id="T2LB6" order="23" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Describe impact on work ability"/>
+      <keyMapping columnObjectName="Join_1" columnName="T2LB6"/>
+    </attribute>
+    <attribute id="T2LB7" order="24" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Custom Field 6"/>
+      <keyMapping columnObjectName="Join_1" columnName="T2LB7"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="WPIID" order="1" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Unique Id"/>
+      <measureMapping columnObjectName="Join_1" columnName="WPIID"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="221.11302679000914" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+    
+  
+    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92.00000000000001" y="376.9999988079071"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_2" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="302.00000000000006" y="376.9999988079071"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="221.11302679000914" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Projection_1" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="136"/>
+    </shape>
+    <shape modelObjectName="Projection_2" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="136"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

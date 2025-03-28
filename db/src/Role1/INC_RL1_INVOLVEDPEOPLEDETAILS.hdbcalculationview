@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="INC_RL1_INVOLVEDPEOPLEDETA" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" hierarchyGeneration="SQL" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="true" application="BAS">
+<descriptions defaultDescription="INC_RL1_INVOLVEDPEOPLEDETA"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="INC_T_INVPL">
+    <resourceUri>INC_T_INVPL</resourceUri>
+  </DataSource>
+  <DataSource id="INC_T_INCDT">
+    <resourceUri>INC_T_INCDT</resourceUri>
+  </DataSource>
+  <DataSource id="INC_M_MSTDT">
+    <resourceUri>INC_M_MSTDT</resourceUri>
+  </DataSource>
+</dataSources>
+<snapshotProcedures/>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="IPLID"/>
+      <viewAttribute id="INCID"/>
+      <viewAttribute id="UNQID"/>
+      <viewAttribute id="PPLB1"/>
+      <viewAttribute id="PPLB2"/>
+      <viewAttribute id="PPLB3"/>
+      <viewAttribute id="PPLB4"/>
+      <viewAttribute id="PPLB5"/>
+      <viewAttribute id="PPLB7"/>
+      <viewAttribute id="PPLB8"/>
+      <viewAttribute id="PPLB9"/>
+      <viewAttribute id="PPLB10"/>
+      <viewAttribute id="PPLB11"/>
+      <viewAttribute id="PPLB12"/>
+      <viewAttribute id="PPLB13"/>
+      <viewAttribute id="PPLB14"/>
+      <viewAttribute id="PPLB15"/>
+      <viewAttribute id="PPLB16"/>
+      <viewAttribute id="PPLB17"/>
+      <viewAttribute id="PPLB18"/>
+      <viewAttribute id="PPLB19"/>
+      <viewAttribute id="PPLB20"/>
+      <viewAttribute id="PPLB21"/>
+      <viewAttribute id="PPLB22"/>
+      <viewAttribute id="ISDEL"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="INC_T_INVPL"/>
+    <filter>&quot;ISDEL&quot;='0'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_2" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="INCID"/>
+      <viewAttribute id="ISDEL"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="INC_T_INCDT"/>
+    <filter>&quot;ISDEL&quot;='0'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_3" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="UNQID"/>
+      <viewAttribute id="TYVAL"/>
+      <viewAttribute id="TXVAL"/>
+      <viewAttribute id="ISDEL"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="INC_M_MSTDT"/>
+    <filter>&quot;TYVAL&quot;='Role' AND &quot;ISDEL&quot;='0'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1_1" cardinality="CN_N" joinType="inner" multiJoinNode="Join_1" multiJoinCentralTable="Projection_1" multiJoinOrder="Outside In">
+    <viewAttributes>
+      <viewAttribute id="IPLID" aggregationType="sum"/>
+      <viewAttribute id="INCID" aggregationType="sum"/>
+      <viewAttribute id="UNQID"/>
+      <viewAttribute id="PPLB1" aggregationType="sum"/>
+      <viewAttribute id="PPLB2"/>
+      <viewAttribute id="PPLB3"/>
+      <viewAttribute id="PPLB4"/>
+      <viewAttribute id="PPLB5"/>
+      <viewAttribute id="PPLB7"/>
+      <viewAttribute id="PPLB8"/>
+      <viewAttribute id="PPLB9"/>
+      <viewAttribute id="PPLB10"/>
+      <viewAttribute id="PPLB11"/>
+      <viewAttribute id="PPLB12"/>
+      <viewAttribute id="PPLB13"/>
+      <viewAttribute id="PPLB14"/>
+      <viewAttribute id="PPLB15"/>
+      <viewAttribute id="PPLB16"/>
+      <viewAttribute id="PPLB17"/>
+      <viewAttribute id="PPLB18"/>
+      <viewAttribute id="PPLB19"/>
+      <viewAttribute id="PPLB20"/>
+      <viewAttribute id="PPLB21"/>
+      <viewAttribute id="PPLB22"/>
+      <viewAttribute id="TXVAL"/>
+      <viewAttribute hidden="true" id="JOIN$PPLB1$UNQID"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Projection_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="IPLID" source="IPLID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="INCID" source="INCID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="UNQID" source="UNQID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PPLB1" source="PPLB1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PPLB2" source="PPLB2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PPLB3" source="PPLB3"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PPLB4" source="PPLB4"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PPLB5" source="PPLB5"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PPLB7" source="PPLB7"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PPLB8" source="PPLB8"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PPLB9" source="PPLB9"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PPLB10" source="PPLB10"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PPLB11" source="PPLB11"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PPLB12" source="PPLB12"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PPLB13" source="PPLB13"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PPLB14" source="PPLB14"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PPLB15" source="PPLB15"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PPLB16" source="PPLB16"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PPLB17" source="PPLB17"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PPLB18" source="PPLB18"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PPLB19" source="PPLB19"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PPLB20" source="PPLB20"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PPLB21" source="PPLB21"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PPLB22" source="PPLB22"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PPLB1$UNQID" source="PPLB1"/>
+    </input>
+    <input node="Projection_3">
+      <mapping xsi:type="Calculation:AttributeMapping" target="TXVAL" source="TXVAL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PPLB1$UNQID" source="UNQID"/>
+    </input>
+    <joinAttribute name="JOIN$PPLB1$UNQID"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1_2" cardinality="CN_N" joinType="inner" multiJoinNode="Join_1" multiJoinCentralTable="Projection_1" multiJoinOrder="Outside In">
+    <viewAttributes>
+      <viewAttribute id="IPLID" aggregationType="sum"/>
+      <viewAttribute id="INCID" aggregationType="sum"/>
+      <viewAttribute id="UNQID"/>
+      <viewAttribute id="PPLB1" aggregationType="sum"/>
+      <viewAttribute id="PPLB2"/>
+      <viewAttribute id="PPLB3"/>
+      <viewAttribute id="PPLB4"/>
+      <viewAttribute id="PPLB5"/>
+      <viewAttribute id="PPLB7"/>
+      <viewAttribute id="PPLB8"/>
+      <viewAttribute id="PPLB9"/>
+      <viewAttribute id="PPLB10"/>
+      <viewAttribute id="PPLB11"/>
+      <viewAttribute id="PPLB12"/>
+      <viewAttribute id="PPLB13"/>
+      <viewAttribute id="PPLB14"/>
+      <viewAttribute id="PPLB15"/>
+      <viewAttribute id="PPLB16"/>
+      <viewAttribute id="PPLB17"/>
+      <viewAttribute id="PPLB18"/>
+      <viewAttribute id="PPLB19"/>
+      <viewAttribute id="PPLB20"/>
+      <viewAttribute id="PPLB21"/>
+      <viewAttribute id="PPLB22"/>
+      <viewAttribute id="TXVAL"/>
+      <viewAttribute hidden="true" id="JOIN$INCID$INCID"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Join_1_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="IPLID" source="IPLID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="INCID" source="INCID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="UNQID" source="UNQID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PPLB1" source="PPLB1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PPLB2" source="PPLB2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PPLB3" source="PPLB3"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PPLB4" source="PPLB4"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PPLB5" source="PPLB5"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PPLB7" source="PPLB7"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PPLB8" source="PPLB8"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PPLB9" source="PPLB9"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PPLB10" source="PPLB10"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PPLB11" source="PPLB11"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PPLB12" source="PPLB12"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PPLB13" source="PPLB13"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PPLB14" source="PPLB14"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PPLB15" source="PPLB15"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PPLB16" source="PPLB16"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PPLB17" source="PPLB17"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PPLB18" source="PPLB18"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PPLB19" source="PPLB19"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PPLB20" source="PPLB20"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PPLB21" source="PPLB21"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PPLB22" source="PPLB22"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TXVAL" source="TXVAL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$INCID$INCID" source="INCID"/>
+    </input>
+    <input node="Projection_2">
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$INCID$INCID" source="INCID"/>
+    </input>
+    <joinAttribute name="JOIN$INCID$INCID"/>
+  </calculationView>
+</calculationViews>
+
+<logicalModel id="Join_1_2">
+  <attributes>
+    <attribute id="INCID" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Incident Id"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="INCID"/>
+    </attribute>
+    <attribute id="UNQID" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Unique Id"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="UNQID"/>
+    </attribute>
+    <attribute id="PPLB1" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Role"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="PPLB1"/>
+    </attribute>
+    <attribute id="PPLB2" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Person/Employee Name"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="PPLB2"/>
+    </attribute>
+    <attribute id="PPLB3" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Employee Id"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="PPLB3"/>
+    </attribute>
+    <attribute id="PPLB4" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Custom Field 1"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="PPLB4"/>
+    </attribute>
+    <attribute id="PPLB5" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Custom Field 2"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="PPLB5"/>
+    </attribute>
+    <attribute id="PPLB7" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Phone Number"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="PPLB7"/>
+    </attribute>
+    <attribute id="PPLB8" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Person Email Id"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="PPLB8"/>
+    </attribute>
+    <attribute id="PPLB9" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Supervisor Name"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="PPLB9"/>
+    </attribute>
+    <attribute id="PPLB10" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Custom Field 3"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="PPLB10"/>
+    </attribute>
+    <attribute id="PPLB11" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Custom Field 4"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="PPLB11"/>
+    </attribute>
+    <attribute id="PPLB12" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Additional Information"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="PPLB12"/>
+    </attribute>
+    <attribute id="PPLB13" order="15" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Department Name"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="PPLB13"/>
+    </attribute>
+    <attribute id="PPLB14" order="16" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Position"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="PPLB14"/>
+    </attribute>
+    <attribute id="PPLB15" order="17" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Manager Name"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="PPLB15"/>
+    </attribute>
+    <attribute id="PPLB16" order="18" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Employee/Person Address"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="PPLB16"/>
+    </attribute>
+    <attribute id="PPLB17" order="19" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Unit No"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="PPLB17"/>
+    </attribute>
+    <attribute id="PPLB18" order="20" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Country"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="PPLB18"/>
+    </attribute>
+    <attribute id="PPLB19" order="21" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Licence Number"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="PPLB19"/>
+    </attribute>
+    <attribute id="PPLB20" order="22" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Supervisor Mail"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="PPLB20"/>
+    </attribute>
+    <attribute id="PPLB21" order="23" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Manager Id"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="PPLB21"/>
+    </attribute>
+    <attribute id="PPLB22" order="24" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Immediate Supervisor ID"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="PPLB22"/>
+    </attribute>
+    <attribute id="TXVAL" order="25" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Master Data Text Value"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="TXVAL"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="IPLID" order="1" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Unique Id"/>
+      <measureMapping columnObjectName="Join_1_2" columnName="IPLID"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="361.75405278666415" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+    
+  
+    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="91.99999999999997" y="391.9999976158142"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_2" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="512" y="391.9999976158142"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_3" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="302" y="391.9999976158142"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="302" y="236.9999988079071"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Projection_2" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Join_1">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="136"/>
+    </shape>
+    <shape modelObjectName="Projection_1" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Join_1">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="136"/>
+    </shape>
+    <shape modelObjectName="Projection_3" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Join_1">
+      <upperLeftCorner x="335" y="145"/>
+      <rectangleSize width="136"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
