@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="INC_RL1_INVOLVEDPEOPLETYPE" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" hierarchyGeneration="SQL" outputViewType="Aggregation" application="BAS" cacheInvalidationPeriod="NONE" enforceSqlExecution="true">
+<descriptions defaultDescription="INC_RL1_INVOLVEDPEOPLETYPE"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="INC_T_IVPTY">
+    <resourceUri>INC_T_IVPTY</resourceUri>
+  </DataSource>
+  <DataSource id="INC_T_INCDT">
+    <resourceUri>INC_T_INCDT</resourceUri>
+  </DataSource>
+  <DataSource id="INC_M_MSTDT">
+    <resourceUri>INC_M_MSTDT</resourceUri>
+  </DataSource>
+</dataSources>
+<snapshotProcedures/>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="IPTID"/>
+      <viewAttribute id="IPLID"/>
+      <viewAttribute id="INCID"/>
+      <viewAttribute id="PPLB6"/>
+      <viewAttribute id="ISDEL"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="INC_T_IVPTY"/>
+    <filter>&quot;ISDEL&quot;='0'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_2" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="INCID"/>
+      <viewAttribute id="ISDEL"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="INC_T_INCDT"/>
+    <filter>&quot;ISDEL&quot;='0'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_3" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="UNQID"/>
+      <viewAttribute id="TYVAL"/>
+      <viewAttribute id="TXVAL"/>
+      <viewAttribute id="ISDEL"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="INC_M_MSTDT"/>
+    <filter>&quot;ISDEL&quot;='0'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1_1" cardinality="CN_N" joinType="leftOuter" ignoreMultipleOutputsForFilter="false" multiJoinNode="Join_1" multiJoinCentralTable="Projection_1" multiJoinOrder="Outside In">
+    <viewAttributes>
+      <viewAttribute id="IPTID" aggregationType="sum"/>
+      <viewAttribute id="IPLID" aggregationType="sum"/>
+      <viewAttribute id="INCID" aggregationType="sum"/>
+      <viewAttribute id="PPLB6" aggregationType="sum"/>
+      <viewAttribute id="TXVAL"/>
+      <viewAttribute hidden="true" id="JOIN$PPLB6$UNQID"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Projection_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="IPTID" source="IPTID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="IPLID" source="IPLID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="INCID" source="INCID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PPLB6" source="PPLB6"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PPLB6$UNQID" source="PPLB6"/>
+    </input>
+    <input node="Projection_3">
+      <mapping xsi:type="Calculation:AttributeMapping" target="TXVAL" source="TXVAL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PPLB6$UNQID" source="UNQID"/>
+    </input>
+    <joinAttribute name="JOIN$PPLB6$UNQID"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1_2" cardinality="CN_N" joinType="inner" ignoreMultipleOutputsForFilter="false" multiJoinNode="Join_1" multiJoinCentralTable="Projection_1" multiJoinOrder="Outside In">
+    <viewAttributes>
+      <viewAttribute id="IPTID" aggregationType="sum"/>
+      <viewAttribute id="IPLID" aggregationType="sum"/>
+      <viewAttribute id="INCID" aggregationType="sum"/>
+      <viewAttribute id="PPLB6" aggregationType="sum"/>
+      <viewAttribute id="TXVAL"/>
+      <viewAttribute hidden="true" id="JOIN$INCID$INCID"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Join_1_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="IPTID" source="IPTID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="IPLID" source="IPLID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="INCID" source="INCID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PPLB6" source="PPLB6"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TXVAL" source="TXVAL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$INCID$INCID" source="INCID"/>
+    </input>
+    <input node="Projection_2">
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$INCID$INCID" source="INCID"/>
+    </input>
+    <joinAttribute name="JOIN$INCID$INCID"/>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Join_1_2">
+  <attributes>
+    <attribute id="IPTID" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Unique Id"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="IPTID"/>
+    </attribute>
+    <attribute id="INCID" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Incident Id"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="INCID"/>
+    </attribute>
+    <attribute id="PPLB6" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Involved Person Type"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="PPLB6"/>
+    </attribute>
+    <attribute id="TXVAL" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Master Data Text Value"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="TXVAL"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="IPLID" order="2" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Involved People Details ID"/>
+      <measureMapping columnObjectName="Join_1_2" columnName="IPLID"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="361" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="91" y="391"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_2" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="512" y="391"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_3" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="302" y="391"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="302" y="236"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Projection_2" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Join_1">
+      <upperLeftCorner x="205" y="30"/>
+      <rectangleSize width="136"/>
+    </shape>
+    <shape modelObjectName="Projection_1" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Join_1">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="136"/>
+    </shape>
+    <shape modelObjectName="Projection_3" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Join_1">
+      <upperLeftCorner x="389" y="30"/>
+      <rectangleSize width="136"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

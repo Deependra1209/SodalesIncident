@@ -8,7 +8,11 @@
     // "tab",
     // "tsv"
   ],
+<<<<<<< Updated upstream
   "SAP HANA Database Artifacts.lastSelectedTargetPath": "/home/user/projects/SODLSINC/SodalesIncident/db/src/Role1",
+=======
+  "SAP HANA Database Artifacts.lastSelectedTargetPath": "/home/user/projects/SodalesIncident/db/src/Role1",
+>>>>>>> Stashed changes
   "SAP HANA Project Explorer.bind.confirm existing service": false,
   "SAP HANA Project Explorer.bind.confirm automatic undeployment": false
 }
