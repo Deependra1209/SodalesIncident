@@ -241,3 +241,16 @@ Content-Type: application/json
 ###
 POST http://localhost:4004/odata/v4/incident-portal-role1/j0hbiystv2nse4e3
 Content-Type: application/json
+
+
+//*********************************** Corrective Actions *********************************//
+
+// Update Corrective Action
+###
+POST http://localhost:4004/odata/v4/corrective-actions-role1/VkUtg9WbhpLD7WKX
+Content-Type: application/json
+
+// Update Corrective Action Status
+###
+POST http://localhost:4004/odata/v4/corrective-actions-role1/lMjgEa7FtVWpKj4g
+Content-Type: application/json
