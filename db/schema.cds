@@ -104,7 +104,6 @@ context RL1 {
     @cds.persistence.exists
     @cds.persistence.calcview
     entity SAVEASDRAFT {
-<<<<<<< Updated upstream
         key INCID: Integer; 
         DRFNM: String(150); 
         CHNDT: Date  @sql.alias: 'UPDDT' ; 
@@ -440,14 +439,6 @@ context RL1 {
     }
 
 }
-=======
-        key INCID : Integer;
-            DRFNM : String(150);
-            CHNDT : Date        @sql.alias: 'UPDDT';
-            CRTBY : String(100);
-            EMPNM : String(250) @sql.alias: 'UPDBY';
-    }
-
     @cds.persistence.exists
     @cds.persistence.calcview
     entity BASICINCIDENTDETAILS {
@@ -960,7 +951,4 @@ context RL1 {
         T2LB4TXT : String(1000) @title: 'T2LB4TXT: TXVAL_T2LB4TXT';
         T2LB5    : String(250)  @title: 'T2LB5: Employee Name';
     }
-
-
 }
->>>>>>> Stashed changes
