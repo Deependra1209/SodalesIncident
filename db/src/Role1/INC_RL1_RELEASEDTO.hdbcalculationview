@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="INC_RL1_RELEASEDTO" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" hierarchyGeneration="SQL" outputViewType="Aggregation" application="BAS" cacheInvalidationPeriod="NONE" enforceSqlExecution="true">
+<descriptions defaultDescription="INC_RL1_RELEASEDTO"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="INC_T_RLSTO">
+    <resourceUri>INC_T_RLSTO</resourceUri>
+  </DataSource>
+  <DataSource id="INC_T_INCDT">
+    <resourceUri>INC_T_INCDT</resourceUri>
+  </DataSource>
+  <DataSource id="INC_M_MSTDT">
+    <resourceUri>INC_M_MSTDT</resourceUri>
+  </DataSource>
+</dataSources>
+<snapshotProcedures/>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="RLSID"/>
+      <viewAttribute id="ENVID"/>
+      <viewAttribute id="INCID"/>
+      <viewAttribute id="T1LB2"/>
+      <viewAttribute id="ISDEL"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="INC_T_RLSTO"/>
+    <filter>&quot;ISDEL&quot;='0'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_2" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="INCID"/>
+      <viewAttribute id="ISDEL"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="INC_T_INCDT"/>
+    <filter>&quot;ISDEL&quot;='0'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_3" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="UNQID"/>
+      <viewAttribute id="TYVAL"/>
+      <viewAttribute id="TXVAL"/>
+      <viewAttribute id="ISDEL"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="INC_M_MSTDT"/>
+    <filter>&quot;ISDEL&quot;='0' AND &quot;TYVAL&quot;='Released To'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1_1" cardinality="CN_N" joinType="leftOuter" multiJoinNode="Join_1" multiJoinCentralTable="Projection_1" multiJoinOrder="Outside In">
+    <viewAttributes>
+      <viewAttribute id="RLSID" aggregationType="sum"/>
+      <viewAttribute id="ENVID" aggregationType="sum"/>
+      <viewAttribute id="INCID" aggregationType="sum"/>
+      <viewAttribute id="T1LB2" aggregationType="sum"/>
+      <viewAttribute id="T1LB2TXT"/>
+      <viewAttribute hidden="true" id="JOIN$T1LB2$UNQID"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Projection_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="RLSID" source="RLSID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ENVID" source="ENVID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="INCID" source="INCID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="T1LB2" source="T1LB2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$T1LB2$UNQID" source="T1LB2"/>
+    </input>
+    <input node="Projection_3">
+      <mapping xsi:type="Calculation:AttributeMapping" target="T1LB2TXT" source="TXVAL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$T1LB2$UNQID" source="UNQID"/>
+    </input>
+    <joinAttribute name="JOIN$T1LB2$UNQID"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1_2" cardinality="CN_N" joinType="inner" multiJoinNode="Join_1" multiJoinCentralTable="Projection_1" multiJoinOrder="Outside In">
+    <viewAttributes>
+      <viewAttribute id="RLSID" aggregationType="sum"/>
+      <viewAttribute id="ENVID" aggregationType="sum"/>
+      <viewAttribute id="INCID" aggregationType="sum"/>
+      <viewAttribute id="T1LB2" aggregationType="sum"/>
+      <viewAttribute id="T1LB2TXT"/>
+      <viewAttribute hidden="true" id="JOIN$INCID$INCID"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Join_1_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="RLSID" source="RLSID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ENVID" source="ENVID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="INCID" source="INCID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="T1LB2" source="T1LB2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="T1LB2TXT" source="T1LB2TXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$INCID$INCID" source="INCID"/>
+    </input>
+    <input node="Projection_2">
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$INCID$INCID" source="INCID"/>
+    </input>
+    <joinAttribute name="JOIN$INCID$INCID"/>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Join_1_2">
+  <attributes>
+    <attribute id="ENVID" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Environmrent Injury Details Table Primary Key"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="ENVID"/>
+    </attribute>
+    <attribute id="INCID" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Incident Id"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="INCID"/>
+    </attribute>
+    <attribute id="T1LB2" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Realese to Master ID"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="T1LB2"/>
+    </attribute>
+    <attribute id="T1LB2TXT" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Master Data Text Value"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="T1LB2TXT"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="RLSID" order="1" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Unique Id"/>
+      <measureMapping columnObjectName="Join_1_2" columnName="RLSID"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="361.75405278666415" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="91.99999999999997" y="391.9999976158142"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_2" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="512" y="391.9999976158142"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_3" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="302" y="391.9999976158142"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="302" y="236.9999988079071"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Projection_1" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Join_1">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="136.0234375"/>
+    </shape>
+    <shape modelObjectName="Projection_2" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Join_1">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="136.0234375"/>
+    </shape>
+    <shape modelObjectName="Projection_3" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Join_1">
+      <upperLeftCorner x="620" y="30"/>
+      <rectangleSize width="136.0234375"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

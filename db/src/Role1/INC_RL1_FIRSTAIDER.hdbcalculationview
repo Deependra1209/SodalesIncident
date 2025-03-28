@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="INC_RL1_FIRSTAIDER" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" hierarchyGeneration="SQL" outputViewType="Aggregation" application="BAS" cacheInvalidationPeriod="NONE" enforceSqlExecution="true">
+<descriptions defaultDescription="INC_RL1_FIRSTAIDER"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="INC_T_FISAL">
+    <resourceUri>INC_T_FISAL</resourceUri>
+  </DataSource>
+  <DataSource id="INC_T_INCDT">
+    <resourceUri>INC_T_INCDT</resourceUri>
+  </DataSource>
+</dataSources>
+<snapshotProcedures/>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="FISID"/>
+      <viewAttribute id="INCID"/>
+      <viewAttribute id="IPLID"/>
+      <viewAttribute id="T1LB1"/>
+      <viewAttribute id="T1LB2"/>
+      <viewAttribute id="T1LB3"/>
+      <viewAttribute id="T1LB4"/>
+      <viewAttribute id="T1LB5"/>
+      <viewAttribute id="UNQID"/>
+      <viewAttribute id="ISDEL"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="INC_T_FISAL"/>
+    <filter>&quot;ISDEL&quot;='0'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_2" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="INCID"/>
+      <viewAttribute id="ISDEL"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="INC_T_INCDT"/>
+    <filter>&quot;ISDEL&quot;='0'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1" cardinality="CN_N" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="FISID" aggregationType="sum"/>
+      <viewAttribute id="INCID" aggregationType="sum"/>
+      <viewAttribute id="IPLID" aggregationType="sum"/>
+      <viewAttribute id="T1LB1"/>
+      <viewAttribute id="T1LB2"/>
+      <viewAttribute id="T1LB3"/>
+      <viewAttribute id="T1LB4"/>
+      <viewAttribute id="T1LB5"/>
+      <viewAttribute id="UNQID"/>
+      <viewAttribute hidden="true" id="JOIN$INCID$INCID"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Projection_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="FISID" source="FISID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="INCID" source="INCID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="IPLID" source="IPLID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="T1LB1" source="T1LB1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="T1LB2" source="T1LB2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="T1LB3" source="T1LB3"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="T1LB4" source="T1LB4"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="T1LB5" source="T1LB5"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="UNQID" source="UNQID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$INCID$INCID" source="INCID"/>
+    </input>
+    <input node="Projection_2">
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$INCID$INCID" source="INCID"/>
+    </input>
+    <joinAttribute name="JOIN$INCID$INCID"/>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Join_1">
+  <attributes>
+    <attribute id="INCID" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Incident Id"/>
+      <keyMapping columnObjectName="Join_1" columnName="INCID"/>
+    </attribute>
+    <attribute id="IPLID" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Involved people Id"/>
+      <keyMapping columnObjectName="Join_1" columnName="IPLID"/>
+    </attribute>
+    <attribute id="T1LB1" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Custom Field 1"/>
+      <keyMapping columnObjectName="Join_1" columnName="T1LB1"/>
+    </attribute>
+    <attribute id="T1LB2" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Custom Field 2"/>
+      <keyMapping columnObjectName="Join_1" columnName="T1LB2"/>
+    </attribute>
+    <attribute id="T1LB3" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="What was the treatment rendered?"/>
+      <keyMapping columnObjectName="Join_1" columnName="T1LB3"/>
+    </attribute>
+    <attribute id="T1LB4" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Please describe what happened and what is the arrangement made for the ill / injured person?"/>
+      <keyMapping columnObjectName="Join_1" columnName="T1LB4"/>
+    </attribute>
+    <attribute id="T1LB5" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Custom Field 3"/>
+      <keyMapping columnObjectName="Join_1" columnName="T1LB5"/>
+    </attribute>
+    <attribute id="UNQID" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Unique Id"/>
+      <keyMapping columnObjectName="Join_1" columnName="UNQID"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="FISID" order="1" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Unique Id"/>
+      <measureMapping columnObjectName="Join_1" columnName="FISID"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="-11" y="342"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_2" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="268" y="342"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="111" y="223"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Projection_1" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="136.0234375"/>
+    </shape>
+    <shape modelObjectName="Projection_2" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="136.0234375"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

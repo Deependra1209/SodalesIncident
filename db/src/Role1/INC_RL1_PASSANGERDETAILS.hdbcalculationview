@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="INC_RL1_PASSANGERDETAILS" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" hierarchyGeneration="SQL" outputViewType="Aggregation" application="BAS" cacheInvalidationPeriod="NONE" enforceSqlExecution="true">
+<descriptions defaultDescription="INC_RL1_PASSANGERDETAILS"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="INC_T_PSNGR">
+    <resourceUri>INC_T_PSNGR</resourceUri>
+  </DataSource>
+  <DataSource id="INC_T_INCDT">
+    <resourceUri>INC_T_INCDT</resourceUri>
+  </DataSource>
+</dataSources>
+<snapshotProcedures/>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="PASID"/>
+      <viewAttribute id="MVDID"/>
+      <viewAttribute id="INCID"/>
+      <viewAttribute id="T3LB1"/>
+      <viewAttribute id="T3LB2"/>
+      <viewAttribute id="T3LB3"/>
+      <viewAttribute id="T3LB4"/>
+      <viewAttribute id="ISDEL"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="INC_T_PSNGR"/>
+    <filter>&quot;ISDEL&quot;='0'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_2" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="INCID"/>
+      <viewAttribute id="ISDEL"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="INC_T_INCDT"/>
+    <filter>&quot;ISDEL&quot;='0'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1" cardinality="CN_N" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="PASID" aggregationType="sum"/>
+      <viewAttribute id="MVDID" aggregationType="sum"/>
+      <viewAttribute id="INCID" aggregationType="sum"/>
+      <viewAttribute id="T3LB1" aggregationType="sum"/>
+      <viewAttribute id="T3LB2"/>
+      <viewAttribute id="T3LB3"/>
+      <viewAttribute id="T3LB4"/>
+      <viewAttribute hidden="true" id="JOIN$INCID$INCID"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Projection_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="PASID" source="PASID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MVDID" source="MVDID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="INCID" source="INCID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="T3LB1" source="T3LB1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="T3LB2" source="T3LB2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="T3LB3" source="T3LB3"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="T3LB4" source="T3LB4"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$INCID$INCID" source="INCID"/>
+    </input>
+    <input node="Projection_2">
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$INCID$INCID" source="INCID"/>
+    </input>
+    <joinAttribute name="JOIN$INCID$INCID"/>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Join_1">
+  <attributes>
+    <attribute id="MVDID" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MVDID"/>
+      <keyMapping columnObjectName="Join_1" columnName="MVDID"/>
+    </attribute>
+    <attribute id="INCID" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="INCID"/>
+      <keyMapping columnObjectName="Join_1" columnName="INCID"/>
+    </attribute>
+    <attribute id="T3LB1" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="T3LB1"/>
+      <keyMapping columnObjectName="Join_1" columnName="T3LB1"/>
+    </attribute>
+    <attribute id="T3LB2" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="T3LB2"/>
+      <keyMapping columnObjectName="Join_1" columnName="T3LB2"/>
+    </attribute>
+    <attribute id="T3LB3" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="T3LB3"/>
+      <keyMapping columnObjectName="Join_1" columnName="T3LB3"/>
+    </attribute>
+    <attribute id="T3LB4" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="T3LB4"/>
+      <keyMapping columnObjectName="Join_1" columnName="T3LB4"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="PASID" order="1" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="PASID"/>
+      <measureMapping columnObjectName="Join_1" columnName="PASID"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="-6" y="298"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_2" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="267" y="286"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="130" y="178"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Projection_1" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="136"/>
+    </shape>
+    <shape modelObjectName="Projection_2" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="136"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

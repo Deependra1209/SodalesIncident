@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="INC_RL1_NEARMISSDETAILS" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" hierarchyGeneration="SQL" outputViewType="Aggregation" application="BAS" cacheInvalidationPeriod="NONE" enforceSqlExecution="true">
+<descriptions defaultDescription="INC_RL1_NEARMISSDETAILS"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="INC_T_NRMIS">
+    <resourceUri>INC_T_NRMIS</resourceUri>
+  </DataSource>
+  <DataSource id="INC_T_INCDT">
+    <resourceUri>INC_T_INCDT</resourceUri>
+  </DataSource>
+</dataSources>
+<snapshotProcedures/>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_2" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="NRMID"/>
+      <viewAttribute id="INCID"/>
+      <viewAttribute id="T1LB3"/>
+      <viewAttribute id="T1LB4"/>
+      <viewAttribute id="T1LB5"/>
+      <viewAttribute id="T1LB6"/>
+      <viewAttribute id="T1LB7"/>
+      <viewAttribute id="T1LB8"/>
+      <viewAttribute id="ISDEL"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="INC_T_NRMIS"/>
+    <filter>&quot;ISDEL&quot;='0'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_3" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="INCID"/>
+      <viewAttribute id="ISDEL"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="INC_T_INCDT"/>
+    <filter>&quot;ISDEL&quot;='0'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1" cardinality="CN_N" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="NRMID" aggregationType="sum"/>
+      <viewAttribute id="INCID" aggregationType="sum"/>
+      <viewAttribute id="T1LB3"/>
+      <viewAttribute id="T1LB4"/>
+      <viewAttribute id="T1LB5"/>
+      <viewAttribute id="T1LB6"/>
+      <viewAttribute id="T1LB7"/>
+      <viewAttribute id="T1LB8"/>
+      <viewAttribute hidden="true" id="JOIN$INCID$INCID"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Projection_2">
+      <mapping xsi:type="Calculation:AttributeMapping" target="NRMID" source="NRMID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="INCID" source="INCID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="T1LB3" source="T1LB3"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="T1LB4" source="T1LB4"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="T1LB5" source="T1LB5"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="T1LB6" source="T1LB6"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="T1LB7" source="T1LB7"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="T1LB8" source="T1LB8"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$INCID$INCID" source="INCID"/>
+    </input>
+    <input node="Projection_3">
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$INCID$INCID" source="INCID"/>
+    </input>
+    <joinAttribute name="JOIN$INCID$INCID"/>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Join_1">
+  <attributes>
+    <attribute id="INCID" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Incident Id"/>
+      <keyMapping columnObjectName="Join_1" columnName="INCID"/>
+    </attribute>
+    <attribute id="T1LB3" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Custom Field 1"/>
+      <keyMapping columnObjectName="Join_1" columnName="T1LB3"/>
+    </attribute>
+    <attribute id="T1LB4" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Custom Field 2"/>
+      <keyMapping columnObjectName="Join_1" columnName="T1LB4"/>
+    </attribute>
+    <attribute id="T1LB5" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Description of Near Miss"/>
+      <keyMapping columnObjectName="Join_1" columnName="T1LB5"/>
+    </attribute>
+    <attribute id="T1LB6" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="How could the near-miss have been avoided?"/>
+      <keyMapping columnObjectName="Join_1" columnName="T1LB6"/>
+    </attribute>
+    <attribute id="T1LB7" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="What immediate actions have been put in place to prevent recurrence?"/>
+      <keyMapping columnObjectName="Join_1" columnName="T1LB7"/>
+    </attribute>
+    <attribute id="T1LB8" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Custom Field 3"/>
+      <keyMapping columnObjectName="Join_1" columnName="T1LB8"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="NRMID" order="1" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Unique Id"/>
+      <measureMapping columnObjectName="Join_1" columnName="NRMID"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="350.2260535800183" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Projection_2" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="91.99999999999997" y="376.9999988079071"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_3" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="512.0000000000001" y="376.9999988079071"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="350.2260535800183" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Projection_2" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="136.0234375"/>
+    </shape>
+    <shape modelObjectName="Projection_3" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="136.0234375"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
